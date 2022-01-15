@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "city-diary",
+    "slug": "city-diary",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "city-diary"
+}

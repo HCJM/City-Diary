@@ -20,6 +20,7 @@ export default function PublicMapScreen() {
           latitudeDelta: 0.2,
           longitudeDelta: 0.05,
         }}
+        zoomEnabled={true}
         style={styles.map}
       />
       <TouchableOpacity style={styles.button} onPress={() => onRecordPress()}>

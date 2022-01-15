@@ -57,9 +57,7 @@ export default function LoginScreen({ navigation }) {
             </Text>
           </Text>
         </View>
-        <Text onPress={onMapViewPress} style={styles.footerLink}>
-          MAP VIEW
-        </Text>
+        <Text onPress={onMapViewPress}>TEST MAP VIEW</Text>
       </KeyboardAwareScrollView>
     </View>
   )

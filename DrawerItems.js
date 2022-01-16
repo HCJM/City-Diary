@@ -15,12 +15,12 @@ export default [
     // iconName:'settings'
   },
   {
-    name: 'Personal Audio Map',
+    name: 'Public Audio Map',
     // iconType:'Material',
     // iconName:'bookmark-check-outline'
   },
   {
-    name: 'Public Audio Map',
+    name: 'Personal Audio Map',
     // iconType:'FontAwesome5',
     // iconName:'user-friends'
   },

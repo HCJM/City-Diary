@@ -8,6 +8,7 @@ import {
   HomeScreen,
   RegistrationScreen,
   PublicMapScreen,
+  PersonalMapScreen,
 } from './src/screens'
 import DrawerItems from './DrawerItems'
 import { decode, encode } from 'base-64'
@@ -47,6 +48,8 @@ export default function App() {
                 ? RegistrationScreen
                 : drawer.name === 'Home'
                 ? HomeScreen
+                : drawer.name === 'Personal Audio Map'
+                ? PersonalMapScreen
                 : PublicMapScreen
             }
           />
@@ -69,33 +72,6 @@ export default function App() {
   )
 }
 
-/*
-<Drawer.Navigator
-        drawerType="front"
-        drawerPosition="right"
-        // initialRouteName="Home"
-        drawerContentOptions={{
-          activeTintColor: '#e91e63',
-          itemStyle: { marginVertical: 10 },
-        }}
-      >
-        {DrawerItems.map((drawer) => (
-          <Drawer.Screen
-            key={drawer.name}
-            name={drawer.name}
-            component={
-              drawer.name === 'Login'
-                ? LoginScreen
-                : drawer.name === 'Registration'
-                ? RegistrationScreen
-                : drawer.name === 'Home'
-                ? HomeScreen
-                : PublicMapScreen
-            }
-          />
-        ))}
-      </Drawer.Navigator>
-*/
 
 // const styles = StyleSheet.create({
 //   container: {

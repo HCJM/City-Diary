@@ -11,10 +11,6 @@ export default function LoginScreen({ navigation }) {
     navigation.navigate('Registration')
   }
 
-  const onMapViewPress = () => {
-    navigation.navigate('Public Audio Map')
-  }
-
   const onLoginPress = () => {}
 
   return (
@@ -57,7 +53,6 @@ export default function LoginScreen({ navigation }) {
             </Text>
           </Text>
         </View>
-        <Text onPress={onMapViewPress}>TEST MAP VIEW</Text>
       </KeyboardAwareScrollView>
     </View>
   )

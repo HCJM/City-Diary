@@ -12,7 +12,7 @@ export default function LoginScreen({ navigation }) {
   }
 
   const onMapViewPress = () => {
-    navigation.navigate('PublicMap')
+    navigation.navigate('Public Audio Map')
   }
 
   const onLoginPress = () => {}

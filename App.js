@@ -33,7 +33,7 @@ export default function App() {
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Registration" component={RegistrationScreen} />
-            <Stack.Screen name="PublicMap" component={PublicMapScreen} />
+            <Stack.Screen name="Public Audio Map" component={PublicMapScreen} />
           </>
         )}
       </Stack.Navigator>

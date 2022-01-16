@@ -1,7 +1,8 @@
 import 'react-native-gesture-handler'
 import React, { useEffect, useState } from 'react'
+// import { Location, Persmissions } from 'expo';
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+// import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import {
   LoginScreen,
@@ -19,43 +20,54 @@ if (!global.atob) {
   global.atob = decode
 }
 
-const Stack = createStackNavigator()
+// const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 
 export default function App() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
+  const [region, setRegion] = useState(null)
+
+  // useEffect();
 
   return (
     <NavigationContainer>
       <Drawer.Navigator
         drawerPosition="right"
         drawerType="front"
-        initialRouteName="Home"
+        // initialRouteName="Home"
         screenOptions={{
           activeTintColor: '#e91e63',
           itemStyle: { marginVertical: 10 },
         }}
       >
-        {DrawerItems.map((drawer) => (
-          <Drawer.Screen
-            key={drawer.name}
-            name={drawer.name}
-            component={
-              drawer.name === 'Login'
-                ? LoginScreen
-                : drawer.name === 'Registration'
-                ? RegistrationScreen
-                : drawer.name === 'Home'
-                ? HomeScreen
-                : drawer.name === 'Personal Audio Map'
-                ? PersonalMapScreen
-                : PublicMapScreen
-            }
-          />
-        ))}
+        {user ? (
+          <Drawer.Screen name="Home">
+            {(props) => <HomeScreen {...props} extraData={user} />}
+          </Drawer.Screen>
+        ) : (
+          DrawerItems.map((drawer) => (
+            <Drawer.Screen
+              key={drawer.name}
+              name={drawer.name}
+              component={
+                drawer.name === 'Login'
+                  ? LoginScreen
+                  : drawer.name === 'Registration'
+                  ? RegistrationScreen
+                  : drawer.name === 'Personal Audio Map'
+                  ? PersonalMapScreen
+                  : PublicMapScreen
+              }
+            />
+          ))
+        )}
       </Drawer.Navigator>
-      {/* <Stack.Navigator>
+    </NavigationContainer>
+  )
+}
+
+/* <Stack.Navigator>
         {user ? (
           <Stack.Screen name="Home">
             {(props) => <HomeScreen {...props} extraData={user} />}
@@ -67,11 +79,7 @@ export default function App() {
             <Stack.Screen name="Public Audio Map" component={PublicMapScreen} />
           </>
         )}
-      </Stack.Navigator> */}
-    </NavigationContainer>
-  )
-}
-
+      </Stack.Navigator> */
 
 // const styles = StyleSheet.create({
 //   container: {

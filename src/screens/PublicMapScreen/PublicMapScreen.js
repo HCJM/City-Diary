@@ -19,20 +19,22 @@ export default function PublicMapScreen() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Please enable permission to access location');
-        return;
-      }
+  const checkPermission = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Please enable permission to access location');
+      return;
+    }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+  }
+
+  useEffect(() => {
+    checkPermission();
   }, []);
 
-  let text = 'Waiting...';
+  let text = 'Loading...';
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {

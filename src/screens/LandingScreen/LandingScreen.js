@@ -8,6 +8,10 @@ export default function LandingScreen ( { navigation } ) {
     const onExploreButtonPress = () => {
         navigation.navigate('Public Audio Map')
     }
+
+    const onLoginButtonPress = () => {
+        navigation.navigate('Login')
+    }
  
    return (
    
@@ -20,8 +24,8 @@ export default function LandingScreen ( { navigation } ) {
         <TouchableOpacity style={styles.exploreButton} onPress={() => onExploreButtonPress()}>
             <Text style={styles.exploreButtonTitle}>Explore</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.signUpLoginButton} onPress={() => console.log('Sign Up/Login button was pressed')}>
-            <Text style={styles.signUpLoginButtonTitle}>Sign Up / Login</Text>
+        <TouchableOpacity style={styles.signUpLoginButton} onPress={() => onLoginButtonPress()}>
+            <Text style={styles.signUpLoginButtonTitle}>Login</Text>
         </TouchableOpacity>
 
     </View>

@@ -18,7 +18,7 @@ export default function LandingScreen ( { navigation } ) {
     <View style={styles.container}>
         <Image 
             style={styles.logo}
-            source={require("/Users/Jennifer/City-Diary/assets/logo.jpeg")}
+            source={require('../../../assets/logo.jpeg')}
         />
         <StatusBar style="auto" />
         <TouchableOpacity style={styles.exploreButton} onPress={() => onExploreButtonPress()}>

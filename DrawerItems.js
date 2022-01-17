@@ -1,5 +1,10 @@
 export default [
   {
+    name: 'Landing Page',
+    //   iconType:'Material',
+    //   iconName:'face-profile'
+  },
+  {
     name: 'Login',
     //   iconType:'Material',
     //   iconName:'face-profile'

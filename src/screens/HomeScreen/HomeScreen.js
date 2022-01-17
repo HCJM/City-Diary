@@ -45,7 +45,7 @@ export default function HomeScreen(props) {
   }, [])
 
   const onSaveButtonPress = () => {
-    if (audioFile && audioFile.length > 0) {
+    if (audioFile) {
       const timestamp = firebase.firestore.FieldValue.serverTimestamp()
       const data = {
         audioFile: audioFile,

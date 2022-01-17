@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler'
 import React, { useEffect, useState } from 'react'
+import { firebase } from './firebase.js'
 // import { Location, Persmissions } from 'expo';
 import { NavigationContainer } from '@react-navigation/native'
 // import { createStackNavigator } from '@react-navigation/stack'
@@ -28,7 +29,30 @@ export default function App() {
   const [user, setUser] = useState(null)
   const [region, setRegion] = useState(null)
 
-  // useEffect();
+  //PERSISTENT LOG-IN CODE...not functioning
+  // if (loading) {
+  //   return <></>
+  // }
+  // useEffect(() => {
+  //   const usersRef = firebase.firestore().collection('users')
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       usersRef
+  //         .doc(user.uid)
+  //         .get()
+  //         .then((document) => {
+  //           const userData = document.data()
+  //           setLoading(false)
+  //           setUser(userData)
+  //         })
+  //         .catch((error) => {
+  //           setLoading(false)
+  //         })
+  //     } else {
+  //       setLoading(false)
+  //     }
+  //   })
+  // }, [])
 
   return (
     <NavigationContainer>
@@ -43,7 +67,7 @@ export default function App() {
       >
         {user ? (
           <Drawer.Screen name="Home">
-            {(props) => <HomeScreen {...props} extraData={user} />}
+            {(props) => <HomeScreen {...props} />}
           </Drawer.Screen>
         ) : (
           DrawerItems.map((drawer) => (
@@ -55,6 +79,8 @@ export default function App() {
                   ? LoginScreen
                   : drawer.name === 'Registration'
                   ? RegistrationScreen
+                  : drawer.name === 'Home'
+                  ? HomeScreen
                   : drawer.name === 'Personal Audio Map'
                   ? PersonalMapScreen
                   : PublicMapScreen

@@ -5,7 +5,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from './styles'
 
 export default function RegistrationScreen({ navigation }) {
-  const [fullName, setFullName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -27,7 +29,9 @@ export default function RegistrationScreen({ navigation }) {
         const data = {
           id: uid,
           email,
-          fullName,
+          firstName,
+          lastName,
+          userName
         }
         const usersRef = firebase.firestore().collection('users')
         usersRef
@@ -57,10 +61,28 @@ export default function RegistrationScreen({ navigation }) {
         />
         <TextInput
           style={styles.input}
-          placeholder="Full Name"
+          placeholder="First Name"
           placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => setFullName(text)}
-          value={fullName}
+          onChangeText={(text) => setFirstName(text)}
+          value={firstName}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Last Name"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setLastName(text)}
+          value={lastName}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="User Name"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setUserName(text)}
+          value={userName}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />

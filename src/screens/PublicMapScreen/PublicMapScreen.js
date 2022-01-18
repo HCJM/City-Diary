@@ -1,4 +1,6 @@
+// import React, { useState, useEffect } from 'react'
 import * as React from 'react'
+import { useState, useEffect } from 'react'
 import MapView from 'react-native-maps'
 import {
   StyleSheet,
@@ -6,23 +8,71 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
+  DatePickerAndroid,
 } from 'react-native'
 // import styles from './styles'
+import * as Location from 'expo-location'
+
+const deltas = {
+  latitudeDelta: 0.2,
+  longitudeDelta: 0.05,
+}
 
 export default function PublicMapScreen() {
   const onRecordPress = () => {}
+  
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [region, setRegion] = useState(null)
+
+  const checkPermission = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+    const region = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        ...deltas
+    }
+    setRegion(region)
+  }
+
+  useEffect(() => {
+    checkPermission();
+  }, []);
+
+  let text = 'Loading...';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    // text = JSON.stringify(location);
+    text = ''
+    // console.log(JSON.stringify(location))
+  }
   return (
     <View style={styles.container}>
+      {location ? 
+      <MapView region={region}
+      style={styles.map}
+      /> 
+      : 
       <MapView
         initialRegion={{
-          latitude: 40.73061,
-          longitude: -73.97,
-          latitudeDelta: 0.2,
-          longitudeDelta: 0.05,
+          latitude: 41.39508,
+          longitude: -73.475291,
+          ...deltas
         }}
         zoomEnabled={true}
         style={styles.map}
       />
+      
+     }
+      <Text style={styles.paragraph}>{text}</Text>
       <TouchableOpacity style={styles.button} onPress={() => onRecordPress()}>
         <Text style={styles.buttonTitle}>Record</Text>
       </TouchableOpacity>
@@ -58,5 +108,12 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 22,
     fontWeight: 'bold',
+  },
+  paragraph: {
+    fontSize: 16,
+    textAlign: 'center',
+    position: 'absolute',
+    top: 20,
+    backgroundColor: '#fff',
   },
 })

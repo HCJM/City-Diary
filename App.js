@@ -7,11 +7,10 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import {
   LoginScreen,
-  HomeScreen,
   RegistrationScreen,
   PublicMapScreen,
   PersonalMapScreen,
-  LandingScreen
+  LandingScreen,
 } from './src/screens'
 import DrawerItems from './DrawerItems'
 import { decode, encode } from 'base-64'
@@ -54,41 +53,24 @@ export default function App() {
   //     }
   //   })
   // }, [])
-
   return (
     <NavigationContainer>
       <Drawer.Navigator
         drawerPosition="right"
         drawerType="front"
-        // initialRouteName="Home"
         screenOptions={{
           activeTintColor: '#e91e63',
           itemStyle: { marginVertical: 10 },
         }}
       >
-        {user ? (
-          <Drawer.Screen name="Public Audio Map">
-            {(props) => <PublicMapScreen {...props} />}
-          </Drawer.Screen>
-        ) : (
-          DrawerItems.map((drawer) => (
-            <Drawer.Screen
-              key={drawer.name}
-              name={drawer.name}
-              component={
-                drawer.name === 'Login'
-                  ? LoginScreen
-                  : drawer.name === 'Registration'
-                  ? RegistrationScreen
-                  : drawer.name === 'Personal Audio Map'
-                  ? PersonalMapScreen
-                  : drawer.name === 'Public Audio Map'
-                  ? PublicMapScreen
-                  : LandingScreen
-              }
-            />
-          ))
-        )}
+        <Drawer.Screen name="Landing Page" component={LandingScreen} />
+        <Drawer.Screen name="Login" component={LoginScreen} />
+        <Drawer.Screen name="Registration" component={RegistrationScreen} />
+        <Drawer.Screen name="Public Audio Map" component={PublicMapScreen} />
+        <Drawer.Screen
+          name="Personal Audio Map"
+          component={PersonalMapScreen}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   )

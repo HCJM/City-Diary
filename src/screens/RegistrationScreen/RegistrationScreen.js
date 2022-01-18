@@ -31,14 +31,14 @@ export default function RegistrationScreen({ navigation }) {
           email,
           firstName,
           lastName,
-          userName
+          userName,
         }
         const usersRef = firebase.firestore().collection('users')
         usersRef
           .doc(uid)
           .set(data)
           .then(() => {
-            navigation.navigate('Home', { user: data })
+            navigation.navigate('Public Audio Map', { user: data })
           })
           .catch((error) => {
             alert(error)

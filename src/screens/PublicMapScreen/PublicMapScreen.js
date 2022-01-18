@@ -13,6 +13,11 @@ import {
 // import styles from './styles'
 import * as Location from 'expo-location'
 
+const deltas = {
+  latitudeDelta: 0.2,
+  longitudeDelta: 0.05,
+}
+
 export default function PublicMapScreen() {
   const onRecordPress = () => {}
   
@@ -23,7 +28,7 @@ export default function PublicMapScreen() {
   const checkPermission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
-      setErrorMsg('Please enable permission to access location');
+      setErrorMsg('Permission to access location was denied');
       return;
     }
 
@@ -32,8 +37,7 @@ export default function PublicMapScreen() {
     const region = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        latitudeDelta: 0.2,
-        longitudeDelta: 0.05,
+        ...deltas
     }
     setRegion(region)
   }
@@ -61,8 +65,7 @@ export default function PublicMapScreen() {
         initialRegion={{
           latitude: 41.39508,
           longitude: -73.475291,
-          latitudeDelta: 0.2,
-          longitudeDelta: 0.05,
+          ...deltas
         }}
         zoomEnabled={true}
         style={styles.map}

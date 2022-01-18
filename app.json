@@ -3,9 +3,11 @@
     "name": "city-diary",
     "slug": "city-diary",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "bundleIdentifier": "com.cityDiary",
+      "googleServicesFile": "./GoogleService-Info.plist"
+    }
   },
   "name": "city-diary"
 }

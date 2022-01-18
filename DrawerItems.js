@@ -15,11 +15,6 @@ export default [
     //   iconName:'face-profile'
   },
   {
-    name: 'Home',
-    // iconType:'Feather',
-    // iconName:'settings'
-  },
-  {
     name: 'Public Audio Map',
     // iconType:'Material',
     // iconName:'bookmark-check-outline'

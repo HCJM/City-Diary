@@ -1,16 +1,16 @@
 import 'react-native-gesture-handler'
 import React, { useEffect, useState } from 'react'
+import { firebase } from './firebase.js'
 // import { Location, Persmissions } from 'expo';
 import { NavigationContainer } from '@react-navigation/native'
 // import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import {
   LoginScreen,
-  HomeScreen,
   RegistrationScreen,
   PublicMapScreen,
   PersonalMapScreen,
-  LandingScreen
+  LandingScreen,
 } from './src/screens'
 import DrawerItems from './DrawerItems'
 import { decode, encode } from 'base-64'
@@ -29,42 +29,48 @@ export default function App() {
   const [user, setUser] = useState(null)
   const [region, setRegion] = useState(null)
 
-  // useEffect();
-
+  //PERSISTENT LOG-IN CODE...not functioning
+  // if (loading) {
+  //   return <></>
+  // }
+  // useEffect(() => {
+  //   const usersRef = firebase.firestore().collection('users')
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       usersRef
+  //         .doc(user.uid)
+  //         .get()
+  //         .then((document) => {
+  //           const userData = document.data()
+  //           setLoading(false)
+  //           setUser(userData)
+  //         })
+  //         .catch((error) => {
+  //           setLoading(false)
+  //         })
+  //     } else {
+  //       setLoading(false)
+  //     }
+  //   })
+  // }, [])
   return (
     <NavigationContainer>
       <Drawer.Navigator
         drawerPosition="right"
         drawerType="front"
-        // initialRouteName="Home"
         screenOptions={{
           activeTintColor: '#e91e63',
           itemStyle: { marginVertical: 10 },
         }}
       >
-        {user ? (
-          <Drawer.Screen name="Home">
-            {(props) => <HomeScreen {...props} extraData={user} />}
-          </Drawer.Screen>
-        ) : (
-          DrawerItems.map((drawer) => (
-            <Drawer.Screen
-              key={drawer.name}
-              name={drawer.name}
-              component={
-                drawer.name === 'Login'
-                  ? LoginScreen
-                  : drawer.name === 'Registration'
-                  ? RegistrationScreen
-                  : drawer.name === 'Personal Audio Map'
-                  ? PersonalMapScreen
-                  : drawer.name === 'Public Audio Map'
-                  ? PublicMapScreen
-                  : LandingScreen
-              }
-            />
-          ))
-        )}
+        <Drawer.Screen name="Landing Page" component={LandingScreen} />
+        <Drawer.Screen name="Login" component={LoginScreen} />
+        <Drawer.Screen name="Registration" component={RegistrationScreen} />
+        <Drawer.Screen name="Public Audio Map" component={PublicMapScreen} />
+        <Drawer.Screen
+          name="Personal Audio Map"
+          component={PersonalMapScreen}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   )

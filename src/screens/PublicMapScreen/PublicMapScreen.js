@@ -20,35 +20,35 @@ const deltas = {
 
 export default function PublicMapScreen() {
   const onRecordPress = () => {}
-  
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+
+  const [location, setLocation] = useState(null)
+  const [errorMsg, setErrorMsg] = useState(null)
   const [region, setRegion] = useState(null)
 
   const checkPermission = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
+    let { status } = await Location.requestForegroundPermissionsAsync()
     if (status !== 'granted') {
-      setErrorMsg('Permission to access location was denied');
-      return;
+      setErrorMsg('Permission to access location was denied')
+      return
     }
 
-    let location = await Location.getCurrentPositionAsync({});
-    setLocation(location);
+    let location = await Location.getCurrentPositionAsync({})
+    setLocation(location)
     const region = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        ...deltas
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      ...deltas,
     }
     setRegion(region)
   }
 
   useEffect(() => {
-    checkPermission();
-  }, []);
+    checkPermission()
+  }, [])
 
-  let text = 'Loading...';
+  let text = 'Loading...'
   if (errorMsg) {
-    text = errorMsg;
+    text = errorMsg
   } else if (location) {
     // text = JSON.stringify(location);
     text = ''
@@ -56,22 +56,24 @@ export default function PublicMapScreen() {
   }
   return (
     <View style={styles.container}>
-      {location ? 
-      <MapView region={region}
-      style={styles.map}
-      /> 
-      : 
-      <MapView
-        initialRegion={{
-          latitude: 41.39508,
-          longitude: -73.475291,
-          ...deltas
-        }}
-        zoomEnabled={true}
-        style={styles.map}
-      />
-      
-     }
+      {location ? (
+        <MapView
+          region={region}
+          style={styles.map}
+          showsUserLocation={true}
+          zoomEnabled={true}
+        />
+      ) : (
+        <MapView
+          initialRegion={{
+            latitude: 41.39508,
+            longitude: -73.475291,
+            ...deltas,
+          }}
+          zoomEnabled={true}
+          style={styles.map}
+        />
+      )}
       <Text style={styles.paragraph}>{text}</Text>
       <TouchableOpacity style={styles.button} onPress={() => onRecordPress()}>
         <Text style={styles.buttonTitle}>Record</Text>

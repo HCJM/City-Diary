@@ -18,6 +18,7 @@ export default function PublicMapScreen() {
   
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [region, setRegion] = useState(null)
 
   const checkPermission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -28,6 +29,13 @@ export default function PublicMapScreen() {
 
     let location = await Location.getCurrentPositionAsync({});
     setLocation(location);
+    const region = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.2,
+        longitudeDelta: 0.05,
+    }
+    setRegion(region)
   }
 
   useEffect(() => {
@@ -38,20 +46,29 @@ export default function PublicMapScreen() {
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
-    text = JSON.stringify(location);
+    // text = JSON.stringify(location);
+    text = ''
+    // console.log(JSON.stringify(location))
   }
   return (
     <View style={styles.container}>
+      {location ? 
+      <MapView region={region}
+      style={styles.map}
+      /> 
+      : 
       <MapView
         initialRegion={{
-          latitude: 40.73061,
-          longitude: -73.97,
+          latitude: 41.39508,
+          longitude: -73.475291,
           latitudeDelta: 0.2,
           longitudeDelta: 0.05,
         }}
         zoomEnabled={true}
         style={styles.map}
       />
+      
+     }
       <Text style={styles.paragraph}>{text}</Text>
       <TouchableOpacity style={styles.button} onPress={() => onRecordPress()}>
         <Text style={styles.buttonTitle}>Record</Text>

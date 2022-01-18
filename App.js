@@ -66,8 +66,8 @@ export default function App() {
         }}
       >
         {user ? (
-          <Drawer.Screen name="Home">
-            {(props) => <HomeScreen {...props} />}
+          <Drawer.Screen name="Public Audio Map">
+            {(props) => <PublicMapScreen {...props} />}
           </Drawer.Screen>
         ) : (
           DrawerItems.map((drawer) => (
@@ -79,8 +79,6 @@ export default function App() {
                   ? LoginScreen
                   : drawer.name === 'Registration'
                   ? RegistrationScreen
-                  : drawer.name === 'Home'
-                  ? HomeScreen
                   : drawer.name === 'Personal Audio Map'
                   ? PersonalMapScreen
                   : PublicMapScreen

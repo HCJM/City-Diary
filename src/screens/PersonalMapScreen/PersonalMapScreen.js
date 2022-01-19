@@ -1,13 +1,7 @@
 import * as React from 'react'
 import MapView from 'react-native-maps'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native'
-// import styles from './styles'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import styles from './styles'
 
 //get user location authorization and use that to set region!
 
@@ -31,34 +25,3 @@ export default function PersonalMapScreen() {
     </View>
   )
 }
-
-export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-  button: {
-    position: 'absolute',
-    bottom: 50,
-    backgroundColor: '#DC143C',
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
-    height: 48,
-    width: 250,
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonTitle: {
-    color: 'white',
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-})

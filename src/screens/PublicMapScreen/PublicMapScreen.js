@@ -3,24 +3,17 @@ import * as React from 'react'
 import { firebase } from '../../../firebase.js'
 import { useState, useEffect } from 'react'
 import MapView, { Marker } from 'react-native-maps'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  DatePickerAndroid,
-  Pressable,
-  Modal,
-} from 'react-native'
+import { Text, View, TouchableOpacity, Pressable, Modal } from 'react-native'
 import { Audio } from 'expo-av'
-// import styles from './styles'
+import styles from './styles'
 import * as Location from 'expo-location'
 
 const deltas = {
   latitudeDelta: 0.2,
   longitudeDelta: 0.05,
 }
+
+// give
 
 export default function PublicMapScreen() {
   const onRecordPress = () => {}
@@ -37,6 +30,7 @@ export default function PublicMapScreen() {
   // const storageRef = firebase.storage().ref('climate.wav')
   // *works but does it repeatedly*
   // async function getAudio() {
+  // run
   //   return await storageRef.getDownloadURL()
   // }
   // *attempt at getting it to only run once*
@@ -201,84 +195,3 @@ export default function PublicMapScreen() {
     </View>
   )
 }
-
-export const styles = StyleSheet.create({
-  // Modal start
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  // Modal end
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-  recordButton: {
-    position: 'absolute',
-    bottom: 50,
-    backgroundColor: '#DC143C',
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
-    height: 48,
-    width: 250,
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonTitle: {
-    color: 'white',
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-  paragraph: {
-    fontSize: 16,
-    textAlign: 'center',
-    position: 'absolute',
-    top: 20,
-    backgroundColor: '#fff',
-  },
-})

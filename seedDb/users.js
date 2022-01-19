@@ -1,10 +1,10 @@
 let users = [
     {
-      email: 'test1@test.com',
-      firstName: 'George',
-      lastName: 'Steiner',
-      userName: 'georgeS',
-      password: 'Password123',
+      email: 'test2@test.com',
+      firstName: 'George2',
+      lastName: 'Steiner2',
+      userName: 'georgeS2',
+      password: 'Password1232',
     },
     {
         email: 'test2@test.com',

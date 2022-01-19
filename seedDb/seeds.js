@@ -36,6 +36,16 @@ const seeding = function () {
         console.log('Adding user to the users collection: ', data.email);
       })
       .catch((error) => console.log(error));
+      await firebase
+      .auth()
+      // sign out the current user (newly created)
+      .signOut()
+      .then(() => console.log('Sign out successful!'))
+      .catch((error) => console.log(error));
+    // increment index to access the different user data
+    index += 1;
+    // when we reach the end of the seedData array, remove the setInterval method
+    if (index === users.length) clearInterval(interval)
   }
     
   interval()

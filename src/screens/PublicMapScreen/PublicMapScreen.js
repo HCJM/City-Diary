@@ -1,5 +1,6 @@
 // import React, { useState, useEffect } from 'react'
 import * as React from 'react'
+import { firebase } from '../../../firebase.js'
 import { useState, useEffect } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import {
@@ -12,19 +13,35 @@ import {
 } from 'react-native'
 // import styles from './styles'
 import * as Location from 'expo-location'
+import { RotateInUpLeft } from 'react-native-reanimated'
 
 const deltas = {
   latitudeDelta: 0.2,
   longitudeDelta: 0.05,
 }
 
-export default function PublicMapScreen() {
+export default function PublicMapScreen(props) {
   const onRecordPress = () => {}
 
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   const [region, setRegion] = useState(null)
-  const [audio, setAudio] = useState(null)
+  const [audio, setAudio] = useState([])
+
+  async function getStuff() {
+    // create a reference to the collection
+    const audiosRef = firebase.firestore().collection('audio')
+
+    const audio = await audiosRef.get()
+    const files = []
+    audio.forEach((audio) => {
+      files.push({ id: audio.id, data: audio.data() })
+      // console.log(audio.id, '=>', audio.data())
+    })
+    setAudio(files)
+    // const uid = props.route.params.user.id
+  }
+  getStuff()
 
   const checkPermission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
@@ -55,25 +72,29 @@ export default function PublicMapScreen() {
     text = ''
     // console.log(JSON.stringify(location))
   }
+
   return (
     <View style={styles.container}>
       {location ? (
         <MapView
-          region={region}
+          // region={region}
           style={styles.map}
           showsUserLocation={true}
           zoomEnabled={true}
         >
-          <Marker
-            title="Hello"
-            description="Hi"
-            coordinate={{
-              latitude: 40.86419161162663,
-              longitude: -73.88101060236843,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          />
+          {audio.map((file) => (
+            <Marker
+              key={file.data.userId}
+              title={file.data.title}
+              description={file.data.description}
+              coordinate={{
+                latitude: file.data.location.latitude,
+                longitude: file.data.location.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            />
+          ))}
         </MapView>
       ) : (
         <MapView

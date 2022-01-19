@@ -7,3 +7,5 @@ export { default as RegistrationScreen } from './RegistrationScreen/Registration
 export { default as PublicMapScreen } from './PublicMapScreen/PublicMapScreen'
 
 export { default as PersonalMapScreen } from './PersonalMapScreen/PersonalMapScreen'
+
+export { default as NewRecording } from './NewRecording/NewRecording'

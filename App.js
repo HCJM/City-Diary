@@ -10,6 +10,8 @@ import {
   RegistrationScreen,
   PublicMapScreen,
   PersonalMapScreen,
+  NewRecording,
+  RecordingDetails,
 } from './src/screens'
 import DrawerItems from './DrawerItems'
 import { decode, encode } from 'base-64'
@@ -57,6 +59,8 @@ export default function App() {
                   ? RegistrationScreen
                   : drawer.name === 'Personal Audio Map'
                   ? PersonalMapScreen
+                  : drawer.name === 'New Recording'
+                  ? NewRecording
                   : PublicMapScreen
               }
             />

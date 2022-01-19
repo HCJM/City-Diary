@@ -1,22 +1,24 @@
 let users = [
     {
-      email: 'test2@test.com',
-      firstName: 'George2',
-      lastName: 'Steiner2',
-      userName: 'georgeS2',
-      password: 'Password1232',
+      email: 'Lou@test.com',
+      firstName: 'Lou',
+      lastName: 'Spy',
+      userName: 'LouS',
+      password: 'Password789',
     },
     {
-        email: 'test2@test.com',
-        firstName: 'Marie',
-        lastName: 'Fields',
-        userName: 'marieF',
-        password: 'Password456',
+        email: 'John@test.com',
+        firstName: 'John',
+        lastName: 'Cooper',
+        userName: 'JohnC',
+        password: 'Password678',
       },
   ]
 
   module.exports = {
     users
   }
+
+  
 
   

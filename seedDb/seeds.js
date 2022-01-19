@@ -6,7 +6,7 @@ const seeding = function () {
   // console.log('hola ', users)
   
   let index = 0
-  const interval = async () => {
+  const interval = setInterval(async () => {
     const user = users[index]
     
     const { email, firstName, lastName, userName, password } = user
@@ -46,9 +46,9 @@ const seeding = function () {
     index += 1;
     // when we reach the end of the seedData array, remove the setInterval method
     if (index === users.length) clearInterval(interval)
-  }
+  }, 2500)
     
-  interval()
+ 
 };
 
 module.exports = {

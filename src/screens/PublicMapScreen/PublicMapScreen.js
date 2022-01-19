@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   DatePickerAndroid,
 } from 'react-native'
+import { Audio } from 'expo-av'
 // import styles from './styles'
 import * as Location from 'expo-location'
 import { RotateInUpLeft } from 'react-native-reanimated'
@@ -20,15 +21,29 @@ const deltas = {
   longitudeDelta: 0.05,
 }
 
-export default function PublicMapScreen(props) {
+export default function PublicMapScreen() {
   const onRecordPress = () => {}
 
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   const [region, setRegion] = useState(null)
   const [audio, setAudio] = useState([])
+  const [sound, setSound] = useState('')
 
-  async function getStuff() {
+  // const storageRef = firebase.storage().ref('climate.wav')
+  // *works but does it repeatedly*
+  // async function getAudio() {
+  //   return await storageRef.getDownloadURL()
+  // }
+  // *attempt at getting it to only run once*
+  // function getAudio() {
+  //   Promise.resolve(storageRef.getDownloadURL()).then(function (value) {
+  //     console.log(value)
+  //   })
+  // }
+  // const downloadUrl = getAudio()
+  // console.log("->>, downloadUrl")
+  async function getAudioData() {
     // create a reference to the collection
     const audiosRef = firebase.firestore().collection('audio')
 
@@ -41,7 +56,21 @@ export default function PublicMapScreen(props) {
     setAudio(files)
     // const uid = props.route.params.user.id
   }
-  getStuff()
+  getAudioData()
+  async function playSound() {
+    try {
+      console.log('Loading sound')
+      const { sound } = await Audio.Sound.createAsync({
+        uri: 'https://firebasestorage.googleapis.com/v0/b/citydiary-ec8b6.appspot.com/o/centuryfox.wav?alt=media&token=1a080b9d-770a-4c4f-8a7f-23446dd8e764',
+      })
+      setSound(sound)
+
+      console.log('Playing sound')
+      await sound.playAsync()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const checkPermission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
@@ -84,14 +113,14 @@ export default function PublicMapScreen(props) {
         >
           {audio.map((file) => (
             <Marker
+              onPress={playSound}
               key={file.data.userId}
               title={file.data.title}
               description={file.data.description}
               coordinate={{
                 latitude: file.data.location.latitude,
                 longitude: file.data.location.longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+                ...deltas,
               }}
             />
           ))}
@@ -99,23 +128,26 @@ export default function PublicMapScreen(props) {
       ) : (
         <MapView
           initialRegion={{
-            latitude: 41.39508,
-            longitude: -73.475291,
+            latitude: 40.73061,
+            longitude: -73.97,
             ...deltas,
           }}
           zoomEnabled={true}
           style={styles.map}
         >
-          <Marker
-            title="Hello"
-            description="Hi"
-            coordinate={{
-              latitude: 40.86419161162663,
-              longitude: -73.88101060236843,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          />
+          {audio.map((file) => (
+            <Marker
+              onPress={playSound}
+              key={file.data.userId}
+              title={file.data.title}
+              description={file.data.description}
+              coordinate={{
+                latitude: file.data.location.latitude,
+                longitude: file.data.location.longitude,
+                ...deltas,
+              }}
+            />
+          ))}
         </MapView>
       )}
       <Text style={styles.paragraph}>{text}</Text>

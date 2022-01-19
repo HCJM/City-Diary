@@ -11,6 +11,7 @@ import {
   PublicMapScreen,
   PersonalMapScreen,
   LandingScreen,
+  NewRecording,
 } from './src/screens'
 import DrawerItems from './DrawerItems'
 import { decode, encode } from 'base-64'
@@ -74,6 +75,7 @@ export default function App() {
           name="Personal Audio Map"
           component={PersonalMapScreen}
         />
+        <Drawer.Screen name="New Recording" component={NewRecording} />
       </Drawer.Navigator>
     </NavigationContainer>
   )

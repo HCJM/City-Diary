@@ -78,6 +78,10 @@ export default function PublicMapScreen() {
       console.log(error)
     }
   }
+  async function stopSound() {
+    console.log('Stopping')
+    sound.stopAsync()
+  }
 
   const checkPermission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
@@ -121,6 +125,7 @@ export default function PublicMapScreen() {
           {audio.map((file) => (
             <Marker
               onPress={playSound}
+              onDeselect={stopSound}
               key={file.data.userId}
               title={file.data.title}
               description={file.data.description}
@@ -145,6 +150,7 @@ export default function PublicMapScreen() {
           {audio.map((file) => (
             <Marker
               onPress={playSound}
+              onDeselect={stopSound}
               key={file.data.userId}
               title={file.data.title}
               description={file.data.description}

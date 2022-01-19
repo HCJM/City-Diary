@@ -1,7 +1,7 @@
 // import React, { useState, useEffect } from 'react'
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import {
   StyleSheet,
   Text,
@@ -24,6 +24,7 @@ export default function PublicMapScreen() {
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   const [region, setRegion] = useState(null)
+  const [audio, setAudio] = useState(null)
 
   const checkPermission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
@@ -62,7 +63,18 @@ export default function PublicMapScreen() {
           style={styles.map}
           showsUserLocation={true}
           zoomEnabled={true}
-        />
+        >
+          <Marker
+            title="Hello"
+            description="Hi"
+            coordinate={{
+              latitude: 40.86419161162663,
+              longitude: -73.88101060236843,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
+        </MapView>
       ) : (
         <MapView
           initialRegion={{
@@ -72,7 +84,18 @@ export default function PublicMapScreen() {
           }}
           zoomEnabled={true}
           style={styles.map}
-        />
+        >
+          <Marker
+            title="Hello"
+            description="Hi"
+            coordinate={{
+              latitude: 40.86419161162663,
+              longitude: -73.88101060236843,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
+        </MapView>
       )}
       <Text style={styles.paragraph}>{text}</Text>
       <TouchableOpacity style={styles.button} onPress={() => onRecordPress()}>

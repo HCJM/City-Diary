@@ -6,9 +6,9 @@ import { seeding } from "../../../seedDb/seeds";
  
 export default function LandingScreen ( { navigation } ) {
  
-    const onTestButtonPress = () => {
-        seeding()
-    }   
+    //run the seeding function once, then comment it out as the dummy data will be stored in the fire store DB
+    
+    seeding()
 
     const onExploreButtonPress = () => {
         navigation.navigate('Public Audio Map')
@@ -32,10 +32,6 @@ export default function LandingScreen ( { navigation } ) {
         <TouchableOpacity style={styles.signUpLoginButton} onPress={() => onLoginButtonPress()}>
             <Text style={styles.signUpLoginButtonTitle}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.signUpLoginButton} onPress={() => onTestButtonPress()}>
-            <Text style={styles.signUpLoginButtonTitle}>test</Text>
-        </TouchableOpacity>
-
     </View>
 
 

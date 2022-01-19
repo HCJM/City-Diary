@@ -11,16 +11,15 @@ export default function LoginScreen({ navigation }) {
   const onFooterLinkPress = () => {
     navigation.navigate('Registration')
   }
-  // can use async await
+
   const onLoginPress = () => {
-    firebase //promise
+    firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        //then run
+      .then(async (response) => {
         const uid = response.user.uid
         const usersRef = firebase.firestore().collection('users')
-        usersRef
+        await usersRef
           .doc(uid)
           .get()
           .then((firestoreDocument) => {

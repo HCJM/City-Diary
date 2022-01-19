@@ -1,14 +1,13 @@
 import * as React from 'react'
-import { Text, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+} from 'react-native'
 import { Audio } from 'expo-av'
-
-/*
-Uploading a recording
-const uri = recording.getURI()
-^ Gets the file path
-
-
-*/
 
 export default function NewRecording({ navigation }) {
   const [recording, setRecording] = React.useState()
@@ -34,8 +33,8 @@ export default function NewRecording({ navigation }) {
 
   async function stopRecording() {
     console.log('Stopped recording...')
-    setRecording(undefined) // docs - if setting to undefined then how are you using .stopAndUnloadAsync(); wipe it out first and then do stuff
-    await recording.stopAndUnloadAsync() //docs
+    setRecording(undefined)
+    await recording.stopAndUnloadAsync()
     const uri = recording.getURI()
     console.log('Recording stopped and stored at', uri)
   }
@@ -81,3 +80,34 @@ export default function NewRecording({ navigation }) {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#A9A9A9',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    color: 'black',
+    fontSize: 17,
+    textAlign: 'center',
+    paddingTop: 30,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    marginTop: 15,
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+    padding: 13,
+    paddingHorizontal: 20,
+    marginTop: 42,
+    marginHorizontal: 65,
+    width: 250,
+  },
+})

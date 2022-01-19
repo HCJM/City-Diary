@@ -24,7 +24,7 @@ export default function RegistrationScreen({ navigation }) {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
+      .then(async (response) => {
         const uid = response.user.uid
         const data = {
           id: uid,
@@ -34,7 +34,7 @@ export default function RegistrationScreen({ navigation }) {
           userName,
         }
         const usersRef = firebase.firestore().collection('users')
-        usersRef
+        await usersRef
           .doc(uid)
           .set(data)
           .then(() => {

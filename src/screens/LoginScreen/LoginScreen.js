@@ -12,6 +12,7 @@ export default function LoginScreen({ navigation }) {
     navigation.navigate('Registration')
   }
 
+  // o: you can use async await here
   const onLoginPress = () => {
     firebase
       .auth()

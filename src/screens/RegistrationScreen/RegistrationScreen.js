@@ -16,6 +16,7 @@ export default function RegistrationScreen({ navigation }) {
     navigation.navigate('Login')
   }
 
+  // o: you can use async await here
   const onRegisterPress = () => {
     if (password !== confirmPassword) {
       alert("Passwords don't match.")

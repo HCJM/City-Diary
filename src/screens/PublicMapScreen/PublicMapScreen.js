@@ -34,6 +34,7 @@ export default function PublicMapScreen() {
   const [sound, setSound] = useState('')
   const [modalVisible, setModalVisible] = useState(true)
 
+  // o: what's all this below?
   // const storageRef = firebase.storage().ref('climate.wav')
   // *works but does it repeatedly*
   // async function getAudio() {
@@ -41,9 +42,9 @@ export default function PublicMapScreen() {
   // }
   // *attempt at getting it to only run once*
   // function getAudio() {
-  //   Promise.resolve(storageRef.getDownloadURL()).then(function (value) {
-  //     console.log(value)
-  //   })
+    // Promise.resolve(storageRef.getDownloadURL()).then(function (value) {
+    //   console.log(value)
+    // })
   // }
   // const downloadUrl = getAudio()
   // console.log("->>, downloadUrl")
@@ -51,6 +52,7 @@ export default function PublicMapScreen() {
     // create a reference to the collection
     const audiosRef = firebase.firestore().collection('audio')
 
+    // o: as a note this name is the same as the state variable
     const audio = await audiosRef.get()
     const files = []
     audio.forEach((audio) => {
@@ -60,6 +62,9 @@ export default function PublicMapScreen() {
     setAudio(files)
     // const uid = props.route.params.user.id
   }
+
+  // o: any reason why this is run every time?
+  //   as opposed to in a useEffect hook?
   getAudioData()
   async function playSound() {
     try {
@@ -82,6 +87,7 @@ export default function PublicMapScreen() {
     sound.stopAsync()
   }
 
+  // o: you can place this inside the useEffect hook
   const checkPermission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
     if (status !== 'granted') {
@@ -202,6 +208,7 @@ export default function PublicMapScreen() {
   )
 }
 
+// o: separate file?
 export const styles = StyleSheet.create({
   // Modal start
   centeredView: {

@@ -27,7 +27,6 @@ const seeding = function () {
           firstName,
           lastName,
           userName,
-          password
         };
         // create a user document reference in the users collection using uid as identifier
         const usersRef = firebase.firestore().collection('users').doc(uid);

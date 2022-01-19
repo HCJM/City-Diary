@@ -16,7 +16,6 @@ import {
 import { Audio } from 'expo-av'
 // import styles from './styles'
 import * as Location from 'expo-location'
-import { RotateInUpLeft } from 'react-native-reanimated'
 
 const deltas = {
   latitudeDelta: 0.2,
@@ -117,6 +116,7 @@ export default function PublicMapScreen() {
     <View style={styles.container}>
       {location ? (
         <MapView
+          // causes map to be unable to move - maybe needs an onRegionChange
           // region={region}
           style={styles.map}
           showsUserLocation={true}

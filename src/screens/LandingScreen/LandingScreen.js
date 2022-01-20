@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { Image, Text, View, TouchableOpacity } from "react-native"
 import styles from "./styles"
+import { seeding } from "../../../seedDb/seeds";
  
 export default function LandingScreen ( { navigation } ) {
  
+    //run the seeding function once, then comment it out as the dummy data will be stored in the fire store DB
+    // seeding()
+
     const onExploreButtonPress = () => {
         navigation.navigate('Public Audio Map')
     }
@@ -27,7 +31,6 @@ export default function LandingScreen ( { navigation } ) {
         <TouchableOpacity style={styles.signUpLoginButton} onPress={() => onLoginButtonPress()}>
             <Text style={styles.signUpLoginButtonTitle}>Login</Text>
         </TouchableOpacity>
-
     </View>
 
 

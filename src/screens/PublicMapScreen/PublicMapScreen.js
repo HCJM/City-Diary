@@ -28,7 +28,6 @@ export default function PublicMapScreen() {
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   const [region, setRegion] = useState(null)
-  // for playback
   const [audioDetails, setAudioDetails] = useState([])
   // for grabbing from db
   const [sound, setSound] = useState('')
@@ -60,7 +59,16 @@ export default function PublicMapScreen() {
     }
     fetchAudio()
   }, [])
-
+  /*
+playSound logic
+- audio would be saved with a unique identifier
+- also store download link with it? so we can just get that from the db when time to play instead of
+- get that from storage
+- use it to locate audio
+- get download url
+- create new sound (redundant?)
+- play it
+*/
   async function playSound() {
     try {
       console.log('Loading sound')

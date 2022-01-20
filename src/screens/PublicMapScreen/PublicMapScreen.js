@@ -33,19 +33,18 @@ export default function PublicMapScreen() {
   const [sound, setSound] = useState('')
   const [modalVisible, setModalVisible] = useState(true)
 
-  // const storageRef = firebase.storage().ref('climate.wav')
-  // *works but does it repeatedly*
-  // async function getAudio() {
-  //   return await storageRef.getDownloadURL()
-  // }
+  async function getAudio() {
+    const storageRef = firebase.storage().ref('climate.wav')
+    return await storageRef.getDownloadURL()
+  }
   // *attempt at getting it to only run once*
   // function getAudio() {
   //   Promise.resolve(storageRef.getDownloadURL()).then(function (value) {
   //     console.log(value)
   //   })
   // }
-  // const downloadUrl = getAudio()
-  // console.log("->>, downloadUrl")
+  const downloadUrl = getAudio()
+  console.log('->>, downloadUrl')
   useEffect(() => {
     async function fetchAudio() {
       const detailsRef = firebase.firestore().collection('audio')
@@ -70,11 +69,15 @@ playSound logic
 - play it
 */
   async function playSound() {
+    const uri = await firebase
+      .storage()
+      .ref('nameOfTheFile.m4a')
+      .getDownloadURL()
     try {
       console.log('Loading sound')
       // the uri is the download link of the audio file
       const { sound } = await Audio.Sound.createAsync({
-        uri: 'https://firebasestorage.googleapis.com/v0/b/citydiary-ec8b6.appspot.com/o/centuryfox.wav?alt=media&token=1a080b9d-770a-4c4f-8a7f-23446dd8e764',
+        uri,
       })
       // putting the to-be-played sound on state
       setSound(sound)

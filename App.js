@@ -4,7 +4,7 @@ import { firebase } from './firebase.js'
 // import { Location, Persmissions } from 'expo';
 import { NavigationContainer } from '@react-navigation/native'
 // import { createStackNavigator } from '@react-navigation/stack'
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 import {
   LoginScreen,
   RegistrationScreen,
@@ -13,7 +13,6 @@ import {
   LandingScreen,
   NewRecording,
 } from './src/screens'
-import DrawerItems from './DrawerItems'
 import { decode, encode } from 'base-64'
 
 if (!global.btoa) {
@@ -57,9 +56,23 @@ export default function App() {
   //     }
   //   })
   // }, [])
+
+  function CustomDrawerContent(props) {
+    return (
+      
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props}/>
+        <DrawerItem 
+        label='Sign Out'
+        onPress={() => console.log('sign out functionality')}
+        />
+      </DrawerContentScrollView>
+    )
+  }
   return (
     <NavigationContainer>
       <Drawer.Navigator
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
         drawerPosition="right"
         drawerType="front"
         screenOptions={{

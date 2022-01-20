@@ -46,12 +46,15 @@ how is it stored?
       console.error(error)
     }
   }
-
+  // uri on state
+  // instead of details screen, modal instead
   async function uploadAudio(uri) {
     try {
+      // creating a blob
       const blob = await new Promise((resolve, reject) => {
+        // opening a new request
         const xhr = new XMLHttpRequest()
-        console.log('WOW', xhr)
+        // once request is recieved
         xhr.onload = () => {
           try {
             resolve(xhr.response)

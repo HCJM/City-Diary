@@ -28,32 +28,42 @@ const Drawer = createDrawerNavigator()
 export default function App() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [region, setRegion] = useState(null)
 
   //PERSISTENT LOG-IN CODE...not functioning
   // if (loading) {
   //   return <></>
   // }
-  // useEffect(() => {
-  //   const usersRef = firebase.firestore().collection('users')
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if (user) {
-  //       usersRef
-  //         .doc(user.uid)
-  //         .get()
-  //         .then((document) => {
-  //           const userData = document.data()
-  //           setLoading(false)
-  //           setUser(userData)
-  //         })
-  //         .catch((error) => {
-  //           setLoading(false)
-  //         })
-  //     } else {
-  //       setLoading(false)
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => {
+    let mounted = true
+    const usersRef = firebase.firestore().collection('users')
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        usersRef
+          .doc(user.uid)
+          .get()
+          .then((document) => {
+            if (mounted) {
+              const userData = document.data()
+              setLoading(false)
+              setUser(userData)
+              setIsLoggedIn(true)
+            }
+          })
+          .catch((error) => {
+            setLoading(false)
+            mounted = false
+          })
+        console.log('USER IS AUTHENTICATED!')
+      } else {
+        setLoading(false)
+        setIsLoggedIn(false)
+        mounted = false
+      }
+    })
+  }, [])
+
   return (
     <NavigationContainer>
       <Drawer.Navigator

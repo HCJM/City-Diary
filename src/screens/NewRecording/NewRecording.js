@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { Audio } from 'expo-av'
+import { firebase } from '../../../firebase.js'
 
 export default function NewRecording({ navigation }) {
   const [recording, setRecording] = React.useState()
@@ -30,13 +31,28 @@ export default function NewRecording({ navigation }) {
       console.error('Failed to start recording', err)
     }
   }
-
+  /*
+- download file first and then add to storage?
+how is it stored?
+*/
   async function stopRecording() {
-    console.log('Stopped recording...')
-    setRecording(undefined)
-    await recording.stopAndUnloadAsync()
-    const uri = recording.getURI()
-    console.log('Recording stopped and stored at', uri)
+    try {
+      console.log('Stopped recording...')
+      setRecording(undefined)
+      await recording.stopAndUnloadAsync()
+      const uri = recording.getURI()
+      console.log('Recording stopped and stored at', uri)
+      // storage
+      const storageRef = firebase.storage().ref()
+      // const newBlob = new Blob([], { type: 'audio/ogg' })
+      const file = new File([uri], 'woot.m4a', { type: 'audio/ogg' })
+      const mountainsRef = storageRef.child(file.name)
+      mountainsRef.put(file).then((snapshot) => {
+        console.log('Uploaded')
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (

@@ -15,6 +15,7 @@ import {
 } from './src/screens'
 import DrawerItems from './DrawerItems'
 import { decode, encode } from 'base-64'
+
 if (!global.btoa) {
   global.btoa = encode
 }
@@ -30,6 +31,8 @@ export default function App() {
   const [user, setUser] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [region, setRegion] = useState(null)
+
+
 
   //PERSISTENT LOG-IN CODE...not functioning
   // if (loading) {

@@ -32,8 +32,6 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [region, setRegion] = useState(null)
 
-
-
   //PERSISTENT LOG-IN CODE...not functioning
   // if (loading) {
   //   return <></>
@@ -65,29 +63,44 @@ export default function App() {
       }
     })
   }, [])
-
-  return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        drawerPosition="right"
-        drawerType="front"
-        screenOptions={{
-          activeTintColor: '#e91e63',
-          itemStyle: { marginVertical: 10 },
-        }}
-      >
-        <Drawer.Screen name="Landing Page" component={LandingScreen} />
-        <Drawer.Screen name="Login" component={LoginScreen} />
-        <Drawer.Screen name="Registration" component={RegistrationScreen} />
-        <Drawer.Screen name="Public Audio Map" component={PublicMapScreen} />
-        <Drawer.Screen
-          name="Personal Audio Map"
-          component={PersonalMapScreen}
-        />
-        <Drawer.Screen name="New Recording" component={NewRecording} />
-      </Drawer.Navigator>
-    </NavigationContainer>
-  )
+  if (user) {
+    return (
+      <NavigationContainer>
+        <Drawer.Navigator
+          drawerPosition="right"
+          drawerType="front"
+          screenOptions={{
+            activeTintColor: '#e91e63',
+            itemStyle: { marginVertical: 10 },
+          }}
+        >
+          <Drawer.Screen name="Public Audio Map" component={PublicMapScreen} />
+          <Drawer.Screen
+            name="Personal Audio Map"
+            component={PersonalMapScreen}
+          />
+          <Drawer.Screen name="New Recording" component={NewRecording} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    )
+  } else
+    return (
+      <NavigationContainer>
+        <Drawer.Navigator
+          drawerPosition="right"
+          drawerType="front"
+          screenOptions={{
+            activeTintColor: '#e91e63',
+            itemStyle: { marginVertical: 10 },
+          }}
+        >
+          <Drawer.Screen name="Landing Page" component={LandingScreen} />
+          <Drawer.Screen name="Login" component={LoginScreen} />
+          <Drawer.Screen name="Registration" component={RegistrationScreen} />
+          <Drawer.Screen name="Public Audio Map" component={PublicMapScreen} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    )
 }
 
 /* <Stack.Navigator>

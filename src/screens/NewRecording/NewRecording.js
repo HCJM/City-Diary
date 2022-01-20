@@ -41,17 +41,51 @@ how is it stored?
       setRecording(undefined)
       await recording.stopAndUnloadAsync()
       const uri = recording.getURI()
-      console.log('Recording stopped and stored at', uri)
-      // storage
-      const storageRef = firebase.storage().ref()
-      // const newBlob = new Blob([], { type: 'audio/ogg' })
-      const file = new File([uri], 'woot.m4a', { type: 'audio/ogg' })
-      const mountainsRef = storageRef.child(file.name)
-      mountainsRef.put(file).then((snapshot) => {
-        console.log('Uploaded')
-      })
+      uploadAudio(uri)
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  async function uploadAudio(uri) {
+    try {
+      const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest()
+        console.log('WOW', xhr)
+        xhr.onload = () => {
+          try {
+            resolve(xhr.response)
+          } catch (error) {
+            console.log('error:', error)
+          }
+        }
+        xhr.onerror = (e) => {
+          console.log(e)
+          reject(new TypeError('Network request failed'))
+        }
+        xhr.responseType = 'blob'
+        xhr.open('GET', uri, true)
+        xhr.send(null)
+      })
+      if (blob != null) {
+        const uriParts = uri.split('.')
+        const fileType = uriParts[uriParts.length - 1]
+        firebase
+          .storage()
+          .ref()
+          .child(`nameOfTheFile.${fileType}`)
+          .put(blob, {
+            contentType: `audio/${fileType}`,
+          })
+          .then(() => {
+            console.log('Sent!')
+          })
+          .catch((e) => console.log('error:', e))
+      } else {
+        console.log('erroor with blob')
+      }
+    } catch (error) {
+      console.log('error:', error)
     }
   }
 

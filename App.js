@@ -58,7 +58,6 @@ export default function App() {
             setLoading(false)
             mounted = false
           })
-        console.log('USER IS AUTHENTICATED!')
       } else {
         setLoading(false)
         setIsLoggedIn(false)

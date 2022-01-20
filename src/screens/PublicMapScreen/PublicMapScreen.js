@@ -97,6 +97,7 @@ export default function PublicMapScreen() {
       ...deltas,
     }
     setRegion(region)
+    //call setErrorMsg again and set to empty string???
   }
 
   useEffect(() => {

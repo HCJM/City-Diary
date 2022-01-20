@@ -7,7 +7,7 @@ const seeding = function () {
   let index = 0
   const interval = setInterval(async () => {
     const user = users[index]
-    
+
     const { email, firstName, lastName, userName, password } = user
     console.log('Current user: ', user.firstName)
 
@@ -28,8 +28,8 @@ const seeding = function () {
         await usersRef.set(data);
         console.log('Adding user to the users collection: ', data.email);
       })
-      .catch((error) => console.log(error));
-      await firebase
+      .catch((error) => console.log(error))
+    await firebase
       .auth()
       .signOut()
       .then(() => console.log('Sign out successful!'))
@@ -37,10 +37,8 @@ const seeding = function () {
     index += 1;
     if (index === users.length) clearInterval(interval)
   }, 2500)
-    
- 
-};
+}
 
 module.exports = {
-  seeding
+  seeding,
 }

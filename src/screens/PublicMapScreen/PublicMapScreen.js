@@ -29,7 +29,7 @@ export default function PublicMapScreen() {
   const [errorMsg, setErrorMsg] = useState(null)
   const [region, setRegion] = useState(null)
   // for playback
-  const [audio, setAudio] = useState([])
+  const [audioDetails, setAudioDetails] = useState([])
   // for grabbing from db
   const [sound, setSound] = useState('')
   const [modalVisible, setModalVisible] = useState(true)
@@ -47,20 +47,20 @@ export default function PublicMapScreen() {
   // }
   // const downloadUrl = getAudio()
   // console.log("->>, downloadUrl")
-  async function getAudioData() {
-    // create a reference to the collection
-    const audiosRef = firebase.firestore().collection('audio')
+  useEffect(() => {
+    async function fetchAudio() {
+      const detailsRef = firebase.firestore().collection('audio')
+      const details = await detailsRef.get()
 
-    const audio = await audiosRef.get()
-    const files = []
-    audio.forEach((audio) => {
-      files.push({ id: audio.id, data: audio.data() })
-      // console.log(audio.id, '=>', audio.data())
-    })
-    setAudio(files)
-    // const uid = props.route.params.user.id
-  }
-  getAudioData()
+      const files = []
+      details.forEach((audioDoc) => {
+        files.push({ id: audioDoc.id, data: audioDoc.data() })
+      })
+      setAudioDetails(files)
+    }
+    fetchAudio()
+  }, [])
+
   async function playSound() {
     try {
       console.log('Loading sound')
@@ -78,8 +78,12 @@ export default function PublicMapScreen() {
     }
   }
   async function stopSound() {
-    console.log('Stopping')
-    sound.stopAsync()
+    try {
+      console.log('Stopping')
+      sound.stopAsync()
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const checkPermission = async () => {
@@ -123,7 +127,7 @@ export default function PublicMapScreen() {
           showsUserLocation={true}
           zoomEnabled={true}
         >
-          {audio.map((file) => (
+          {audioDetails.map((file) => (
             <Marker
               onPress={playSound}
               onDeselect={stopSound}
@@ -148,7 +152,7 @@ export default function PublicMapScreen() {
           zoomEnabled={true}
           style={styles.map}
         >
-          {audio.map((file) => (
+          {audioDetails.map((file) => (
             <Marker
               onPress={playSound}
               onDeselect={stopSound}

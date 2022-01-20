@@ -55,7 +55,8 @@ export default function App() {
             setLoading(false)
             mounted = false
           })
-        console.log('USER IS AUTHENTICATED!')
+        // console.log('USER IS AUTHENTICATED!')
+        // console.log("USER -->>", user)
       } else {
         setLoading(false)
         setIsLoggedIn(false)
@@ -74,7 +75,30 @@ export default function App() {
           itemStyle: { marginVertical: 10 },
         }}
       >
-        <Drawer.Screen name="Landing Page" component={LandingScreen} />
+        {isLoggedIn ? (
+          <>
+            <Drawer.Screen
+              name="Public Audio Map"
+              component={PublicMapScreen}
+            />
+            <Drawer.Screen
+              name="Personal Audio Map"
+              component={PersonalMapScreen}
+            />
+            <Drawer.Screen name="New Recording" component={NewRecording} />
+          </>
+        ) : (
+          <>
+            <Drawer.Screen name="Landing Page" component={LandingScreen} />
+            <Drawer.Screen name="Login" component={LoginScreen} />
+            <Drawer.Screen name="Registration" component={RegistrationScreen} />
+            <Drawer.Screen
+              name="Public Audio Map"
+              component={PublicMapScreen}
+            />
+          </>
+        )}
+        {/* <Drawer.Screen name="Landing Page" component={LandingScreen} />
         <Drawer.Screen name="Login" component={LoginScreen} />
         <Drawer.Screen name="Registration" component={RegistrationScreen} />
         <Drawer.Screen name="Public Audio Map" component={PublicMapScreen} />
@@ -82,7 +106,7 @@ export default function App() {
           name="Personal Audio Map"
           component={PersonalMapScreen}
         />
-        <Drawer.Screen name="New Recording" component={NewRecording} />
+        <Drawer.Screen name="New Recording" component={NewRecording} /> */}
       </Drawer.Navigator>
     </NavigationContainer>
   )

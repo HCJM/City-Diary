@@ -30,13 +30,6 @@ export default function LoginScreen({ navigation }) {
             }
             const user = firestoreDocument.data()
             AsyncStorage.setItem('currentUser', JSON.stringify(user))
-            // let result = AsyncStorage.getItem('currentUser')
-            //   .then((response) => {
-            //     console.log('Response:')
-            //     console.log(JSON.parse(response))
-            //     console.info('=================================')
-            //   })
-            //   .catch((err) => console.error(err))
             navigation.navigate('Public Audio Map', { user })
           })
           .catch((error) => {

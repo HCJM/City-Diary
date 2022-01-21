@@ -37,17 +37,17 @@ export default function App() {
   useEffect(() => {
     let mounted = true
     const usersRef = firebase.firestore().collection('users')
-    const storedUser = AsyncStorage.getItem('currentUser')
-      .then((response) => {
-        console.log('Response:')
-        console.log(JSON.parse(response))
-        console.info('=================================')
-      })
-      .catch((err) => console.error(err))
-    firebase.auth().onAuthStateChanged(() => {
-      if (storedUser) {
+    // const storedUser = AsyncStorage.getItem('currentUser')
+    //   .then((response) => {
+    //     console.log('Response:')
+    //     console.log(JSON.parse(response))
+    //     console.info('=================================')
+    //   })
+    //   .catch((err) => console.error(err))
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
         usersRef
-          .doc(storedUser.id)
+          .doc(user.uid)
           .get()
           .then((document) => {
             if (mounted) {
@@ -61,7 +61,19 @@ export default function App() {
             setLoading(false)
             mounted = false
           })
-      } else {
+      }
+      // else if (storedUser) {
+      //   usersRef
+      //     .doc(storedUser.id)
+      //     .get()
+      //     .then((doc) => {
+      //       const currUserData = doc.data()
+      //       setLoading(false)
+      //       setUser(currUserData)
+      //       setIsLoggedIn(true)
+      //     })
+      // }
+      else {
         setLoading(false)
         setIsLoggedIn(false)
         mounted = false
@@ -92,6 +104,13 @@ export default function App() {
               component={PersonalMapScreen}
             />
             <Drawer.Screen name="New Recording" component={NewRecording} />
+            <Drawer.Screen
+              name="Landing Page"
+              component={LandingScreen}
+              options={{
+                drawerItemStyle: { height: 0 },
+              }}
+            />
           </>
         ) : (
           <>

@@ -123,7 +123,7 @@ export default function PublicMapScreen() {
           showsUserLocation={true}
           zoomEnabled={true}
         >
-          {audio.map((file) => (
+          {/* {audio.map((file) => (
             <Marker
               onPress={playSound}
               onDeselect={stopSound}
@@ -136,7 +136,7 @@ export default function PublicMapScreen() {
                 ...deltas,
               }}
             />
-          ))}
+          ))} */}
         </MapView>
       ) : (
         <MapView
@@ -148,7 +148,7 @@ export default function PublicMapScreen() {
           zoomEnabled={true}
           style={styles.map}
         >
-          {audio.map((file) => (
+          {/* {audio.map((file) => (
             <Marker
               onPress={playSound}
               onDeselect={stopSound}
@@ -161,7 +161,7 @@ export default function PublicMapScreen() {
                 ...deltas,
               }}
             />
-          ))}
+          ))} */}
         </MapView>
       )}
       {/* Modal start */}

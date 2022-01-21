@@ -1,7 +1,6 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
-import 'firebase/compat/storage'
 
 //Initialize Firebase
 const firebaseConfig = {
@@ -19,5 +18,3 @@ if (!firebase.apps.length) {
 }
 
 export { firebase }
-
-// export const db = getFirestore(app)

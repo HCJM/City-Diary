@@ -12,8 +12,9 @@ import {
   LandingScreen,
   NewRecording,
 } from './src/screens'
-import DrawerItems from './DrawerItems'
 import { decode, encode } from 'base-64'
+import { CustomDrawerContent } from './src/screens/CustomDrawerContent/CustomDrawerContent.js'
+
 if (!global.btoa) {
   global.btoa = encode
 }
@@ -29,16 +30,20 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [region, setRegion] = useState(null)
 
+  //PERSISTENT LOG-IN CODE...not functioning
+  // if (loading) {
+  //   return <></>
+  // }
   useEffect(() => {
     let mounted = true
     const usersRef = firebase.firestore().collection('users')
     const storedUser = AsyncStorage.getItem('currentUser')
-              .then((response) => {
-                console.log('Response:')
-                console.log(JSON.parse(response))
-                console.info('=================================')
-              })
-              .catch((err) => console.error(err))
+      .then((response) => {
+        console.log('Response:')
+        console.log(JSON.parse(response))
+        console.info('=================================')
+      })
+      .catch((err) => console.error(err))
     firebase.auth().onAuthStateChanged(() => {
       if (storedUser) {
         usersRef
@@ -67,6 +72,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
         drawerPosition="right"
         drawerType="front"
         screenOptions={{

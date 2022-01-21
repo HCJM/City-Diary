@@ -4,7 +4,8 @@ import { Image, Text, View, TouchableOpacity } from "react-native"
 import styles from "./styles"
  
 export default function LandingScreen ( { navigation } ) {
- 
+     
+
     const onExploreButtonPress = () => {
         navigation.navigate('Public Audio Map')
     }
@@ -27,7 +28,6 @@ export default function LandingScreen ( { navigation } ) {
         <TouchableOpacity style={styles.signUpLoginButton} onPress={() => onLoginButtonPress()}>
             <Text style={styles.signUpLoginButtonTitle}>Login</Text>
         </TouchableOpacity>
-
     </View>
 
 

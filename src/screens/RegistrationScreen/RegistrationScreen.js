@@ -49,6 +49,16 @@ export default function RegistrationScreen({ navigation }) {
       })
   }
 
+  const resetRegistrationInputFields = () => {
+    setFirstName('')
+    setLastName('')
+    setUserName('')
+    setEmail('')
+    setPassword('')
+    setConfirmPassword('')
+    
+  }
+
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -117,7 +127,7 @@ export default function RegistrationScreen({ navigation }) {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => onRegisterPress()}
+          onPress={() => {onRegisterPress(), resetRegistrationInputFields()}}
         >
           <Text style={styles.buttonTitle}>Create account</Text>
         </TouchableOpacity>

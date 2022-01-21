@@ -19,3 +19,5 @@ if (!firebase.apps.length) {
 }
 
 export { firebase }
+
+// export const db = getFirestore(app)

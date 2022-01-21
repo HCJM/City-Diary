@@ -76,20 +76,34 @@ how is it stored?
         firebase
           .storage()
           .ref()
-          .child(`nameOfTheFile.${fileType}`)
+          .child(`nameOfTheFile11.${fileType}`)
           .put(blob, {
             contentType: `audio/${fileType}`,
           })
           .then(() => {
             console.log('Sent!')
+            sendToDatabase()
           })
-          .catch((e) => console.log('error:', e))
+          .catch((e) => console.log('error!:', e))
       } else {
         console.log('erroor with blob')
       }
     } catch (error) {
-      console.log('error:', error)
+      console.log('error!!:', error)
     }
+  }
+
+  async function sendToDatabase() {
+    const uri = await firebase
+      .storage()
+      .ref('nameOfTheFile11.m4a')
+      .getDownloadURL()
+
+    const instance = firebase.firestore().collection('audio')
+    instance.add({
+      title: 'title',
+      download: uri,
+    })
   }
 
   return (
@@ -121,12 +135,7 @@ how is it stored?
           <Text>Pause</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate('RecordingDetails')
-          }}
-        >
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
           <Text>Done</Text>
         </TouchableOpacity>
       </View>

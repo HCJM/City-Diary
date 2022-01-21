@@ -29,7 +29,7 @@ export default function LoginScreen({ navigation }) {
               return
             }
             const user = firestoreDocument.data()
-            AsyncStorage.setItem('currentUser', JSON.stringify(user))
+            // AsyncStorage.setItem('currentUser', JSON.stringify(user))
             navigation.navigate('Public Audio Map', { user })
           })
           .catch((error) => {
@@ -44,7 +44,6 @@ export default function LoginScreen({ navigation }) {
   const resetLoginInputFields = () => {
     setEmail('')
     setPassword('')
-    
   }
 
   return (
@@ -76,7 +75,12 @@ export default function LoginScreen({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TouchableOpacity style={styles.button} onPress={() => {onLoginPress(), resetLoginInputFields()}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            onLoginPress(), resetLoginInputFields()
+          }}
+        >
           <Text style={styles.buttonTitle}>Log in</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>

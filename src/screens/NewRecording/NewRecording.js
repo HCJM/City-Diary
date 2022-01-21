@@ -9,9 +9,11 @@ import {
 } from 'react-native'
 import { Audio } from 'expo-av'
 import { firebase } from '../../../firebase.js'
+import RecordingDetailsModal from './RecordingDetails.js'
 
-export default function NewRecording({ navigation }) {
+export default function NewRecording() {
   const [recording, setRecording] = React.useState()
+  const [isVisible, setIsVisible] = React.useState(false)
 
   async function startRecording() {
     try {
@@ -135,9 +137,15 @@ how is it stored?
           <Text>Pause</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            setIsVisible(!isVisible)
+          }}
+        >
           <Text>Done</Text>
         </TouchableOpacity>
+        <RecordingDetailsModal visible={isVisible} />
       </View>
     </SafeAreaView>
   )

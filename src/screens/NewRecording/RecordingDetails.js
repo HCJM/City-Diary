@@ -16,7 +16,7 @@ export default function RecordingDetailsModal() {
   const [modalVisible, setModalVisible] = useState(true)
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
-
+  // upload button both uploads and navigates to map
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.centeredView}>

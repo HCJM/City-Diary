@@ -22,8 +22,11 @@ const deltas = {
   longitudeDelta: 0.05,
 }
 
-export default function PublicMapScreen() {
-  const onRecordPress = () => {}
+export default function PublicMapScreen({ navigation }) {
+  const userId = firebase.auth().currentUser.uid
+  const onRecordPress = () => {
+    navigation.navigate('New Recording')
+  }
 
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
@@ -33,18 +36,6 @@ export default function PublicMapScreen() {
   const [sound, setSound] = useState('')
   const [modalVisible, setModalVisible] = useState(true)
 
-  async function getAudio() {
-    const storageRef = firebase.storage().ref('climate.wav')
-    return await storageRef.getDownloadURL()
-  }
-  // *attempt at getting it to only run once*
-  // function getAudio() {
-  //   Promise.resolve(storageRef.getDownloadURL()).then(function (value) {
-  //     console.log(value)
-  //   })
-  // }
-  const downloadUrl = getAudio()
-  console.log('->>, downloadUrl')
   useEffect(() => {
     async function fetchAudio() {
       const detailsRef = firebase.firestore().collection('audio')
@@ -68,7 +59,8 @@ playSound logic
 - create new sound (redundant?)
 - play it
 */
-  async function playSound() {
+  async function playSound(soundUrl) {
+    // instead of this, will just grab url on press and pass it in
     const uri = await firebase
       .storage()
       .ref('nameOfTheFile.m4a')
@@ -85,7 +77,7 @@ playSound logic
       console.log('Playing sound')
       await sound.playAsync()
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
   async function stopSound() {

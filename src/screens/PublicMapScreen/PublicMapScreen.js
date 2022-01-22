@@ -16,6 +16,7 @@ import {
 import { Audio } from 'expo-av'
 import styles from './styles'
 import * as Location from 'expo-location'
+import { useIsFocused } from '@react-navigation/native'
 
 const deltas = {
   latitudeDelta: 0.2,
@@ -36,6 +37,7 @@ export default function PublicMapScreen({ navigation }) {
   const [sound, setSound] = useState('')
   const [modalVisible, setModalVisible] = useState(true)
 
+  const isFocused = useIsFocused()
   useEffect(() => {
     async function fetchAudio() {
       const detailsRef = firebase.firestore().collection('audio')
@@ -48,7 +50,7 @@ export default function PublicMapScreen({ navigation }) {
       setAudioDetails(files)
     }
     fetchAudio()
-  }, [])
+  }, [isFocused])
   /*
 playSound logic
 - audio would be saved with a unique identifier
@@ -66,9 +68,7 @@ playSound logic
       const { sound } = await Audio.Sound.createAsync({
         uri,
       })
-      // putting the to-be-played sound on state
       setSound(sound)
-
       console.log('Playing sound')
       await sound.playAsync()
     } catch (error) {
@@ -77,7 +77,7 @@ playSound logic
   }
   async function stopSound() {
     try {
-      console.log('Stopping')
+      console.log('Stopping sound')
       sound.stopAsync()
     } catch (error) {
       console.error(error)
@@ -131,7 +131,7 @@ playSound logic
                 playSound(file.data.downloadUrl)
               }}
               onDeselect={stopSound}
-              key={file.data.userId}
+              key={file.id}
               title={file.data.title}
               description={file.data.description}
               coordinate={{
@@ -158,7 +158,7 @@ playSound logic
                 playSound(file.data.downloadUrl)
               }}
               onDeselect={stopSound}
-              key={file.data.userId}
+              key={file.id}
               title={file.data.title}
               description={file.data.description}
               coordinate={{

@@ -14,16 +14,19 @@ import {
 import { Audio } from 'expo-av'
 import { firebase } from '../../../firebase.js'
 import RecordingDetailsModal from './RecordingDetails.js'
+import * as Location from 'expo-location'
 
 export default function NewRecording() {
   const [recording, setRecording] = useState()
   const [isVisible, setIsVisible] = useState(false)
   const [userRecording, setUserRecording] = useState(null)
+  const [fileName, setFileName] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
+  const [currentUser, setCurrentUser] = useState(null)
 
-  console.log(firebase.auth().currentUser.uid)
+  // console.log(firebase.auth().currentUser)
   async function startRecording() {
     try {
       console.log('Requesting permissions...')
@@ -37,6 +40,7 @@ export default function NewRecording() {
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
       )
       setRecording(recording)
+      setCurrentUser(firebase.auth().currentUser.uid)
       console.log('Recording started')
     } catch (err) {
       console.error('Failed to start recording', err)
@@ -57,7 +61,8 @@ how is it stored?
       console.error(error)
     }
   }
-  async function uploadAudio(uri) {
+
+  async function storeAudio() {
     try {
       // creating a blob
       const blob = await new Promise((resolve, reject) => {
@@ -68,24 +73,24 @@ how is it stored?
           try {
             resolve(xhr.response)
           } catch (error) {
-            console.log('error:', error)
+            console.error('error xhr.onload:', error)
           }
         }
-        xhr.onerror = (e) => {
-          console.log(e)
+        xhr.onerror = (error) => {
+          console.error(error)
           reject(new TypeError('Network request failed'))
         }
         xhr.responseType = 'blob'
-        xhr.open('GET', uri, true)
+        xhr.open('GET', userRecording, true)
         xhr.send(null)
       })
       if (blob != null) {
-        const uriParts = uri.split('.')
+        const uriParts = userRecording.split('.')
         const fileType = uriParts[uriParts.length - 1]
         firebase
           .storage()
           .ref()
-          .child(`nameOfTheFile11.${fileType}`)
+          .child(`${currentUser}.${fileType}`)
           .put(blob, {
             contentType: `audio/${fileType}`,
           })
@@ -103,16 +108,31 @@ how is it stored?
   }
 
   async function sendToDatabase() {
-    const uri = await firebase
-      .storage()
-      .ref('nameOfTheFile11.m4a')
-      .getDownloadURL()
+    try {
+      let location = await Location.getCurrentPositionAsync({})
 
-    const instance = firebase.firestore().collection('audio')
-    instance.add({
-      title: 'title',
-      download: uri,
-    })
+      const uri = await firebase
+        .storage()
+        .ref()
+        .child(`${currentUser}.m4a`)
+        .getDownloadURL()
+
+      const instance = firebase.firestore().collection('audio')
+      instance.add({
+        title: 'title',
+        description: 'desc',
+        isPrivate: false,
+        userId: firebase.auth().currentUser.uid,
+        username: firebase.auth().currentUser.providerData[0].email,
+        downloadUrl: uri,
+        location: new firebase.firestore.GeoPoint(
+          location.coords.latitude,
+          location.coords.longitude
+        ),
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
   async function doneRecording() {
     setModalVisible(!modalVisible)
@@ -150,7 +170,7 @@ how is it stored?
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            doneRecording()
+            storeAudio()
           }}
         >
           <Text>Done</Text>

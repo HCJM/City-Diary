@@ -58,12 +58,7 @@ playSound logic
 - create new sound (redundant?)
 - play it
 */
-  async function playSound(soundUrl) {
-    // instead of this, will just grab url on press and pass it in
-    const uri = await firebase
-      .storage()
-      .ref('nameOfTheFile.m4a')
-      .getDownloadURL()
+  async function playSound(uri) {
     try {
       console.log('Loading sound')
       // the uri is the download link of the audio file
@@ -131,7 +126,9 @@ playSound logic
         >
           {audioDetails.map((file) => (
             <Marker
-              onPress={playSound}
+              onPress={() => {
+                playSound(file.data.downloadUrl)
+              }}
               onDeselect={stopSound}
               key={file.data.userId}
               title={file.data.title}
@@ -156,7 +153,9 @@ playSound logic
         >
           {audioDetails.map((file) => (
             <Marker
-              onPress={playSound}
+              onPress={() => {
+                playSound(file.data.downloadUrl)
+              }}
               onDeselect={stopSound}
               key={file.data.userId}
               title={file.data.title}

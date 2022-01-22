@@ -24,12 +24,6 @@ const deltas = {
 }
 
 export default function PublicMapScreen({ navigation }) {
-  const onRecordPress = () => {
-    const user = firebase.auth().currentUser
-    console.log('User: ', user)
-    navigation.navigate('New Recording', { uid: user.uid })
-  }
-
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   const [region, setRegion] = useState(null)
@@ -38,7 +32,16 @@ export default function PublicMapScreen({ navigation }) {
   const [sound, setSound] = useState('')
   const [isPlaying, setIsPlaying] = useState(false)
   const [modalVisible, setModalVisible] = useState(true)
+  const [user, setUser] = useState(null)
 
+  const onRecordPress = () => {
+    setUser(firebase.auth().currentUser)
+    if (user) {
+      navigation.navigate('New Recording', { uid: user.uid })
+    } else {
+      setErrorMsg('Login to record')
+    }
+  }
   const isFocused = useIsFocused() //todo
   useEffect(() => {
     async function fetchAudio() {
@@ -52,6 +55,7 @@ export default function PublicMapScreen({ navigation }) {
       setAudioDetails(files)
     }
     fetchAudio()
+    setErrorMsg('')
   }, [isFocused]) //files?
 
   async function playSound(uri) {

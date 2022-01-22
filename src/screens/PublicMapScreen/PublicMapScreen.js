@@ -24,7 +24,8 @@ const deltas = {
 
 export default function PublicMapScreen({ navigation }) {
   const onRecordPress = () => {
-    navigation.navigate('New Recording')
+    const user = firebase.auth().currentUser
+    navigation.navigate('New Recording', { uid: user.uid })
   }
 
   const [location, setLocation] = useState(null)

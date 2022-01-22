@@ -26,6 +26,7 @@ const deltas = {
 export default function PublicMapScreen({ navigation }) {
   const onRecordPress = () => {
     const user = firebase.auth().currentUser
+    console.log('User: ', user)
     navigation.navigate('New Recording', { uid: user.uid })
   }
 
@@ -55,9 +56,6 @@ export default function PublicMapScreen({ navigation }) {
 
   async function playSound(uri) {
     try {
-      if (isPlaying) {
-        stopSound()
-      }
       console.log('Loading sound')
       // the uri is the download link of the audio file
       const { sound } = await Audio.Sound.createAsync({
@@ -75,7 +73,7 @@ export default function PublicMapScreen({ navigation }) {
     try {
       console.log('Stopping sound')
       setIsPlaying(false)
-      sound.stopAsync()
+      await sound.stopAsync()
     } catch (error) {
       console.error(error)
     }

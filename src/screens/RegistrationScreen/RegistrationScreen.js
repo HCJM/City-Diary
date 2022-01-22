@@ -56,7 +56,6 @@ export default function RegistrationScreen({ navigation }) {
     setEmail('')
     setPassword('')
     setConfirmPassword('')
-    
   }
 
   return (
@@ -67,7 +66,7 @@ export default function RegistrationScreen({ navigation }) {
       >
         <Image
           style={styles.logo}
-          source={require('../../../assets/icon.png')}
+          source={require('../../../assets/icon_ccexpress.png')}
         />
         <TextInput
           style={styles.input}
@@ -127,7 +126,9 @@ export default function RegistrationScreen({ navigation }) {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {onRegisterPress(), resetRegistrationInputFields()}}
+          onPress={() => {
+            onRegisterPress(), resetRegistrationInputFields()
+          }}
         >
           <Text style={styles.buttonTitle}>Create account</Text>
         </TouchableOpacity>

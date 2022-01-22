@@ -16,17 +16,14 @@ import { firebase } from '../../../firebase.js'
 import RecordingDetailsModal from './RecordingDetails.js'
 import * as Location from 'expo-location'
 
-export default function NewRecording() {
+export default function NewRecording({ route, navigation }) {
   const [recording, setRecording] = useState()
-  const [isVisible, setIsVisible] = useState(false)
   const [userRecording, setUserRecording] = useState(null)
-  const [fileName, setFileName] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
-  const [currentUser, setCurrentUser] = useState(null)
+  const { uid } = route.params
 
-  // console.log(firebase.auth().currentUser)
   async function startRecording() {
     try {
       console.log('Requesting permissions...')
@@ -40,23 +37,18 @@ export default function NewRecording() {
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
       )
       setRecording(recording)
-      setCurrentUser(firebase.auth().currentUser.uid)
       console.log('Recording started')
     } catch (err) {
       console.error('Failed to start recording', err)
     }
   }
-  /*
-- download file first and then add to storage?
-how is it stored?
-*/
+
   async function stopRecording() {
     try {
       console.log('Stopped recording...')
       setRecording(undefined)
       await recording.stopAndUnloadAsync()
       setUserRecording(recording.getURI())
-      // uploadAudio(uri)
     } catch (error) {
       console.error(error)
     }
@@ -90,7 +82,7 @@ how is it stored?
         firebase
           .storage()
           .ref()
-          .child(`${currentUser}.${fileType}`)
+          .child(`${title.replace(/ /g, '')}.${uid}.${fileType}`)
           .put(blob, {
             contentType: `audio/${fileType}`,
           })
@@ -114,14 +106,15 @@ how is it stored?
       const uri = await firebase
         .storage()
         .ref()
-        .child(`${currentUser}.m4a`)
+        .child(`${title.replace(/ /g, '')}.${uid}.m4a`)
         .getDownloadURL()
 
       const instance = firebase.firestore().collection('audio')
       instance.add({
-        title: 'title',
-        description: 'desc',
+        title,
+        description,
         isPrivate: false,
+        uploadedAt: new Date(),
         userId: firebase.auth().currentUser.uid,
         username: firebase.auth().currentUser.providerData[0].email,
         downloadUrl: uri,
@@ -130,6 +123,7 @@ how is it stored?
           location.coords.longitude
         ),
       })
+      console.log('Added!')
     } catch (error) {
       console.log(error)
     }
@@ -170,12 +164,11 @@ how is it stored?
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            storeAudio()
+            setModalVisible(!modalVisible)
           }}
         >
           <Text>Done</Text>
         </TouchableOpacity>
-        {/* <RecordingDetailsModal visible={isVisible} /> */}
       </View>
       {/* Modal Start */}
       <View style={styles.centeredView}>
@@ -203,12 +196,16 @@ how is it stored?
                 multiline={true}
                 value={description}
               />
-              <Pressable
+              <TouchableOpacity
                 style={[styles.modalButton, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
+                onPress={() => {
+                  setModalVisible(!modalVisible)
+                  storeAudio()
+                  navigation.navigate('Public Audio Map')
+                }}
               >
                 <Text style={styles.textStyle}>Upload</Text>
-              </Pressable>
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>

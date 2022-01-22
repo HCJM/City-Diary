@@ -22,6 +22,7 @@ export default function NewRecording({ route, navigation }) {
   const [modalVisible, setModalVisible] = useState(false)
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
+  const fileName = title.replace(/([^a-z0-9]+)/gi, '')
   const { uid } = route.params
 
   async function startRecording() {
@@ -82,7 +83,7 @@ export default function NewRecording({ route, navigation }) {
         firebase
           .storage()
           .ref()
-          .child(`${title.replace(/ /g, '')}.${uid}.${fileType}`)
+          .child(`${fileName}.${uid}.${fileType}`)
           .put(blob, {
             contentType: `audio/${fileType}`,
           })
@@ -106,7 +107,7 @@ export default function NewRecording({ route, navigation }) {
       const uri = await firebase
         .storage()
         .ref()
-        .child(`${title.replace(/ /g, '')}.${uid}.m4a`)
+        .child(`${fileName}.${uid}.m4a`)
         .getDownloadURL()
 
       const instance = firebase.firestore().collection('audio')
@@ -128,8 +129,10 @@ export default function NewRecording({ route, navigation }) {
       console.log(error)
     }
   }
-  async function doneRecording() {
-    setModalVisible(!modalVisible)
+
+  async function onModalExit() {
+    onChangeTitle('')
+    onChangeDescription('')
   }
 
   return (
@@ -164,6 +167,7 @@ export default function NewRecording({ route, navigation }) {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
+            recording ? stopRecording() : null
             setModalVisible(!modalVisible)
           }}
         >
@@ -176,9 +180,9 @@ export default function NewRecording({ route, navigation }) {
           animationType="slide"
           transparent={true}
           visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible)
-          }}
+          // onRequestClose={() => {
+          //   setModalVisible(!modalVisible)
+          // }}
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
@@ -200,11 +204,22 @@ export default function NewRecording({ route, navigation }) {
                 style={[styles.modalButton, styles.buttonClose]}
                 onPress={() => {
                   setModalVisible(!modalVisible)
+                  onModalExit()
                   storeAudio()
+                  // navigate to personal instead? easy fix
                   navigation.navigate('Public Audio Map')
                 }}
               >
                 <Text style={styles.textStyle}>Upload</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.buttonClose]}
+                onPress={() => {
+                  setModalVisible(!modalVisible)
+                  onModalExit()
+                }}
+              >
+                <Text style={styles.textStyle}>Cancel</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -283,6 +298,7 @@ const styles = StyleSheet.create({
   },
   buttonClose: {
     backgroundColor: '#2196F3',
+    marginVertical: 15,
   },
   textStyle: {
     color: 'white',

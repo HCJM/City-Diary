@@ -25,7 +25,6 @@ if (!global.atob) {
 const Drawer = createDrawerNavigator()
 
 export default function App() {
-
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)

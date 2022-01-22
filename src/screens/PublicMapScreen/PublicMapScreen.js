@@ -73,7 +73,8 @@ export default function PublicMapScreen() {
       })
       // putting the to-be-played sound on state
       setSound(sound)
-
+      
+      console.log('USER -->>', currentUser)
       console.log('Playing sound')
       await sound.playAsync()
     } catch (error) {
@@ -83,7 +84,6 @@ export default function PublicMapScreen() {
   async function stopSound() {
     console.log('Stopping')
     sound.stopAsync()
-    console.log('USER -->>', currentUser)
   }
 
   const checkPermission = async () => {

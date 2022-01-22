@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { Audio } from 'expo-av'
+import { useAuth } from '../../context/AuthContext'
 
 export default function NewRecording({ navigation }) {
+  const { currentUser } = useAuth()
   const [recording, setRecording] = React.useState()
 
   async function startRecording() {
@@ -33,6 +35,7 @@ export default function NewRecording({ navigation }) {
 
   async function stopRecording() {
     console.log('Stopped recording...')
+    console.log('USER recording is -->>', currentUser)
     setRecording(undefined)
     await recording.stopAndUnloadAsync()
     const uri = recording.getURI()

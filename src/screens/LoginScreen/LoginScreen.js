@@ -34,7 +34,6 @@ export default function LoginScreen({ navigation }) {
             setCurrentUser(user)
             navigation.navigate('Public Audio Map', { user })
             console.log('CURRENT USER -->>', currentUser)
-
           })
           .catch((error) => {
             alert(error)

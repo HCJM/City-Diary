@@ -15,6 +15,7 @@ import {
 import { Audio } from 'expo-av'
 import styles from './styles'
 import * as Location from 'expo-location'
+import { useIsFocused } from '@react-navigation/native'
 import { useAuth } from '../../context/AuthContext'
 
 const deltas = {
@@ -22,8 +23,11 @@ const deltas = {
   longitudeDelta: 0.05,
 }
 
-export default function PublicMapScreen() {
-  const onRecordPress = () => {}
+export default function PublicMapScreen({ navigation }) {
+  const onRecordPress = () => {
+    const user = firebase.auth().currentUser
+    navigation.navigate('New Recording', { uid: user.uid })
+  }
 
   // currentUser is an object with these properties: email, firstName, id, lastName, userName
   const { currentUser } = useAuth()
@@ -31,59 +35,53 @@ export default function PublicMapScreen() {
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   const [region, setRegion] = useState(null)
-  // for playback
-  const [audio, setAudio] = useState([])
+  const [audioDetails, setAudioDetails] = useState([])
   // for grabbing from db
   const [sound, setSound] = useState('')
+  const [isPlaying, setIsPlaying] = useState(false)
   const [modalVisible, setModalVisible] = useState(true)
 
-  // const storageRef = firebase.storage().ref('climate.wav')
-  // *works but does it repeatedly*
-  // async function getAudio() {
-  //   return await storageRef.getDownloadURL()
-  // }
-  // *attempt at getting it to only run once*
-  // function getAudio() {
-  //   Promise.resolve(storageRef.getDownloadURL()).then(function (value) {
-  //     console.log(value)
-  //   })
-  // }
-  // const downloadUrl = getAudio()
-  // console.log("->>, downloadUrl")
-  async function getAudioData() {
-    // create a reference to the collection
-    const audiosRef = firebase.firestore().collection('audio')
+  const isFocused = useIsFocused() //todo
+  useEffect(() => {
+    async function fetchAudio() {
+      const detailsRef = firebase.firestore().collection('audio')
+      const details = await detailsRef.get()
 
-    const audio = await audiosRef.get()
-    const files = []
-    audio.forEach((audio) => {
-      files.push({ id: audio.id, data: audio.data() })
-      // console.log(audio.id, '=>', audio.data())
-    })
-    setAudio(files)
-    // const uid = props.route.params.user.id
-  }
-  getAudioData()
-  async function playSound() {
+      const files = []
+      details.forEach((audioDoc) => {
+        files.push({ id: audioDoc.id, data: audioDoc.data() })
+      })
+      setAudioDetails(files)
+    }
+    fetchAudio()
+  }, [isFocused]) //files?
+
+  async function playSound(uri) {
     try {
+      if (isPlaying) {
+        stopSound()
+      }
       console.log('Loading sound')
       // the uri is the download link of the audio file
       const { sound } = await Audio.Sound.createAsync({
-        uri: 'https://firebasestorage.googleapis.com/v0/b/citydiary-ec8b6.appspot.com/o/centuryfox.wav?alt=media&token=1a080b9d-770a-4c4f-8a7f-23446dd8e764',
+        uri,
       })
-      // putting the to-be-played sound on state
       setSound(sound)
-      
-      console.log('USER -->>', currentUser)
+      setIsPlaying(true)
       console.log('Playing sound')
       await sound.playAsync()
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
   async function stopSound() {
-    console.log('Stopping')
-    sound.stopAsync()
+    try {
+      console.log('Stopping sound')
+      setIsPlaying(false)
+      sound.stopAsync()
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const checkPermission = async () => {
@@ -105,6 +103,7 @@ export default function PublicMapScreen() {
   }
 
   useEffect(() => {
+    console.log('USER -->>', currentUser)
     checkPermission()
   }, [])
 
@@ -127,11 +126,13 @@ export default function PublicMapScreen() {
           showsUserLocation={true}
           zoomEnabled={true}
         >
-          {audio.map((file) => (
+          {audioDetails.map((file) => (
             <Marker
-              onPress={playSound}
+              onPress={() => {
+                playSound(file.data.downloadUrl)
+              }}
               onDeselect={stopSound}
-              key={file.data.userId}
+              key={file.id}
               title={file.data.title}
               description={file.data.description}
               coordinate={{
@@ -152,11 +153,13 @@ export default function PublicMapScreen() {
           zoomEnabled={true}
           style={styles.map}
         >
-          {audio.map((file) => (
+          {audioDetails.map((file) => (
             <Marker
-              onPress={playSound}
+              onPress={() => {
+                playSound(file.data.downloadUrl)
+              }}
               onDeselect={stopSound}
-              key={file.data.userId}
+              key={file.id}
               title={file.data.title}
               description={file.data.description}
               coordinate={{
@@ -175,15 +178,14 @@ export default function PublicMapScreen() {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.')
             setModalVisible(!modalVisible)
           }}
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
-                Welcome to City Diary! {'\n'} Tap on a red marker for a
-                surprise!
+                Welcome to City Diary! {'\n'} {'\n'}Tap on a red marker for a
+                surprise! {'\n'} {'\n'} Tap elsewhere to stop playback
               </Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}

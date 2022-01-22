@@ -38,7 +38,7 @@ export default function PublicMapScreen({ navigation }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [modalVisible, setModalVisible] = useState(true)
 
-  const isFocused = useIsFocused()
+  const isFocused = useIsFocused() //todo
   useEffect(() => {
     async function fetchAudio() {
       const detailsRef = firebase.firestore().collection('audio')
@@ -51,7 +51,7 @@ export default function PublicMapScreen({ navigation }) {
       setAudioDetails(files)
     }
     fetchAudio()
-  }, [isFocused])
+  }, [isFocused]) //files?
 
   async function playSound(uri) {
     try {
@@ -180,8 +180,8 @@ export default function PublicMapScreen({ navigation }) {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
-                Welcome to City Diary! {'\n'} Tap on a red marker for a
-                surprise!
+                Welcome to City Diary! {'\n'} {'\n'}Tap on a red marker for a
+                surprise! {'\n'} {'\n'} Tap elsewhere to stop playback
               </Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}

@@ -74,7 +74,9 @@ export default function NewRecording({ route, navigation }) {
           reject(new TypeError('Network request failed'))
         }
         xhr.responseType = 'blob'
+        // request type, content, asynchronous
         xhr.open('GET', userRecording, true)
+        // request body
         xhr.send(null)
       })
       if (blob != null) {
@@ -104,7 +106,7 @@ export default function NewRecording({ route, navigation }) {
     try {
       let location = await Location.getCurrentPositionAsync({})
 
-      const uri = await firebase
+      const downloadUrl = await firebase
         .storage()
         .ref()
         .child(`${fileName}.${uid}.m4a`)
@@ -118,7 +120,7 @@ export default function NewRecording({ route, navigation }) {
         uploadedAt: new Date(),
         userId: firebase.auth().currentUser.uid,
         username: firebase.auth().currentUser.providerData[0].email,
-        downloadUrl: uri,
+        downloadUrl,
         location: new firebase.firestore.GeoPoint(
           location.coords.latitude,
           location.coords.longitude

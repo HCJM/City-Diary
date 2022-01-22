@@ -35,6 +35,7 @@ export default function PublicMapScreen({ navigation }) {
   const [audioDetails, setAudioDetails] = useState([])
   // for grabbing from db
   const [sound, setSound] = useState('')
+  const [isPlaying, setIsPlaying] = useState(false)
   const [modalVisible, setModalVisible] = useState(true)
 
   const isFocused = useIsFocused()
@@ -51,24 +52,19 @@ export default function PublicMapScreen({ navigation }) {
     }
     fetchAudio()
   }, [isFocused])
-  /*
-playSound logic
-- audio would be saved with a unique identifier
-- also store download link with it? so we can just get that from the db when time to play instead of
-- get that from storage
-- use it to locate audio
-- get download url
-- create new sound (redundant?)
-- play it
-*/
+
   async function playSound(uri) {
     try {
+      if (isPlaying) {
+        stopSound()
+      }
       console.log('Loading sound')
       // the uri is the download link of the audio file
       const { sound } = await Audio.Sound.createAsync({
         uri,
       })
       setSound(sound)
+      setIsPlaying(true)
       console.log('Playing sound')
       await sound.playAsync()
     } catch (error) {
@@ -78,6 +74,7 @@ playSound logic
   async function stopSound() {
     try {
       console.log('Stopping sound')
+      setIsPlaying(false)
       sound.stopAsync()
     } catch (error) {
       console.error(error)

@@ -13,8 +13,8 @@ import {
   LandingScreen,
   NewRecording,
 } from './src/screens'
-import DrawerItems from './DrawerItems'
 import { decode, encode } from 'base-64'
+import { CustomDrawerContent } from './src/screens/CustomDrawerContent/CustomDrawerContent.js'
 
 if (!global.btoa) {
   global.btoa = encode
@@ -67,6 +67,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
         drawerPosition="right"
         drawerType="front"
         screenOptions={{

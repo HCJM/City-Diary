@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { firebase } from '../../../firebase.js'
+import { useAuth } from '../../context/AuthContext.js'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from './styles'
@@ -8,6 +8,8 @@ import styles from './styles'
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const { setCurrentUser } = useAuth()
+  const { currentUser } = useAuth()
 
   const onFooterLinkPress = () => {
     navigation.navigate('Registration')
@@ -29,8 +31,10 @@ export default function LoginScreen({ navigation }) {
               return
             }
             const user = firestoreDocument.data()
-            // AsyncStorage.setItem('currentUser', JSON.stringify(user))
+            setCurrentUser(user)
             navigation.navigate('Public Audio Map', { user })
+            console.log('CURRENT USER -->>', currentUser)
+
           })
           .catch((error) => {
             alert(error)

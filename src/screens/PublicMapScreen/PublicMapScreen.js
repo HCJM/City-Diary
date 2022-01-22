@@ -1,4 +1,3 @@
-// import React, { useState, useEffect } from 'react'
 import * as React from 'react'
 import { firebase } from '../../../firebase.js'
 import { useState, useEffect } from 'react'
@@ -16,6 +15,7 @@ import {
 import { Audio } from 'expo-av'
 // import styles from './styles'
 import * as Location from 'expo-location'
+import { useAuth } from '../../context/AuthContext'
 
 const deltas = {
   latitudeDelta: 0.2,
@@ -24,6 +24,9 @@ const deltas = {
 
 export default function PublicMapScreen() {
   const onRecordPress = () => {}
+
+  // currentUser is an object with these properties: email, firstName, id, lastName, userName
+  const { currentUser } = useAuth()
 
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
@@ -80,6 +83,7 @@ export default function PublicMapScreen() {
   async function stopSound() {
     console.log('Stopping')
     sound.stopAsync()
+    console.log('USER -->>', currentUser)
   }
 
   const checkPermission = async () => {

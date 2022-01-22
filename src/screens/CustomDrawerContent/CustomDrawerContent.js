@@ -9,11 +9,11 @@ import {
 } from '@react-navigation/drawer'
 import { firebase } from '../../../firebase.js'
 import { useNavigation } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useAuth } from '../../context/AuthContext'
 
 export function CustomDrawerContent(props) {
-  const auth = firebase.auth()
-  const signedInUser = auth.currentUser?.email
+  const { setCurrentUser } = useAuth()
+  const { currentUser } = useAuth()
 
   const navigation = useNavigation()
 
@@ -22,8 +22,8 @@ export function CustomDrawerContent(props) {
       .auth()
       .signOut()
       .then(() => {
-        // AsyncStorage.removeItem('currentUser')
-        // console.log('currentUser -->>', AsyncStorage.getItem('currentUser'))
+        setCurrentUser(null)
+        console.log('LOOK -->>', currentUser)
         navigation.navigate('Landing Page')
       })
       .catch((error) => console.log('user cannot sign out: ', error))

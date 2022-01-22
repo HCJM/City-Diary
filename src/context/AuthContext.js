@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const AuthContext = React.useContext(null)
+export const AuthContext = React.createContext(null)
 
 //wrapper for the provider
 export const AuthProvider = ({ user, children }) => {

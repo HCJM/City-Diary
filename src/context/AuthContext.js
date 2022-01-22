@@ -13,5 +13,5 @@ export const AuthProvider = ({ user, children }) => {
   )
 }
 
-//custom hook
+//custom hook for accessing auth user data context throughout app
 export const useAuth = () => React.useContext(AuthContext)

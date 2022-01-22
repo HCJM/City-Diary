@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler'
 import React, { useEffect, useState } from 'react'
 import { firebase } from './firebase.js'
+import { AuthProvider } from './src/context/AuthContext.js'
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import {
@@ -10,10 +11,10 @@ import {
   PersonalMapScreen,
   LandingScreen,
   NewRecording,
+  CustomDrawerContent,
 } from './src/screens'
 import { decode, encode } from 'base-64'
-import { CustomDrawerContent } from './src/screens/CustomDrawerContent/CustomDrawerContent.js'
-import { AuthProvider } from './src/context/AuthContext.js'
+// import { CustomDrawerContent } from './src/screens/CustomDrawerContent/CustomDrawerContent.js'
 
 if (!global.btoa) {
   global.btoa = encode

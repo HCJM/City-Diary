@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -6,15 +7,23 @@ import {
   SafeAreaView,
   Image,
   TouchableOpacity,
+  Pressable,
+  Modal,
+  TextInput,
 } from 'react-native'
 import { Audio } from 'expo-av'
 import { firebase } from '../../../firebase.js'
 import RecordingDetailsModal from './RecordingDetails.js'
 
 export default function NewRecording() {
-  const [recording, setRecording] = React.useState()
-  const [isVisible, setIsVisible] = React.useState(false)
+  const [recording, setRecording] = useState()
+  const [isVisible, setIsVisible] = useState(false)
+  const [userRecording, setUserRecording] = useState(null)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [title, onChangeTitle] = React.useState('')
+  const [description, onChangeDescription] = React.useState('')
 
+  console.log(firebase.auth().currentUser.uid)
   async function startRecording() {
     try {
       console.log('Requesting permissions...')
@@ -42,14 +51,12 @@ how is it stored?
       console.log('Stopped recording...')
       setRecording(undefined)
       await recording.stopAndUnloadAsync()
-      const uri = recording.getURI()
-      uploadAudio(uri)
+      setUserRecording(recording.getURI())
+      // uploadAudio(uri)
     } catch (error) {
       console.error(error)
     }
   }
-  // uri on state
-  // instead of details screen, modal instead
   async function uploadAudio(uri) {
     try {
       // creating a blob
@@ -107,6 +114,9 @@ how is it stored?
       download: uri,
     })
   }
+  async function doneRecording() {
+    setModalVisible(!modalVisible)
+  }
 
   return (
     <SafeAreaView>
@@ -140,13 +150,50 @@ how is it stored?
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            setIsVisible(!isVisible)
+            doneRecording()
           }}
         >
           <Text>Done</Text>
         </TouchableOpacity>
-        <RecordingDetailsModal visible={isVisible} />
+        {/* <RecordingDetailsModal visible={isVisible} /> */}
       </View>
+      {/* Modal Start */}
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible)
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Tell us about this clip!</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeTitle}
+                placeholder="Give me a title"
+                value={title}
+              />
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeDescription}
+                placeholder="Description"
+                multiline={true}
+                value={description}
+              />
+              <Pressable
+                style={[styles.modalButton, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Upload</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      </View>
+      {/* Modal End */}
     </SafeAreaView>
   )
 }
@@ -164,6 +211,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingTop: 30,
   },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: 200,
+  },
   image: {
     width: 150,
     height: 150,
@@ -180,4 +234,47 @@ const styles = StyleSheet.create({
     marginHorizontal: 65,
     width: 250,
   },
+  // Modal start
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalButton: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  // Modal end
 })

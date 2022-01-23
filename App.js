@@ -13,7 +13,7 @@ import {
   NewRecording,
 } from './src/screens'
 import { decode, encode } from 'base-64'
-import { CustomDrawerContent } from './src/screens/CustomDrawerContent/CustomDrawerContent.js'
+import { CustomDrawerContent } from './src/screens/SignOutScreen/SignOutScreen.js'
 
 if (!global.btoa) {
   global.btoa = encode

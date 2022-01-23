@@ -38,7 +38,11 @@ export default function PublicMapScreen({ navigation }) {
   const { currentUser } = useAuth()
 
   const onRecordPress = () => {
-    navigation.navigate('New Recording')
+    if (currentUser) {
+      navigation.navigate('New Recording')
+    } else {
+      setErrorMsg('Please log in to make a recording')
+    }
   }
 
   const isFocused = useIsFocused() //todo

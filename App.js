@@ -28,7 +28,7 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [region, setRegion] = useState(null)
+  const [region, setRegion] = useState(null) //
 
   //PERSISTENT LOG-IN CODE...not functioning
   // if (loading) {

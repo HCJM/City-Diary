@@ -38,7 +38,6 @@ export default function LoginScreen({ navigation }) {
             navigation.navigate('Public Audio Map')
             console.log('CURRENT USER -->>', user)
             console.log('FIRE DOC -->>', authCurrUser.stsTokenManager)
-
           })
           .catch((error) => {
             alert(error)

@@ -27,12 +27,7 @@ export default function NewRecording({ navigation }) {
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
   const fileName = title.replace(/([^a-z0-9]+)/gi, '')
-  // const { uid } = route.params
-
-  // useEffect(() => {
-  //   console.log('AUTH ID-->>>', currentUser.id)
-  //   // console.log('PROPS UID -->>>', uid)
-  // })
+  const uid = currentUser.id
 
   async function startRecording() {
     try {
@@ -55,7 +50,6 @@ export default function NewRecording({ navigation }) {
 
   async function stopRecording() {
     try {
-      console.log('USER recording is -->>', currentUser)
       console.log('Stopped recording...')
       setRecording(undefined)
       await recording.stopAndUnloadAsync()
@@ -128,8 +122,8 @@ export default function NewRecording({ navigation }) {
         description,
         isPrivate: false,
         uploadedAt: new Date(),
-        userId: firebase.auth().currentUser.uid,
-        username: firebase.auth().currentUser.providerData[0].email,
+        userId: uid,
+        username: currentUser.userName,
         downloadUrl,
         location: new firebase.firestore.GeoPoint(
           location.coords.latitude,

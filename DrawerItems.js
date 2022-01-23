@@ -1,6 +1,6 @@
 export default [
   {
-    name: 'Landing Page',
+    name: 'Explore',
     //   iconType:'Material',
     //   iconName:'face-profile'
   },

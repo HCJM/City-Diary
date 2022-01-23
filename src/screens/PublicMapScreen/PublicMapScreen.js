@@ -1,29 +1,21 @@
-import * as React from 'react'
-import { firebase } from '../../../firebase.js'
-import { useState, useEffect } from 'react'
-import { useAuth } from '../../context/AuthContext'
-import MapView, { Marker } from 'react-native-maps'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  DatePickerAndroid,
-  Pressable,
-  Modal,
-} from 'react-native'
-import { Audio } from 'expo-av'
-import styles from './styles'
-import * as Location from 'expo-location'
 import { useIsFocused } from '@react-navigation/native'
-
+import { Audio } from 'expo-av'
+import * as Location from 'expo-location'
+import * as React from 'react'
+import { useEffect, useState } from 'react'
+import { Modal, Pressable, Text, TouchableOpacity, View } from 'react-native'
+import MapView, { Marker } from 'react-native-maps'
+import { firebase } from '../../../firebase.js'
+import { useAuth } from '../../context/AuthContext'
+import SignInPrompt from './SignInPromptModal.js'
+import styles from './styles'
 const deltas = {
   latitudeDelta: 0.2,
   longitudeDelta: 0.05,
 }
 
 export default function PublicMapScreen({ navigation }) {
+  const [open, setOpen] = useState(false)
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   const [region, setRegion] = useState(null)
@@ -41,7 +33,7 @@ export default function PublicMapScreen({ navigation }) {
     if (currentUser) {
       navigation.navigate('New Recording')
     } else {
-      setErrorMsg('Please log in to make a recording')
+      setOpen(true)
     }
   }
 
@@ -61,25 +53,23 @@ export default function PublicMapScreen({ navigation }) {
         longitude: location.coords.longitude,
         ...deltas,
       }
-
       setUserRegion(myRegion)
-      //call setErrorMsg again and set to empty string???
     }
     checkPermission()
-    // console.log('current user --->>>', currentUser)
-    async function fetchAudio() {
-      const detailsRef = firebase.firestore().collection('audio')
-      const details = await detailsRef.get()
 
-      const files = []
+    async function fetchAudio() {
+      const audioRef = firebase.firestore().collection('audio')
+      const details = await audioRef.get()
+
+      const markerContent = []
       details.forEach((audioDoc) => {
-        files.push({ id: audioDoc.id, data: audioDoc.data() })
+        markerContent.push({ id: audioDoc.id, data: audioDoc.data() })
       })
-      setAudioDetails(files)
+      setAudioDetails(markerContent)
     }
     fetchAudio()
-    setErrorMsg('')
-  }, [isFocused]) //files?
+    setModalVisible(false)
+  }, [isFocused])
 
   async function playSound(uri) {
     try {
@@ -121,7 +111,6 @@ export default function PublicMapScreen({ navigation }) {
     <View style={styles.container}>
       {location ? (
         <MapView
-          // causes map to be unable to move - maybe needs an onRegionChange
           initialRegion={userRegion}
           style={styles.map}
           showsUserLocation={true}
@@ -199,6 +188,15 @@ export default function PublicMapScreen({ navigation }) {
         </Modal>
       </View>
       {/* Modal end */}
+      <View style={styles.centeredView}>
+        <Modal visible={open} transparent={true}>
+          <SignInPrompt
+            props={navigation}
+            open={open}
+            onClose={() => setOpen(false)}
+          />
+        </Modal>
+      </View>
       <Text style={styles.paragraph}>{text}</Text>
       <TouchableOpacity
         style={styles.recordButton}

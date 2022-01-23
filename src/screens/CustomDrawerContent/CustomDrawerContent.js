@@ -16,15 +16,8 @@ export function CustomDrawerContent(props) {
   const [label, setLabel] = useState('')
   const { setCurrentUser } = useAuth()
   const { currentUser } = useAuth()
-  // const auth = firebase.auth()
-  // const signedInUser = auth.currentUser
 
   const navigation = useNavigation()
-
-  // useEffect(() => {
-  //   console.log("AUTH.CURRUSER.ID -->>>", signedInUser)
-  //   console.log("USER ON CONTEXT-->>>", currentUser.id)
-  // })
 
   const navigateToLandingPage = () => {
     navigation.navigate('Landing Page')

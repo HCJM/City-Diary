@@ -24,16 +24,6 @@ const deltas = {
 }
 
 export default function PublicMapScreen({ navigation }) {
-  // const onRecordPress = () => {
-  //   const user = firebase.auth().currentUser
-  //   navigation.navigate('New Recording', { uid: user.uid })
-  // }
-  const onRecordPress = () => {
-    navigation.navigate('New Recording')
-  }
-  // currentUser is an object with these properties: email, firstName, id, lastName, userName
-  const { currentUser } = useAuth()
-
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   const [region, setRegion] = useState(null)
@@ -43,8 +33,16 @@ export default function PublicMapScreen({ navigation }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [modalVisible, setModalVisible] = useState(true)
 
+  // currentUser is an object with these properties: email, firstName, id, lastName, userName
+  const { currentUser } = useAuth()
+
+  const onRecordPress = () => {
+    navigation.navigate('New Recording')
+  }
+
   const isFocused = useIsFocused() //todo
   useEffect(() => {
+    console.log('current user --->>>', currentUser)
     async function fetchAudio() {
       const detailsRef = firebase.firestore().collection('audio')
       const details = await detailsRef.get()
@@ -105,7 +103,6 @@ export default function PublicMapScreen({ navigation }) {
   }
 
   useEffect(() => {
-    console.log('USER -->>', currentUser)
     checkPermission()
   }, [])
 

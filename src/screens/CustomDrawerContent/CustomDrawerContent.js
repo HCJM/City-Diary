@@ -20,7 +20,7 @@ export function CustomDrawerContent(props) {
   const navigation = useNavigation()
 
   const navigateToLandingPage = () => {
-    navigation.navigate('Landing Page')
+    navigation.navigate('Explore')
   }
 
   const handleSignOut = async () => {

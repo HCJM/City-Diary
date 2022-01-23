@@ -14,10 +14,7 @@ export default function LandingScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={require('../../../assets/logo.jpeg')}
-      />
+      <Image style={styles.logo} source={require('../../../assets/logo.png')} />
       <StatusBar style="auto" />
       <TouchableOpacity
         style={styles.exploreButton}

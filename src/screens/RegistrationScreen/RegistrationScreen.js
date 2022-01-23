@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { firebase } from '../../../firebase.js'
+import { useAuth } from '../../context/AuthContext.js'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from './styles'
@@ -11,7 +12,7 @@ export default function RegistrationScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  
+  const { setCurrentUser } = useAuth()
 
   const onFooterLinkPress = () => {
     navigation.navigate('Login')
@@ -39,7 +40,8 @@ export default function RegistrationScreen({ navigation }) {
           .doc(uid)
           .set(data)
           .then(() => {
-            navigation.navigate('Public Audio Map', { user: data })
+            setCurrentUser(data)
+            navigation.navigate('Public Audio Map')
           })
           .catch((error) => {
             alert(error)

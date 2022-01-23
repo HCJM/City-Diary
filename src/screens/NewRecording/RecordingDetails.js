@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
 import {
   StyleSheet,
   Text,
@@ -14,50 +13,14 @@ import {
 } from 'react-native'
 import { Audio } from 'expo-av'
 import { firebase } from '../../../firebase.js'
-import RecordingDetailsModal from './RecordingDetails.js'
-import * as Location from 'expo-location'
-import styles from './styles'
-import { useEffect } from 'react/cjs/react.development'
 
-export default function NewRecording({ navigation }) {
-  const { currentUser } = useAuth()
-  const [recording, setRecording] = useState()
-  const [userRecording, setUserRecording] = useState(null)
+import * as Location from 'expo-location'
+
+export default function RecordingDetailsModal({ route, navigation }) {
   const [modalVisible, setModalVisible] = useState(false)
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
-  const fileName = title.replace(/([^a-z0-9]+)/gi, '')
-  const uid = currentUser.id
-
-  async function startRecording() {
-    try {
-      console.log('Requesting permissions...')
-      await Audio.requestPermissionsAsync()
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
-      })
-      console.log('Starting recording...')
-      const { recording } = await Audio.Recording.createAsync(
-        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
-      )
-      setRecording(recording)
-      console.log('Recording started')
-    } catch (err) {
-      console.error('Failed to start recording', err)
-    }
-  }
-
-  async function stopRecording() {
-    try {
-      console.log('Stopped recording...')
-      setRecording(undefined)
-      await recording.stopAndUnloadAsync()
-      setUserRecording(recording.getURI())
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  const { uid } = route.params
 
   async function storeAudio() {
     try {
@@ -78,9 +41,7 @@ export default function NewRecording({ navigation }) {
           reject(new TypeError('Network request failed'))
         }
         xhr.responseType = 'blob'
-        // request type, content, asynchronous
         xhr.open('GET', userRecording, true)
-        // request body
         xhr.send(null)
       })
       if (blob != null) {
@@ -110,7 +71,7 @@ export default function NewRecording({ navigation }) {
     try {
       let location = await Location.getCurrentPositionAsync({})
 
-      const downloadUrl = await firebase
+      const uri = await firebase
         .storage()
         .ref()
         .child(`${fileName}.${uid}.m4a`)
@@ -122,9 +83,9 @@ export default function NewRecording({ navigation }) {
         description,
         isPrivate: false,
         uploadedAt: new Date(),
-        userId: uid,
-        username: currentUser.userName,
-        downloadUrl,
+        userId: firebase.auth().currentUser.uid,
+        username: firebase.auth().currentUser.providerData[0].email,
+        downloadUrl: uri,
         location: new firebase.firestore.GeoPoint(
           location.coords.latitude,
           location.coords.longitude
@@ -143,43 +104,6 @@ export default function NewRecording({ navigation }) {
 
   return (
     <SafeAreaView>
-      <View>
-        <Image
-          style={styles.image}
-          source={require('../../../assets/plainlogo.png')}
-        />
-        <Text style={styles.text}> 00 : 00 : 00 </Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={recording ? stopRecording : startRecording}
-        >
-          <Text>Start Recording / Stop </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button}>
-          <Text>Start Over</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.text}> 00 : 00 : 00 / 00 : 00 : 00</Text>
-
-        <TouchableOpacity style={styles.button}>
-          <Text>Play</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button}>
-          <Text>Pause</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            recording ? stopRecording() : null
-            setModalVisible(!modalVisible)
-          }}
-        >
-          <Text>Done</Text>
-        </TouchableOpacity>
-      </View>
       {/* Modal Start */}
       <View style={styles.centeredView}>
         <Modal
@@ -235,3 +159,85 @@ export default function NewRecording({ navigation }) {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#A9A9A9',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    color: 'black',
+    fontSize: 17,
+    textAlign: 'center',
+    paddingTop: 30,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: 200,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    marginTop: 15,
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+    padding: 13,
+    paddingHorizontal: 20,
+    marginTop: 42,
+    marginHorizontal: 65,
+    width: 250,
+  },
+  // Modal start
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalButton: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+    marginVertical: 15,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  // Modal end
+})

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { firebase } from '../../../firebase.js'
+import { useAuth } from '../../context/AuthContext.js'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from './styles'
@@ -7,13 +8,15 @@ import styles from './styles'
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const { setCurrentUser } = useAuth()
+  const { currentUser } = useAuth()
 
   const onFooterLinkPress = () => {
     navigation.navigate('Registration')
   }
 
-  const onLoginPress = () => {
-    firebase
+  const onLoginPress = async () => {
+    await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((response) => {
@@ -28,7 +31,8 @@ export default function LoginScreen({ navigation }) {
               return
             }
             const user = firestoreDocument.data()
-            navigation.navigate('Public Audio Map', { user })
+            setCurrentUser(user)
+            navigation.navigate('Public Audio Map')
           })
           .catch((error) => {
             alert(error)
@@ -42,7 +46,6 @@ export default function LoginScreen({ navigation }) {
   const resetLoginInputFields = () => {
     setEmail('')
     setPassword('')
-    
   }
 
   return (
@@ -74,7 +77,12 @@ export default function LoginScreen({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TouchableOpacity style={styles.button} onPress={() => {onLoginPress(), resetLoginInputFields()}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            onLoginPress(), resetLoginInputFields()
+          }}
+        >
           <Text style={styles.buttonTitle}>Log in</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>

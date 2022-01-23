@@ -27,7 +27,11 @@ export default function NewRecording({ navigation }) {
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
   const fileName = title.replace(/([^a-z0-9]+)/gi, '')
-  // const uid = currentUser.id
+
+  if (currentUser) {
+    const uid = currentUser.id
+  }
+  
 
   async function startRecording() {
     try {

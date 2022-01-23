@@ -51,18 +51,13 @@ export default function PublicMapScreen({ navigation }) {
      }
       let location = await Location.getCurrentPositionAsync({})
      setLocation(location)
-     console.log('user region 1: ', userRegion)
      const myRegion = {
          latitude: location.coords.latitude,
          longitude: location.coords.longitude,
          ...deltas,
        }
     
-     console.log('user region 2; ', userRegion )
-     console.log('region 1: ', userRegion)
      setUserRegion(myRegion)
-     console.log('user region 2: ', userRegion)
-     console.log('region 2: ', userRegion)
      //call setErrorMsg again and set to empty string???
    }
    checkPermission()
@@ -109,18 +104,12 @@ export default function PublicMapScreen({ navigation }) {
  }
  
  
- 
- // useEffect(() => {
- //   checkPermission()
- // }, [])
- 
+ //renders loading while getting user's location, otherwise empty string
  let text = 'Loading...'
  if (errorMsg) {
    text = errorMsg
  } else if (location) {
-   // text = JSON.stringify(location);
    text = ''
-   // console.log(JSON.stringify(location))
  }
  
  return (

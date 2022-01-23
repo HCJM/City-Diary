@@ -9,17 +9,22 @@ import {
 } from '@react-navigation/drawer'
 import { firebase } from '../../../firebase.js'
 import { useNavigation } from '@react-navigation/native'
-import { useState } from 'react/cjs/react.development'
+import { useEffect, useState } from 'react/cjs/react.development'
 import { useAuth } from '../../context/AuthContext'
 
 export function CustomDrawerContent(props) {
   const [label, setLabel] = useState('')
-  // const { setCurrentUser } = useAuth()
-  // const { currentUser } = useAuth()
-  const auth = firebase.auth()
-  const signedInUser = auth.currentUser
+  const { setCurrentUser } = useAuth()
+  const { currentUser } = useAuth()
+  // const auth = firebase.auth()
+  // const signedInUser = auth.currentUser
 
   const navigation = useNavigation()
+
+  // useEffect(() => {
+  //   console.log("AUTH.CURRUSER.ID -->>>", signedInUser)
+  //   console.log("USER ON CONTEXT-->>>", currentUser.id)
+  // })
 
   const navigateToLandingPage = () => {
     navigation.navigate('Landing Page')
@@ -29,7 +34,10 @@ export function CustomDrawerContent(props) {
     await firebase
       .auth()
       .signOut()
-      .then(() => navigateToLandingPage())
+      .then(() => {
+        setCurrentUser(null)
+        navigateToLandingPage()
+      })
       .catch((error) => console.log('user cannot sign out: ', error))
   }
 
@@ -38,9 +46,9 @@ export function CustomDrawerContent(props) {
       <DrawerItemList {...props} />
       <DrawerItem
         style={styles.signOutItem}
-        label={auth.currentUser ? 'Log Out' : ''}
+        label={currentUser ? 'Log Out' : ''}
         onPress={() => {
-          auth.currentUser ? handleSignOut() : null
+          currentUser ? handleSignOut() : null
         }}
       />
     </DrawerContentScrollView>

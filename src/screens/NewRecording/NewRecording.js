@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
 import {
   StyleSheet,
   Text,
@@ -16,15 +17,17 @@ import { firebase } from '../../../firebase.js'
 import RecordingDetailsModal from './RecordingDetails.js'
 import * as Location from 'expo-location'
 import styles from './styles'
+import { useEffect } from 'react/cjs/react.development'
 
-export default function NewRecording({ route, navigation }) {
+export default function NewRecording({ navigation }) {
+  const { currentUser } = useAuth()
   const [recording, setRecording] = useState()
   const [userRecording, setUserRecording] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
   const fileName = title.replace(/([^a-z0-9]+)/gi, '')
-  const { uid } = route.params
+  const uid = currentUser.id
 
   async function startRecording() {
     try {
@@ -119,8 +122,8 @@ export default function NewRecording({ route, navigation }) {
         description,
         isPrivate: false,
         uploadedAt: new Date(),
-        userId: firebase.auth().currentUser.uid,
-        username: firebase.auth().currentUser.providerData[0].email,
+        userId: uid,
+        username: currentUser.userName,
         downloadUrl,
         location: new firebase.firestore.GeoPoint(
           location.coords.latitude,

@@ -1,7 +1,7 @@
-// import React, { useState, useEffect } from 'react'
 import * as React from 'react'
 import { firebase } from '../../../firebase.js'
 import { useState, useEffect } from 'react'
+import { useAuth } from '../../context/AuthContext'
 import MapView, { Marker } from 'react-native-maps'
 import {
   StyleSheet,
@@ -34,16 +34,16 @@ export default function PublicMapScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(true)
   const [user, setUser] = useState(null)
 
+  // currentUser is an object with these properties: email, firstName, id, lastName, userName
+  const { currentUser } = useAuth()
+
   const onRecordPress = () => {
-    setUser(firebase.auth().currentUser)
-    if (user) {
-      navigation.navigate('New Recording', { uid: user.uid })
-    } else {
-      setErrorMsg('Login to record')
-    }
+    navigation.navigate('New Recording')
   }
+
   const isFocused = useIsFocused() //todo
   useEffect(() => {
+    console.log('current user --->>>', currentUser)
     async function fetchAudio() {
       const detailsRef = firebase.firestore().collection('audio')
       const details = await detailsRef.get()

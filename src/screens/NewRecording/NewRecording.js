@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
 import {
   StyleSheet,
   Text,
@@ -16,8 +17,7 @@ import { firebase } from '../../../firebase.js'
 import RecordingDetailsModal from './RecordingDetails.js'
 import * as Location from 'expo-location'
 import styles from './styles'
-import { useAuth } from '../../context/AuthContext'
-
+import { useEffect } from 'react/cjs/react.development'
 
 export default function NewRecording({ route, navigation }) {
   const { currentUser } = useAuth()
@@ -28,6 +28,11 @@ export default function NewRecording({ route, navigation }) {
   const [description, onChangeDescription] = React.useState('')
   const fileName = title.replace(/([^a-z0-9]+)/gi, '')
   const { uid } = route.params
+
+  useEffect(() => {
+    console.log('AUTH ID-->>>', currentUser.id)
+    console.log('PROPS UID -->>>', uid)
+  })
 
   async function startRecording() {
     try {

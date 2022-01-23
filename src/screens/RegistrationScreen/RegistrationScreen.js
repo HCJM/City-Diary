@@ -11,6 +11,7 @@ export default function RegistrationScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  
 
   const onFooterLinkPress = () => {
     navigation.navigate('Login')
@@ -56,7 +57,6 @@ export default function RegistrationScreen({ navigation }) {
     setEmail('')
     setPassword('')
     setConfirmPassword('')
-    
   }
 
   return (
@@ -127,7 +127,9 @@ export default function RegistrationScreen({ navigation }) {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {onRegisterPress(), resetRegistrationInputFields()}}
+          onPress={() => {
+            onRegisterPress(), resetRegistrationInputFields()
+          }}
         >
           <Text style={styles.buttonTitle}>Create account</Text>
         </TouchableOpacity>

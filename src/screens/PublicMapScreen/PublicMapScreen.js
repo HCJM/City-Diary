@@ -42,7 +42,7 @@ export default function PublicMapScreen({ navigation }) {
 
   const isFocused = useIsFocused() //todo
   useEffect(() => {
-    console.log('current user --->>>', currentUser)
+    // console.log('current user --->>>', currentUser)
     async function fetchAudio() {
       const detailsRef = firebase.firestore().collection('audio')
       const details = await detailsRef.get()

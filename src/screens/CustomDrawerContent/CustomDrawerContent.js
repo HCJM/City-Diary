@@ -11,6 +11,7 @@ import { firebase } from '../../../firebase.js'
 import { useNavigation } from '@react-navigation/native'
 import { useEffect, useState } from 'react/cjs/react.development'
 import { useAuth } from '../../context/AuthContext'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export function CustomDrawerContent(props) {
   const [label, setLabel] = useState('')
@@ -29,6 +30,8 @@ export function CustomDrawerContent(props) {
       .signOut()
       .then(() => {
         setCurrentUser(null)
+        AsyncStorage.removeItem('asyncUser')
+        console.log('just logged out -->>', AsyncStorage.getItem('asyncUser'))
         navigateToLandingPage()
       })
       .catch((error) => console.log('user cannot sign out: ', error))

@@ -34,10 +34,10 @@ export default function LoginScreen({ navigation }) {
             const user = firestoreDocument.data()
             setCurrentUser(user)
             const authCurrUser = firebase.auth().currentUser
-            // AsyncStorage.setItem('asyncUser', )
+            AsyncStorage.setItem('asyncUser', JSON.stringify(authCurrUser))
             navigation.navigate('Public Audio Map')
             console.log('CURRENT USER -->>', user)
-            console.log('FIRE DOC -->>', authCurrUser.stsTokenManager)
+            console.log('FIRE DOC USER ID -->>', authCurrUser)
           })
           .catch((error) => {
             alert(error)

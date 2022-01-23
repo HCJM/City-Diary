@@ -33,7 +33,7 @@ export default function LoginScreen({ navigation }) {
             const user = firestoreDocument.data()
             setCurrentUser(user)
             navigation.navigate('Public Audio Map', { user })
-            console.log('CURRENT USER -->>', currentUser)
+            // console.log('CURRENT USER -->>', currentUser)
           })
           .catch((error) => {
             alert(error)

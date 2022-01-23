@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { firebase } from '../../../firebase.js'
 import { useState, useEffect } from 'react'
+import { useAuth } from '../../context/AuthContext'
 import MapView, { Marker } from 'react-native-maps'
 import {
   StyleSheet,
@@ -16,7 +17,6 @@ import { Audio } from 'expo-av'
 import styles from './styles'
 import * as Location from 'expo-location'
 import { useIsFocused } from '@react-navigation/native'
-import { useAuth } from '../../context/AuthContext'
 
 const deltas = {
   latitudeDelta: 0.2,
@@ -24,11 +24,13 @@ const deltas = {
 }
 
 export default function PublicMapScreen({ navigation }) {
+  // const onRecordPress = () => {
+  //   const user = firebase.auth().currentUser
+  //   navigation.navigate('New Recording', { uid: user.uid })
+  // }
   const onRecordPress = () => {
-    const user = firebase.auth().currentUser
-    navigation.navigate('New Recording', { uid: user.uid })
+    navigation.navigate('New Recording')
   }
-
   // currentUser is an object with these properties: email, firstName, id, lastName, userName
   const { currentUser } = useAuth()
 

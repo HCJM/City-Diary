@@ -19,7 +19,7 @@ import * as Location from 'expo-location'
 import styles from './styles'
 import { useEffect } from 'react/cjs/react.development'
 
-export default function NewRecording({ route, navigation }) {
+export default function NewRecording({ navigation }) {
   const { currentUser } = useAuth()
   const [recording, setRecording] = useState()
   const [userRecording, setUserRecording] = useState(null)
@@ -27,12 +27,12 @@ export default function NewRecording({ route, navigation }) {
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
   const fileName = title.replace(/([^a-z0-9]+)/gi, '')
-  const { uid } = route.params
+  // const { uid } = route.params
 
-  useEffect(() => {
-    console.log('AUTH ID-->>>', currentUser.id)
-    console.log('PROPS UID -->>>', uid)
-  })
+  // useEffect(() => {
+  //   console.log('AUTH ID-->>>', currentUser.id)
+  //   // console.log('PROPS UID -->>>', uid)
+  // })
 
   async function startRecording() {
     try {

@@ -22,6 +22,7 @@ import { useEffect } from 'react/cjs/react.development'
 export default function NewRecording({ navigation }) {
   const { currentUser } = useAuth()
   const [recording, setRecording] = useState()
+  const [sound, setSound] = React.useState()
   const [userRecording, setUserRecording] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [title, onChangeTitle] = React.useState('')
@@ -58,6 +59,24 @@ export default function NewRecording({ navigation }) {
       console.error(error)
     }
   }
+
+  async function playbackRecording() {
+    console.log('Loading your recording...')
+    const { sound } = await Audio.Sound.createAsync({ uri: userRecording })
+    setSound(sound)
+
+    console.log('Playing your recording...')
+    await sound.playAsync()
+  }
+
+  React.useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading your recording...')
+          sound.unloadAsync()
+        }
+      : undefined
+  }, [sound])
 
   async function storeAudio() {
     try {
@@ -162,7 +181,7 @@ export default function NewRecording({ navigation }) {
 
         <Text style={styles.text}> 00 : 00 : 00 / 00 : 00 : 00</Text>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={playbackRecording}>
           <Text>Play</Text>
         </TouchableOpacity>
 

@@ -129,7 +129,11 @@ export default function PublicMapScreen({ navigation }) {
                 ...deltas,
               }}
               pinColor={
-                audioDoc.data.userId === currentUser.id ? '#000000' : '#FF0000'
+                audioDoc.data.userId === currentUser.id
+                  ? audioDoc.data.isPrivate
+                    ? '#000000'
+                    : '#008000'
+                  : '#FF0000'
               }
             />
           ))}

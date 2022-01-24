@@ -1,23 +1,19 @@
+import { Audio } from 'expo-av'
+import * as Location from 'expo-location'
 import * as React from 'react'
 import { useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
 import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
   Image,
-  TouchableOpacity,
-  Pressable,
   Modal,
+  SafeAreaView,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import { Audio } from 'expo-av'
 import { firebase } from '../../../firebase.js'
-import RecordingDetailsModal from './RecordingDetails.js'
-import * as Location from 'expo-location'
+import { useAuth } from '../../context/AuthContext'
 import styles from './styles'
-import { useEffect } from 'react/cjs/react.development'
 
 export default function NewRecording({ navigation }) {
   const currentUser = useAuth().currentUser || {}

@@ -41,46 +41,25 @@ export default function App() {
     const storedUser = AsyncStorage.getItem('asyncUser')
       .then((response) => {
         console.log('stored user yoooo -->>>', response)
-        console.info('=================')
       })
       .catch((err) => console.error(err))
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        usersRef
-          .doc(user.uid)
-          .get()
-          .then((document) => {
-            if (mounted) {
-              const userData = document.data()
-              setLoading(false)
-              setUser(userData)
-              setIsLoggedIn(true)
-            }
-          })
-          .catch((error) => {
-            setLoading(false)
-            mounted = false
-          })
-      } else if (storedUser !== undefined) {
-        usersRef
-          .doc(storedUser.uid)
-          .get()
-          .then((doc) => {
-            const currUserData = doc.data()
-            setLoading(false)
-            setUser(currUserData)
-            setIsLoggedIn(true)
-          })
-      } else {
-        setLoading(false)
-        setIsLoggedIn(false)
-        mounted = false
-      }
-    })
+    if (storedUser) {
+      usersRef
+        .doc(storedUser.uid)
+        .get()
+        .then((doc) => {
+          const currUserData = doc.data()
+          setLoading(false)
+          setUser(currUserData)
+          setIsLoggedIn(true)
+        })
+    } 
   }, [])
 
-  return (
+  return loading ? (
+    <></>
+  ) : (
     <AuthProvider value={user}>
       <NavigationContainer>
         {isLoggedIn ? (

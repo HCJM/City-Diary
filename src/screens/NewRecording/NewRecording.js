@@ -1,24 +1,10 @@
 import { Audio } from 'expo-av'
 import * as React from 'react'
 import { useState } from 'react'
-<<<<<<< HEAD
-import {
-  Image,
-  Modal,
-  SafeAreaView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
-import { firebase } from '../../../firebase.js'
-import { useAuth } from '../../context/AuthContext'
-=======
 import { Text, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
->>>>>>> main
 import styles from './styles'
 import RecordingDetails from './RecordingDetails'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function NewRecording() {
   const [recording, setRecording] = useState()
@@ -118,6 +104,7 @@ export default function NewRecording() {
           }}
         />
       </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

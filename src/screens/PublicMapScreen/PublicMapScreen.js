@@ -38,8 +38,13 @@ export default function PublicMapScreen({ navigation }) {
 
   const isFocused = useIsFocused()
 
-  const filterOutPrivateAudio = audioDetails.filter(
-    (audioDoc) => audioDoc.data.isPrivate === false
+  const filterOutAllPrivateAudio = audioDetails.filter(
+    (audioDoc) => (audioDoc.data.isPrivate === false)
+  )
+  
+
+  const filterOutOthersPrivateAudio = audioDetails.filter(
+    (audioDoc) => (audioDoc.data.userId === currentUser.id || audioDoc.data.isPrivate === false)
   )
 
   useEffect(() => {
@@ -119,7 +124,7 @@ export default function PublicMapScreen({ navigation }) {
             showsUserLocation={true}
             zoomEnabled={true}
           >
-            {audioDetails.map((audioDoc) => (
+            {filterOutOthersPrivateAudio.map((audioDoc) => (
               <Marker
                 onPress={() => {
                   playSound(audioDoc.data.downloadUrl)
@@ -150,7 +155,7 @@ export default function PublicMapScreen({ navigation }) {
             showsUserLocation={true}
             zoomEnabled={true}
           >
-            {filterOutPrivateAudio.map((audioDoc) => (
+            {filterOutAllPrivateAudio.map((audioDoc) => (
               <Marker
                 onPress={() => {
                   playSound(audioDoc.data.downloadUrl)
@@ -183,7 +188,7 @@ export default function PublicMapScreen({ navigation }) {
           zoomEnabled={true}
           style={styles.map}
         >
-          {audioDetails.map((audioDoc) => (
+          {filterOutAllPrivateAudio.map((audioDoc) => (
             <Marker
               onPress={() => {
                 playSound(audioDoc.data.downloadUrl)

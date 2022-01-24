@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 import { firebase } from '../../../firebase.js'
 import { useAuth } from '../../context/AuthContext'
 import styles from './styles'
@@ -158,6 +159,7 @@ export default function NewRecording({ navigation }) {
 
   return (
     <SafeAreaView>
+      <ScrollView>
       <View>
         <Image
           style={styles.image}
@@ -191,6 +193,7 @@ export default function NewRecording({ navigation }) {
           <Text>Done</Text>
         </TouchableOpacity>
       </View>
+      </ScrollView>
       {/* Modal Start */}
       <View style={styles.centeredView}>
         <Modal

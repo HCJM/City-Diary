@@ -68,7 +68,6 @@ export default function PublicMapScreen({ navigation }) {
       setAudioDetails(markerContent)
     }
     fetchAudio()
-    setModalVisible(false)
   }, [isFocused])
 
   async function playSound(uri) {

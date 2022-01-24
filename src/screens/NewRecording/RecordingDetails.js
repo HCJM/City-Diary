@@ -14,10 +14,10 @@ import { firebase } from '../../../firebase.js'
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native'
 
-export default function RecordingDetails({}) {
+export default function RecordingDetails({ visible, closeModal }) {
   //   const [userRecording, setUserRecording] = useState(null)
   const currentUser = useAuth().currentUser || {}
-  const [modalVisible, setModalVisible] = useState(false)
+  // const [visible, setvisible] = useState(false)
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
   const fileName = title.replace(/([^a-z0-9]+)/gi, '')
@@ -112,9 +112,9 @@ export default function RecordingDetails({}) {
         <Modal
           animationType="slide"
           transparent={true}
-          visible={modalVisible}
+          visible={visible}
           // onRequestClose={() => {
-          //   setModalVisible(!modalVisible)
+          //   setvisible(!visible)
           // }}
         >
           <View style={styles.centeredView}>
@@ -136,7 +136,8 @@ export default function RecordingDetails({}) {
               <TouchableOpacity
                 style={[styles.modalButton, styles.buttonClose]}
                 onPress={() => {
-                  setModalVisible(!modalVisible)
+                  // setvisible(!visible)
+                  closeModal()
                   onModalExit()
                   storeAudio()
                   // navigate to personal instead? easy fix
@@ -148,8 +149,9 @@ export default function RecordingDetails({}) {
               <TouchableOpacity
                 style={[styles.modalButton, styles.buttonClose]}
                 onPress={() => {
-                  setModalVisible(!modalVisible)
+                  // setvisible(!visible)
                   onModalExit()
+                  closeModal()
                 }}
               >
                 <Text style={styles.textStyle}>Cancel</Text>

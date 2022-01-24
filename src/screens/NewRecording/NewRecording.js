@@ -194,7 +194,12 @@ export default function NewRecording({ navigation }) {
           <Text>Done</Text>
         </TouchableOpacity>
 
-        <RecordingDetails />
+        <RecordingDetails
+          visible={modalVisible}
+          closeModal={() => {
+            setModalVisible(false)
+          }}
+        />
       </View>
       {/* Modal Start */}
       {/* <View style={styles.centeredView}>

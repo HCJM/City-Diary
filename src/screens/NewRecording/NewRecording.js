@@ -108,7 +108,7 @@ export default function NewRecording({ navigation }) {
         firebase
           .storage()
           .ref()
-          .child(`${fileName}.${uid}.${fileType}`)
+          .child(`${uid}.${fileName}.${fileType}`)
           .put(blob, {
             contentType: `audio/${fileType}`,
           })
@@ -132,7 +132,7 @@ export default function NewRecording({ navigation }) {
       const downloadUrl = await firebase
         .storage()
         .ref()
-        .child(`${fileName}.${uid}.m4a`)
+        .child(`${uid}.${fileName}.m4a`)
         .getDownloadURL()
 
       const instance = firebase.firestore().collection('audio')
@@ -183,13 +183,6 @@ export default function NewRecording({ navigation }) {
 
         <TouchableOpacity style={styles.button} onPress={playbackRecording}>
           <Text>Play</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.jumpTo('Public Audio Map')}
-        >
-          <Text>Pause</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

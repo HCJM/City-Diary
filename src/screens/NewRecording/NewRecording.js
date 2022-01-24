@@ -109,19 +109,9 @@ export default function NewRecording() {
         >
           <Text>Done</Text>
         </TouchableOpacity>
-<<<<<<< HEAD
-      </View>
-      </ScrollView>
-      {/* Modal Start */}
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-=======
 
         <RecordingDetails
           userRecording={userRecording}
->>>>>>> main
           visible={modalVisible}
           closeModal={() => {
             setModalVisible(false)

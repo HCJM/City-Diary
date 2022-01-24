@@ -39,12 +39,13 @@ export default function PublicMapScreen({ navigation }) {
   const isFocused = useIsFocused()
 
   const filterOutAllPrivateAudio = audioDetails.filter(
-    (audioDoc) => (audioDoc.data.isPrivate === false)
+    (audioDoc) => audioDoc.data.isPrivate === false
   )
-  
 
   const filterOutOthersPrivateAudio = audioDetails.filter(
-    (audioDoc) => (audioDoc.data.userId === currentUser.id || audioDoc.data.isPrivate === false)
+    (audioDoc) =>
+      audioDoc.data.userId === currentUser.id ||
+      audioDoc.data.isPrivate === false
   )
 
   useEffect(() => {

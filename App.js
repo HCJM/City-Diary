@@ -13,6 +13,7 @@ import {
   PublicMapScreen,
   RegistrationScreen,
 } from './src/screens'
+import ProfileScreen from './src/screens/ProfileScreen/ProfileScreen.js'
 import { CustomDrawerContent } from './src/screens/SignOutScreen/SignOutScreen.js'
 
 if (!global.btoa) {
@@ -84,6 +85,7 @@ export default function App() {
             component={PersonalMapScreen}
           />
           <Drawer.Screen name="New Recording" component={NewRecording} />
+          <Drawer.Screen name="Profile" component={ProfileScreen}/>
         </Drawer.Navigator>
       </NavigationContainer>
     </AuthProvider>

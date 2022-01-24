@@ -24,4 +24,9 @@ export default [
     // iconType:'FontAwesome5',
     // iconName:'user-friends'
   },
+  {
+    name: 'Profile',
+    // iconType:'FontAwesome5',
+    // iconName:'user-friends'
+  },
 ]

@@ -1,16 +1,14 @@
-import * as React from 'react'
-import styles from './styles.js'
-import { Image, Text, View, TouchableOpacity } from 'react-native'
 import {
-  createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer'
-import { firebase } from '../../../firebase.js'
 import { useNavigation } from '@react-navigation/native'
-import { useEffect, useState } from 'react/cjs/react.development'
+import * as React from 'react'
+import { useState } from 'react/cjs/react.development'
+import { firebase } from '../../../firebase.js'
 import { useAuth } from '../../context/AuthContext'
+import styles from './styles.js'
 
 export function CustomDrawerContent(props) {
   const [label, setLabel] = useState('')
@@ -47,4 +45,3 @@ export function CustomDrawerContent(props) {
     </DrawerContentScrollView>
   )
 }
-

@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, SafeAreaView, TextInput } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native'
 
-export default function RecordingDetails({ navigation }) {
+export default function RecordingDetails({}) {
   const [Title, onChangeTitle] = React.useState('')
   const [Description, onChangeDescription] = React.useState('')
   return (

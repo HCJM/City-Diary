@@ -9,7 +9,7 @@ export default StyleSheet.create({
         marginBottom: 25,
       },
       title: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
         marginTop: 15,
         marginBottom: 5,
@@ -39,8 +39,11 @@ export default StyleSheet.create({
         lineHeight: 26,
       },
       locationText: {
-        color:"#777777", 
-        marginLeft: 20
+        color: 'darkblue',
+        marginLeft: 20,
+        fontWeight: '600',
+        fontSize: 17,
+        lineHeight: 26,
       },
       nameUserName: {
         marginLeft: 20

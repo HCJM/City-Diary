@@ -1,20 +1,16 @@
+import * as Location from 'expo-location'
 import * as React from 'react'
 import { useState } from 'react'
 import {
+  Modal,
+  SafeAreaView,
   StyleSheet,
   Text,
-  View,
-  SafeAreaView,
-  Image,
-  TouchableOpacity,
-  Pressable,
-  Modal,
   TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import { Audio } from 'expo-av'
 import { firebase } from '../../../firebase.js'
-
-import * as Location from 'expo-location'
 
 export default function RecordingDetailsModal({ route, navigation }) {
   const [modalVisible, setModalVisible] = useState(false)

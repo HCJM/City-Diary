@@ -20,7 +20,7 @@ export default function ProfileScreen ({ navigation }) {
 
                 <View style={styles.userInfoSection}>
                     <View style={styles.row}>
-                    <Text style={styles.locationText}>Brooklyn, NY</Text>
+                    <Text style={styles.locationText}>My Audio Entries:</Text>
                     </View>
                 </View>
 

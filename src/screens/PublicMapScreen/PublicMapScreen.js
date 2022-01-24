@@ -18,7 +18,6 @@ export default function PublicMapScreen({ navigation }) {
   const [open, setOpen] = useState(false)
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
-  const [region, setRegion] = useState(null)
   const [audioDetails, setAudioDetails] = useState([])
   // for grabbing from db
   const [sound, setSound] = useState('')
@@ -27,7 +26,7 @@ export default function PublicMapScreen({ navigation }) {
   const [userRegion, setUserRegion] = useState(null)
 
   // currentUser is an object with these properties: email, firstName, id, lastName, userName
-  const { currentUser } = useAuth()
+  const currentUser = useAuth().currentUser || {}
 
   const onRecordPress = () => {
     if (currentUser) {
@@ -115,20 +114,23 @@ export default function PublicMapScreen({ navigation }) {
           showsUserLocation={true}
           zoomEnabled={true}
         >
-          {audioDetails.map((file) => (
+          {audioDetails.map((audioDoc) => (
             <Marker
               onPress={() => {
-                playSound(file.data.downloadUrl)
+                playSound(audioDoc.data.downloadUrl)
               }}
               onDeselect={stopSound}
-              key={file.id}
-              title={file.data.title}
-              description={file.data.description}
+              key={audioDoc.id}
+              title={audioDoc.data.title}
+              description={audioDoc.data.description}
               coordinate={{
-                latitude: file.data.location.latitude,
-                longitude: file.data.location.longitude,
+                latitude: audioDoc.data.location.latitude,
+                longitude: audioDoc.data.location.longitude,
                 ...deltas,
               }}
+              pinColor={
+                audioDoc.data.userId === currentUser.id ? '#000000' : '#FF0000'
+              }
             />
           ))}
         </MapView>
@@ -142,18 +144,18 @@ export default function PublicMapScreen({ navigation }) {
           zoomEnabled={true}
           style={styles.map}
         >
-          {audioDetails.map((file) => (
+          {audioDetails.map((audioDoc) => (
             <Marker
               onPress={() => {
-                playSound(file.data.downloadUrl)
+                playSound(audioDoc.data.downloadUrl)
               }}
               onDeselect={stopSound}
-              key={file.id}
-              title={file.data.title}
-              description={file.data.description}
+              key={audioDoc.id}
+              title={audioDoc.data.title}
+              description={audioDoc.data.description}
               coordinate={{
-                latitude: file.data.location.latitude,
-                longitude: file.data.location.longitude,
+                latitude: audioDoc.data.location.latitude,
+                longitude: audioDoc.data.location.longitude,
                 ...deltas,
               }}
             />

@@ -42,7 +42,7 @@ export default function App() {
     const persistedUser = AsyncStorage.getItem('persistedUser')
       .then((response) => {
         JSON.parse(response)
-        console.log('user from async storage--->>>', JSON.parse(response))
+        console.log('user from async storage in APP--->>>', JSON.parse(response))
       })
       .catch((error) => {
         console.error(error)

@@ -2,8 +2,21 @@ import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Image, Text, View, TouchableOpacity } from 'react-native'
 import styles from './styles'
+import { useEffect } from 'react/cjs/react.development'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function LandingScreen({ navigation }) {
+
+  useEffect(() => {
+    const persistedUser = AsyncStorage.getItem('persistedUser')
+      .then((response) => {
+        JSON.parse(response)
+        console.log('user from async storage in LANDING--->>>', JSON.parse(response))
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  })
   const onExploreButtonPress = () => {
     navigation.navigate('Public Audio Map')
   }

@@ -43,7 +43,6 @@ export default function PublicMapScreen({ navigation }) {
  
  const isFocused = useIsFocused() //todo
  useEffect(() => {
-   console.log("public map screen user -->>>", currentUser)
    const checkPermission = async () => {
      let { status } = await Location.requestForegroundPermissionsAsync()
      if (status !== 'granted') {

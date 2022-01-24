@@ -9,10 +9,19 @@ import { firebase } from '../../../firebase.js'
 import { useAuth } from '../../context/AuthContext'
 import SignInPrompt from './SignInPromptModal.js'
 import styles from './styles'
+
+// deltas control how much of the map to display. The amount of 'zoom'.
 const deltas = {
   latitudeDelta: 0.2,
   longitudeDelta: 0.05,
 }
+
+//initial map location view
+const NYC_Coordinates = {
+  latitude: 40.73061,
+  longitude: -73.97,
+}
+
 
 export default function PublicMapScreen({ navigation }) {
   const [open, setOpen] = useState(false)
@@ -137,8 +146,7 @@ export default function PublicMapScreen({ navigation }) {
       ) : (
         <MapView
           region={{
-            latitude: 40.73061,
-            longitude: -73.97,
+            ...NYC_Coordinates,
             ...deltas,
           }}
           zoomEnabled={true}

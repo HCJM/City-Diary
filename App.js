@@ -85,7 +85,7 @@ export default function App() {
             component={PersonalMapScreen}
           />
           <Drawer.Screen name="New Recording" component={NewRecording} />
-          <Drawer.Screen name="Profile" component={ProfileScreen}/>
+          <Drawer.Screen name="My Profile" component={ProfileScreen}/>
         </Drawer.Navigator>
       </NavigationContainer>
     </AuthProvider>

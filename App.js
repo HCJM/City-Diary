@@ -38,8 +38,21 @@ export default function App() {
     let mounted = true
     const usersRef = firebase.firestore().collection('users')
 
+    // o: you can use async await here
+    // o: also, it may make sense to export the usersRef and use it where you
+    //  need it
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        /* 
+         const document = usersRef
+          .doc(user.uid)
+          .get()
+
+          const userData = document.data()
+          setLoading(false)
+          setUser(userData)
+          setIsLoggedIn(true)
+        */
         usersRef
           .doc(user.uid)
           .get()

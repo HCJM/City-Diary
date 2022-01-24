@@ -15,6 +15,7 @@ export default function LoginScreen({ navigation }) {
   }
 
   const onLoginPress = async () => {
+    // o: why are you using await and thenable syntax?
     await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)

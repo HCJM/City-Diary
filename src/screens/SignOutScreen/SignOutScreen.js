@@ -11,6 +11,7 @@ import { useAuth } from '../../context/AuthContext'
 import styles from './styles.js'
 
 export function CustomDrawerContent(props) {
+  // o: this is not being used
   const [label, setLabel] = useState('')
   const { setCurrentUser } = useAuth()
   const { currentUser } = useAuth()
@@ -21,6 +22,7 @@ export function CustomDrawerContent(props) {
     navigation.navigate('Explore')
   }
 
+  // o: you are using async await and the origina syntax 🤔
   const handleSignOut = async () => {
     await firebase
       .auth()

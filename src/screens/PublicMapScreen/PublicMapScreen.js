@@ -107,6 +107,7 @@ export default function PublicMapScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      {/* o: what are you switching between here? */}
       {location ? (
         <MapView
           initialRegion={userRegion}

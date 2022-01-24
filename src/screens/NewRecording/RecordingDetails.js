@@ -29,6 +29,7 @@ export default function RecordingDetails({
 
   async function storeAudio() {
     try {
+      // o: why not use axios here?
       // creating a blob
       const blob = await new Promise((resolve, reject) => {
         // opening a new request
@@ -52,6 +53,7 @@ export default function RecordingDetails({
         xhr.send(null)
       })
       if (blob != null) {
+        // o: you can use async await here 
         const uriParts = userRecording.split('.')
         const fileType = uriParts[uriParts.length - 1]
         firebase

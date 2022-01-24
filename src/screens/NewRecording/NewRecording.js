@@ -7,7 +7,7 @@ import RecordingDetails from './RecordingDetails'
 
 export default function NewRecording() {
   const [recording, setRecording] = useState()
-  const [sound, setSound] = React.useState()
+  const [sound, setSound] = useState()
   const [userRecording, setUserRecording] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -50,7 +50,8 @@ export default function NewRecording() {
     await sound.playAsync()
   }
 
-  React.useEffect(() => {
+  // o: why is useEffect being used in this way instead of the standard way?
+  useEffect(() => {
     return sound
       ? () => {
           console.log('Unloading your recording...')

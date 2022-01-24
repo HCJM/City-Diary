@@ -1,26 +1,29 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
+import * as Location from 'expo-location'
 import {
-  StyleSheet,
-  Text,
   View,
+  Text,
   SafeAreaView,
-  Image,
   TouchableOpacity,
-  Pressable,
   Modal,
   TextInput,
 } from 'react-native'
-import { Audio } from 'expo-av'
 import { firebase } from '../../../firebase.js'
+import styles from './styles'
+import { useNavigation } from '@react-navigation/native'
 
-import * as Location from 'expo-location'
-
-export default function RecordingDetailsModal({ route, navigation }) {
+export default function RecordingDetails({}) {
+  //   const [userRecording, setUserRecording] = useState(null)
+  const currentUser = useAuth().currentUser || {}
   const [modalVisible, setModalVisible] = useState(false)
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
-  const { uid } = route.params
+  const fileName = title.replace(/([^a-z0-9]+)/gi, '')
+  const navigation = useNavigation()
+
+  const uid = currentUser.id
 
   async function storeAudio() {
     try {
@@ -41,7 +44,9 @@ export default function RecordingDetailsModal({ route, navigation }) {
           reject(new TypeError('Network request failed'))
         }
         xhr.responseType = 'blob'
+        // request type, content, asynchronous
         xhr.open('GET', userRecording, true)
+        // request body
         xhr.send(null)
       })
       if (blob != null) {
@@ -71,7 +76,7 @@ export default function RecordingDetailsModal({ route, navigation }) {
     try {
       let location = await Location.getCurrentPositionAsync({})
 
-      const uri = await firebase
+      const downloadUrl = await firebase
         .storage()
         .ref()
         .child(`${fileName}.${uid}.m4a`)
@@ -83,9 +88,9 @@ export default function RecordingDetailsModal({ route, navigation }) {
         description,
         isPrivate: false,
         uploadedAt: new Date(),
-        userId: firebase.auth().currentUser.uid,
-        username: firebase.auth().currentUser.providerData[0].email,
-        downloadUrl: uri,
+        userId: uid,
+        username: currentUser.userName,
+        downloadUrl,
         location: new firebase.firestore.GeoPoint(
           location.coords.latitude,
           location.coords.longitude
@@ -101,11 +106,9 @@ export default function RecordingDetailsModal({ route, navigation }) {
     onChangeTitle('')
     onChangeDescription('')
   }
-
   return (
     <SafeAreaView>
-      {/* Modal Start */}
-      <View style={styles.centeredView}>
+      <View>
         <Modal
           animationType="slide"
           transparent={true}
@@ -155,89 +158,6 @@ export default function RecordingDetailsModal({ route, navigation }) {
           </View>
         </Modal>
       </View>
-      {/* Modal End */}
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#A9A9A9',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: 'black',
-    fontSize: 17,
-    textAlign: 'center',
-    paddingTop: 30,
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    width: 200,
-  },
-  image: {
-    width: 150,
-    height: 150,
-    alignSelf: 'center',
-    marginTop: 15,
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'grey',
-    padding: 13,
-    paddingHorizontal: 20,
-    marginTop: 42,
-    marginHorizontal: 65,
-    width: 250,
-  },
-  // Modal start
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalButton: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-    marginVertical: 15,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  // Modal end
-})

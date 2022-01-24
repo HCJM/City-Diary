@@ -20,7 +20,7 @@ import styles from './styles'
 import { useEffect } from 'react/cjs/react.development'
 
 export default function NewRecording({ navigation }) {
-  const { currentUser } = useAuth()
+  const currentUser = useAuth().currentUser || {}
   const [recording, setRecording] = useState()
   const [sound, setSound] = React.useState()
   const [userRecording, setUserRecording] = useState(null)
@@ -28,11 +28,7 @@ export default function NewRecording({ navigation }) {
   const [title, onChangeTitle] = React.useState('')
   const [description, onChangeDescription] = React.useState('')
   const fileName = title.replace(/([^a-z0-9]+)/gi, '')
-
-  if (currentUser) {
-    const uid = currentUser.id
-  }
-  
+  const uid = currentUser.id
 
   async function startRecording() {
     try {
@@ -112,7 +108,7 @@ export default function NewRecording({ navigation }) {
         firebase
           .storage()
           .ref()
-          .child(`${fileName}.${uid}.${fileType}`)
+          .child(`${uid}.${fileName}.${fileType}`)
           .put(blob, {
             contentType: `audio/${fileType}`,
           })
@@ -136,7 +132,7 @@ export default function NewRecording({ navigation }) {
       const downloadUrl = await firebase
         .storage()
         .ref()
-        .child(`${fileName}.${uid}.m4a`)
+        .child(`${uid}.${fileName}.m4a`)
         .getDownloadURL()
 
       const instance = firebase.firestore().collection('audio')
@@ -187,10 +183,6 @@ export default function NewRecording({ navigation }) {
 
         <TouchableOpacity style={styles.button} onPress={playbackRecording}>
           <Text>Play</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button}>
-          <Text>Pause</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

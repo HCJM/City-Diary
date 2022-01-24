@@ -41,7 +41,7 @@ export default function PublicMapScreen({ navigation }) {
   const filterOutPrivateAudio = audioDetails.filter(
     (audioDoc) => audioDoc.data.isPrivate === false
   )
-  
+
   useEffect(() => {
     const checkPermission = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()

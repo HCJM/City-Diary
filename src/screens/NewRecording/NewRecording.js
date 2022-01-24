@@ -1,9 +1,12 @@
+import { Audio } from 'expo-av'
+import * as Location from 'expo-location'
 import * as React from 'react'
 import { useState } from 'react'
 import { Text, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import { Audio } from 'expo-av'
 import styles from './styles'
 import RecordingDetails from './RecordingDetails'
+
 
 export default function NewRecording({ navigation }) {
   const [recording, setRecording] = useState()

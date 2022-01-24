@@ -2,7 +2,6 @@ import * as Location from 'expo-location'
 import * as React from 'react'
 import { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
-import * as Location from 'expo-location'
 import {
   View,
   Text,
@@ -10,8 +9,6 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
-  TouchableOpacity,
-  View,
 } from 'react-native'
 import { firebase } from '../../../firebase.js'
 import styles from './styles'

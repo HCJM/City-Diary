@@ -2,6 +2,7 @@ import 'react-native-gesture-handler'
 import React, { useEffect, useState } from 'react'
 import { firebase } from './firebase.js'
 import { AuthProvider } from './src/context/AuthContext.js'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import {
@@ -29,6 +30,7 @@ export default function App() {
   const [user, setUser] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [region, setRegion] = useState(null)
+  const { currentUser } = firebase.auth()
 
   //PERSISTENT LOG-IN CODE...not functioning
   // if (loading) {
@@ -37,31 +39,77 @@ export default function App() {
   useEffect(() => {
     let mounted = true
     const usersRef = firebase.firestore().collection('users')
-
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        usersRef
-          .doc(user.uid)
-          .get()
-          .then((document) => {
-            if (mounted) {
-              const userData = document.data()
-              setLoading(false)
-              setUser(userData)
-              setIsLoggedIn(true)
-            }
-          })
-          .catch((error) => {
+    const persistedUser = AsyncStorage.getItem('persistedUser')
+      .then((response) => {
+        JSON.parse(response)
+        console.log('user from async storage--->>>', JSON.parse(response))
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    if (persistedUser !== null) {
+      usersRef
+        .doc(persistedUser.id)
+        .get()
+        .then((document) => {
+          if (mounted) {
+            const userData = document.data()
             setLoading(false)
-            mounted = false
-          })
-      } else {
-        setLoading(false)
-        setIsLoggedIn(false)
-        mounted = false
-      }
-    })
+            setUser(userData)
+            setIsLoggedIn(true)
+          }
+        })
+        .catch((error) => {
+          setLoading(false)
+          mounted = false
+        })
+    } else {
+      setLoading(false)
+      setIsLoggedIn(false)
+      mounted = false
+    }
   }, [])
+  // firebase.auth().onAuthStateChanged((user) => {
+  //   if (user) {
+  //     usersRef
+  //       .doc(user.uid)
+  //       .get()
+  //       .then((document) => {
+  //         if (mounted) {
+  //           const userData = document.data()
+  //           setLoading(false)
+  //           setUser(userData)
+  //           setIsLoggedIn(true)
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         setLoading(false)
+  //         mounted = false
+  //       })
+  //   } else
+  // if (persistedUser !== null) {
+  //   usersRef
+  //     .doc(persistedUser.id)
+  //     .get()
+  //     .then((document) => {
+  //       if (mounted) {
+  //         const userData = document.data()
+  //         setLoading(false)
+  //         setUser(userData)
+  //         setIsLoggedIn(true)
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       setLoading(false)
+  //       mounted = false
+  //     })
+  // } else {
+  //   setLoading(false)
+  //   setIsLoggedIn(false)
+  //   mounted = false
+  // }
+  //   })
+  // }, [])
 
   return (
     <AuthProvider value={user}>

@@ -38,6 +38,10 @@ export default function PublicMapScreen({ navigation }) {
 
   const isFocused = useIsFocused()
 
+  const filterOutPrivateAudio = audioDetails.filter(
+    (audioDoc) => audioDoc.data.isPrivate === false
+  )
+  
   useEffect(() => {
     const checkPermission = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
@@ -108,36 +112,67 @@ export default function PublicMapScreen({ navigation }) {
   return (
     <View style={styles.container}>
       {location ? (
-        <MapView
-          initialRegion={userRegion}
-          style={styles.map}
-          showsUserLocation={true}
-          zoomEnabled={true}
-        >
-          {audioDetails.map((audioDoc) => (
-            <Marker
-              onPress={() => {
-                playSound(audioDoc.data.downloadUrl)
-              }}
-              onDeselect={stopSound}
-              key={audioDoc.id}
-              title={audioDoc.data.title}
-              description={audioDoc.data.description}
-              coordinate={{
-                latitude: audioDoc.data.location.latitude,
-                longitude: audioDoc.data.location.longitude,
-                ...deltas,
-              }}
-              pinColor={
-                audioDoc.data.userId === currentUser.id
-                  ? audioDoc.data.isPrivate
-                    ? '#000000'
-                    : '#008000'
-                  : '#FF0000'
-              }
-            />
-          ))}
-        </MapView>
+        currentUser.id ? (
+          <MapView
+            initialRegion={userRegion}
+            style={styles.map}
+            showsUserLocation={true}
+            zoomEnabled={true}
+          >
+            {audioDetails.map((audioDoc) => (
+              <Marker
+                onPress={() => {
+                  playSound(audioDoc.data.downloadUrl)
+                }}
+                onDeselect={stopSound}
+                key={audioDoc.id}
+                title={audioDoc.data.title}
+                description={audioDoc.data.description}
+                coordinate={{
+                  latitude: audioDoc.data.location.latitude,
+                  longitude: audioDoc.data.location.longitude,
+                  ...deltas,
+                }}
+                pinColor={
+                  audioDoc.data.userId === currentUser.id
+                    ? audioDoc.data.isPrivate
+                      ? '#000000'
+                      : '#008000'
+                    : '#FF0000'
+                }
+              />
+            ))}
+          </MapView>
+        ) : (
+          <MapView
+            initialRegion={userRegion}
+            style={styles.map}
+            showsUserLocation={true}
+            zoomEnabled={true}
+          >
+            {filterOutPrivateAudio.map((audioDoc) => (
+              <Marker
+                onPress={() => {
+                  playSound(audioDoc.data.downloadUrl)
+                }}
+                onDeselect={stopSound}
+                key={audioDoc.id}
+                title={audioDoc.data.title}
+                description={audioDoc.data.description}
+                coordinate={{
+                  latitude: audioDoc.data.location.latitude,
+                  longitude: audioDoc.data.location.longitude,
+                  ...deltas,
+                }}
+                pinColor={
+                  audioDoc.data.userId === currentUser.id
+                    ? '#008000'
+                    : '#FF0000'
+                }
+              />
+            ))}
+          </MapView>
+        )
       ) : (
         <MapView
           region={{

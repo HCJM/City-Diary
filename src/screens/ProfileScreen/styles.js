@@ -11,6 +11,8 @@ export default StyleSheet.create({
       title: {
         fontSize: 24,
         fontWeight: 'bold',
+        marginTop: 15,
+        marginBottom: 5,
       },
       caption: {
         fontSize: 14,
@@ -35,6 +37,17 @@ export default StyleSheet.create({
         fontWeight: '600',
         fontSize: 16,
         lineHeight: 26,
+      },
+      locationText: {
+        color:"#777777", 
+        marginLeft: 20
+      },
+      nameUserName: {
+        marginLeft: 20
+      },
+      nameUserNameView: {
+        flexDirection: 'row',
+        marginTop: 15,
       },
 })
 

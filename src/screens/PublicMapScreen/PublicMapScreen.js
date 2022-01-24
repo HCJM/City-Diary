@@ -29,7 +29,7 @@ export default function PublicMapScreen({ navigation }) {
   const currentUser = useAuth().currentUser || {}
 
   const onRecordPress = () => {
-    if (currentUser) {
+    if (currentUser.id) {
       navigation.navigate('New Recording')
     } else {
       setOpen(true)

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Text, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import styles from './styles'
 import RecordingDetails from './RecordingDetails'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function NewRecording() {
   const [recording, setRecording] = useState()
@@ -61,6 +62,7 @@ export default function NewRecording() {
 
   return (
     <SafeAreaView>
+      <ScrollView>
       <View>
         <Image
           style={styles.image}
@@ -102,6 +104,7 @@ export default function NewRecording() {
           }}
         />
       </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

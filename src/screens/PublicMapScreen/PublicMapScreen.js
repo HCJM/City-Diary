@@ -9,18 +9,12 @@ import { firebase } from '../../../firebase.js'
 import { useAuth } from '../../context/AuthContext'
 import SignInPrompt from './SignInPromptModal.js'
 import styles from './styles'
+import MapScreenModule from './MapScreenModule.js'
 
 // deltas control how much of the map to display. The amount of 'zoom'.
-import MapScreenModule from './MapScreenModule.js'
 const deltas = {
   latitudeDelta: 0.2,
   longitudeDelta: 0.05,
-}
-
-//initial map location view
-const NYC_Coordinates = {
-  latitude: 40.73061,
-  longitude: -73.97,
 }
 
 

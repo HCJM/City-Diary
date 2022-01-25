@@ -26,7 +26,7 @@ export default function ProfileScreen ({ navigation }) {
                 const audioList = []
                 querySnapShot.forEach((doc) => {
                     audioList.push(doc.data())
-                    console.log(audioList)
+                    // console.log(audioList)
                 })
                 setUserAudioFiles(audioList)
             })
@@ -62,7 +62,13 @@ export default function ProfileScreen ({ navigation }) {
                 </View>
 
 
-                <Text>{JSON.stringify(userAudioFiles[0])}</Text>
+                {/* <Text>{JSON.stringify(userAudioFiles[0])}</Text> */}
+
+                <View>
+                    {userAudioFiles.map(audioFile => {
+                        console.log(audioFile.title)
+                    })}
+                </View>
 
                 <View style={styles.userInfoSection}>
                     <View style={styles.row}>

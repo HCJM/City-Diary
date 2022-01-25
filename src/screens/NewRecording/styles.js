@@ -10,13 +10,13 @@ export default StyleSheet.create({
   picker: {
     height: 50,
     width: 200,
-    // alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 20,
     marginVertical: 20,
-    // borderRadius: 20,
-    // padding: 10,
-    // elevation: 2,
+  },
+  pickerView: {
+    marginHorizontal: 20,
+    marginTop: 20,
   },
   text: {
     color: 'black',
@@ -26,7 +26,7 @@ export default StyleSheet.create({
   },
   input: {
     height: 40,
-    margin: 12,
+    margin: 20,
     borderWidth: 1,
     padding: 10,
     width: 200,
@@ -52,14 +52,14 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    marginTop: 20,
   },
   modalView: {
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
+    alignItems: 'stretch',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -92,6 +92,7 @@ export default StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontSize: 20,
   },
   // Modal end
 })

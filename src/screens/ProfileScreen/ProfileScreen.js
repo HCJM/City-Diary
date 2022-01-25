@@ -13,14 +13,13 @@ export default function ProfileScreen ({ navigation }) {
 
     // currentUser is an object with these properties: email, firstName, id, lastName, userName
     const currentUser = useAuth().currentUser || {}
-
-    console.log('currentUser before mount ===>', currentUser)
+    console.log('this is currentUser ===>', currentUser)
     
     useState(() => {
-        // const consFunction = () => {
-        //     console.log(currentUser.id)
-        // }
-        
+
+       
+
+        console.log('component did mount ===>', currentUser)
 
         const fetchAllUserAudio = async () => {
             const allAudioRef = firebase.firestore().collection('audio')
@@ -41,7 +40,7 @@ export default function ProfileScreen ({ navigation }) {
         fetchAllUserAudio()
         
         
-        // consFunction()
+        
     }, [])
         
 

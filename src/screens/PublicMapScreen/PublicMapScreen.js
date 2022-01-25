@@ -1,5 +1,5 @@
 import { useIsFocused } from '@react-navigation/native'
-import { Audio } from 'expo-av'
+// import { Audio } from 'expo-av'
 import * as Location from 'expo-location'
 import * as React from 'react'
 import { useEffect, useState } from 'react'
@@ -9,6 +9,7 @@ import { firebase } from '../../../firebase.js'
 import { useAuth } from '../../context/AuthContext'
 import SignInPrompt from './SignInPromptModal.js'
 import styles from './styles'
+import MapScreenModule from './MapScreenModule.js'
 const deltas = {
   latitudeDelta: 0.2,
   longitudeDelta: 0.05,
@@ -19,9 +20,7 @@ export default function PublicMapScreen({ navigation }) {
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   const [audioDetails, setAudioDetails] = useState([])
-  // for grabbing from db
-  const [sound, setSound] = useState('')
-  const [isPlaying, setIsPlaying] = useState(false)
+
   const [modalVisible, setModalVisible] = useState(true)
   const [userRegion, setUserRegion] = useState(null)
 
@@ -38,21 +37,14 @@ export default function PublicMapScreen({ navigation }) {
 
   const isFocused = useIsFocused()
 
-  const filterOutAllPrivateAudio = audioDetails.filter(
-    (audioDoc) => audioDoc.data.isPrivate === false
-  )
-
-  const filterOutOthersPrivateAudio = audioDetails.filter(
-    (audioDoc) =>
-      audioDoc.data.userId === currentUser.id ||
-      audioDoc.data.isPrivate === false
-  )
+  const defaultRegion = { latitude: 40.73061, longitude: -73.97, ...deltas }
 
   useEffect(() => {
     const checkPermission = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied')
+        setUserRegion(defaultRegion)
         return
       }
       let location = await Location.getCurrentPositionAsync({})
@@ -79,34 +71,6 @@ export default function PublicMapScreen({ navigation }) {
     fetchAudio()
   }, [isFocused])
 
-  async function playSound(uri) {
-    try {
-      if (isPlaying) {
-        stopSound()
-      }
-      console.log('Loading sound')
-      // the uri is the download link of the audio file
-      const { sound } = await Audio.Sound.createAsync({
-        uri,
-      })
-      setSound(sound)
-      setIsPlaying(true)
-      console.log('Playing sound')
-      await sound.playAsync()
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  async function stopSound() {
-    try {
-      console.log('Stopping sound')
-      setIsPlaying(false)
-      sound.stopAsync()
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   //renders loading while getting user's location, otherwise empty string
   let text = 'Loading...'
   if (errorMsg) {
@@ -117,96 +81,12 @@ export default function PublicMapScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {location ? (
-        currentUser.id ? (
-          <MapView
-            initialRegion={userRegion}
-            style={styles.map}
-            showsUserLocation={true}
-            zoomEnabled={true}
-          >
-            {filterOutOthersPrivateAudio.map((audioDoc) => (
-              <Marker
-                onPress={() => {
-                  playSound(audioDoc.data.downloadUrl)
-                }}
-                onDeselect={stopSound}
-                key={audioDoc.id}
-                title={audioDoc.data.title}
-                description={audioDoc.data.description}
-                coordinate={{
-                  latitude: audioDoc.data.location.latitude,
-                  longitude: audioDoc.data.location.longitude,
-                  ...deltas,
-                }}
-                pinColor={
-                  audioDoc.data.userId === currentUser.id
-                    ? audioDoc.data.isPrivate
-                      ? '#000000'
-                      : '#008000'
-                    : '#FF0000'
-                }
-              />
-            ))}
-          </MapView>
-        ) : (
-          <MapView
-            initialRegion={userRegion}
-            style={styles.map}
-            showsUserLocation={true}
-            zoomEnabled={true}
-          >
-            {filterOutAllPrivateAudio.map((audioDoc) => (
-              <Marker
-                onPress={() => {
-                  playSound(audioDoc.data.downloadUrl)
-                }}
-                onDeselect={stopSound}
-                key={audioDoc.id}
-                title={audioDoc.data.title}
-                description={audioDoc.data.description}
-                coordinate={{
-                  latitude: audioDoc.data.location.latitude,
-                  longitude: audioDoc.data.location.longitude,
-                  ...deltas,
-                }}
-                pinColor={
-                  audioDoc.data.userId === currentUser.id
-                    ? '#008000'
-                    : '#FF0000'
-                }
-              />
-            ))}
-          </MapView>
-        )
-      ) : (
-        <MapView
-          region={{
-            latitude: 40.73061,
-            longitude: -73.97,
-            ...deltas,
-          }}
-          zoomEnabled={true}
-          style={styles.map}
-        >
-          {filterOutAllPrivateAudio.map((audioDoc) => (
-            <Marker
-              onPress={() => {
-                playSound(audioDoc.data.downloadUrl)
-              }}
-              onDeselect={stopSound}
-              key={audioDoc.id}
-              title={audioDoc.data.title}
-              description={audioDoc.data.description}
-              coordinate={{
-                latitude: audioDoc.data.location.latitude,
-                longitude: audioDoc.data.location.longitude,
-                ...deltas,
-              }}
-            />
-          ))}
-        </MapView>
-      )}
+      <MapScreenModule
+        region={userRegion}
+        audioDetails={audioDetails}
+        currentUser={currentUser}
+      />
+
       {/* Modal start */}
       <View style={styles.centeredView}>
         <Modal

@@ -18,6 +18,7 @@ import { useNavigation } from '@react-navigation/native'
 export default function RecordingDetails({
   visible,
   closeModal,
+  upload,
   userRecording,
 }) {
   const currentUser = useAuth().currentUser || {}
@@ -130,26 +131,29 @@ export default function RecordingDetails({
                 multiline={true}
                 value={description}
               />
-              <Picker
-                selectedValue={selectedValue}
-                style={styles.picker}
-                onValueChange={(itemValue, itemIndex) => {
-                  console.log(itemValue)
-                  setSelectedValue(itemValue)
-                }}
-              >
-                {/* If the user opts to upload publically, set isPrivate in database to false */}
-                <Picker.Item label="Upload publically" value={false} />
-                {/* If the user opts to keep private, set isPrivate in database to true */}
-                <Picker.Item label="Keep private" value={true} />
-              </Picker>
+              <View style={styles.pickerView}>
+                <Picker
+                  selectedValue={selectedValue}
+                  style={styles.picker}
+                  onValueChange={(itemValue, itemIndex) => {
+                    console.log(itemValue)
+                    setSelectedValue(itemValue)
+                  }}
+                >
+                  {/* If the user opts to upload publically, set isPrivate in database to false */}
+                  <Picker.Item label="Upload publically" value={false} />
+                  {/* If the user opts to keep private, set isPrivate in database to true */}
+                  <Picker.Item label="Keep private" value={true} />
+                </Picker>
+              </View>
+
               <TouchableOpacity
                 style={[styles.modalButton, styles.buttonClose]}
                 onPress={() => {
+                  upload()
                   closeModal()
                   onModalExit()
                   storeAudio()
-                  // navigate to personal instead? easy fix
                   navigation.navigate('Public Audio Map')
                 }}
               >

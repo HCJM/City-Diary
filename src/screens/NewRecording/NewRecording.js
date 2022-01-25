@@ -99,6 +99,9 @@ export default function NewRecording() {
         <RecordingDetails
           userRecording={userRecording}
           visible={modalVisible}
+          upload={() => {
+            setDone(false)
+          }}
           closeModal={() => {
             setModalVisible(false)
           }}

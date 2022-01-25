@@ -50,7 +50,15 @@ export default function ProfileScreen ({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-               
+                
+                <View>
+                    {userAudioFiles.map(audioFile => 
+                        <Text key={audioFile.uploadedAt}>{JSON.stringify(audioFile.title)}</Text>
+                    )}
+                </View>
+
+                {/* <Text>{JSON.stringify(userAudioFiles[0])}</Text> */}
+
 
                 <View style={styles.userInfoSection}>
                     <View style={styles.nameUserNameView}>
@@ -62,13 +70,8 @@ export default function ProfileScreen ({ navigation }) {
                 </View>
 
 
-                {/* <Text>{JSON.stringify(userAudioFiles[0])}</Text> */}
 
-                <View>
-                    {userAudioFiles.map(audioFile => {
-                        console.log(audioFile.title)
-                    })}
-                </View>
+               
 
                 <View style={styles.userInfoSection}>
                     <View style={styles.row}>
@@ -76,30 +79,16 @@ export default function ProfileScreen ({ navigation }) {
                     </View>
                 </View>
 
+                    
+
                 <View style={styles.menuWrapper}>
                     <TouchableRipple onPress={() => console.log('hello friend')}>
                     <View style={styles.menuItem}>
                         <Text style={styles.menuItemText}>My Latest Entry 1-24-22</Text>
                     </View>
                     </TouchableRipple>
-                    <TouchableRipple onPress={() => console.log('hello friend')}>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemText}>My Latest Entry 1-23-22</Text>
-                    </View>
-                    </TouchableRipple>
-                    <TouchableRipple onPress={() => console.log('hello friend')}>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemText}>My Latest Entry 1-22-22</Text>
-                    </View>
-                    </TouchableRipple>
-                    <TouchableRipple onPress={() => console.log('hello friend')}>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemText}>My Latest Entry 1-21-22</Text>
-                    </View>
-                    </TouchableRipple>
-
-                    
                 </View>
+
             </ScrollView>
         </SafeAreaView>
     )

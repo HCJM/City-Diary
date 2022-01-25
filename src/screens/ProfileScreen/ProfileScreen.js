@@ -54,8 +54,8 @@ export default function ProfileScreen ({ navigation }) {
                 <View style={styles.userInfoSection}>
                     <View style={styles.nameUserNameView}>
                     <View style={styles.nameUserName}>
-                        <Title style={styles.title}>{currentUser.firstName}</Title>
-                        <Caption style={styles.caption}>{currentUser.userName}</Caption>
+                        <Title style={styles.title}>Howdy, {currentUser.firstName}!</Title>
+                        <Caption style={styles.caption}>@{currentUser.userName}</Caption>
                     </View>
                     </View>
                 </View>

@@ -51,21 +51,14 @@ export default function ProfileScreen ({ navigation }) {
         <SafeAreaView style={styles.container}>
             <ScrollView>
             
-                {/* <Text>{JSON.stringify(userAudioFiles[0])}</Text> */}
-
-
                 <View style={styles.userInfoSection}>
                     <View style={styles.nameUserNameView}>
                     <View style={styles.nameUserName}>
-                        <Title style={styles.title}>Hello Jose!</Title>
-                        <Caption style={styles.caption}>@mauilema</Caption>
+                        <Title style={styles.title}>{currentUser.firstName}</Title>
+                        <Caption style={styles.caption}>{currentUser.userName}</Caption>
                     </View>
                     </View>
                 </View>
-
-
-
-               
 
                 <View style={styles.userInfoSection}>
                     <View style={styles.row}>
@@ -73,7 +66,6 @@ export default function ProfileScreen ({ navigation }) {
                     </View>
                 </View> 
 
-            
                 {userAudioFiles.map(audioFile => 
                     <View style={styles.menuWrapper}>
                         <TouchableRipple onPress={() => console.log('hello friend')}>
@@ -83,7 +75,6 @@ export default function ProfileScreen ({ navigation }) {
                         </TouchableRipple>
                     </View> 
                 )}
-
 
             </ScrollView>
         </SafeAreaView>

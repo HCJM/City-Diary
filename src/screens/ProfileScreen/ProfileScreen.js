@@ -22,7 +22,7 @@ export default function ProfileScreen ({ navigation }) {
 
         const fetchAllUserAudio = async () => {
             const allAudioRef = firebase.firestore().collection('audio')
-            allAudioRef.where('userId', '==', `${currentUser.id}`).orderBy('uploadedAt', 'desc').onSnapshot((querySnapShot) => {
+            allAudioRef.orderBy('uploadedAt', 'desc').where('userId', '==', `${currentUser.id}`).onSnapshot((querySnapShot) => {
                 const audioList = []
                 querySnapShot.forEach((doc) => {
                     audioList.push(doc.data())
@@ -61,11 +61,8 @@ export default function ProfileScreen ({ navigation }) {
                     </View>
                 </View>
 
-                <Text>{JSON.stringify(userAudioFiles)}</Text>
 
-                {/* <TouchableOpacity onPress={() => currentUser ? console.log(currentUser) : null}> 
-                        <Button>currentUser</Button>
-                </TouchableOpacity> */}
+                <Text>{JSON.stringify(userAudioFiles[0])}</Text>
 
                 <View style={styles.userInfoSection}>
                     <View style={styles.row}>

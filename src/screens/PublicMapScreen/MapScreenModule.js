@@ -58,6 +58,7 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
   return (
     <View>
       <MapView
+        initialRegion={region}
         region={region}
         style={styles.map}
         showsUserLocation={true}

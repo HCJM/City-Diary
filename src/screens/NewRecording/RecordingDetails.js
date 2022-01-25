@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import {
   View,
+  Picker,
   Text,
   SafeAreaView,
   TouchableOpacity,
@@ -17,14 +18,15 @@ import { useNavigation } from '@react-navigation/native'
 export default function RecordingDetails({
   visible,
   closeModal,
+  upload,
   userRecording,
 }) {
   const currentUser = useAuth().currentUser || {}
-  const [title, onChangeTitle] = React.useState('')
-  const [description, onChangeDescription] = React.useState('')
+  const [title, onChangeTitle] = useState('')
+  const [description, onChangeDescription] = useState('')
   const fileName = title.replace(/([^a-z0-9]+)/gi, '')
   const navigation = useNavigation()
-
+  const [selectedValue, setSelectedValue] = useState(false)
   const uid = currentUser.id
 
   async function storeAudio() {
@@ -88,7 +90,7 @@ export default function RecordingDetails({
       instance.add({
         title,
         description,
-        isPrivate: false,
+        isPrivate: selectedValue,
         uploadedAt: new Date(),
         userId: uid,
         username: currentUser.userName,
@@ -128,13 +130,30 @@ export default function RecordingDetails({
                 multiline={true}
                 value={description}
               />
+              <View style={styles.pickerView}>
+                <Picker
+                  selectedValue={selectedValue}
+                  style={styles.picker}
+                  onValueChange={(itemValue, itemIndex) => {
+                    console.log(itemValue)
+                    setSelectedValue(itemValue)
+                  }}
+                >
+                  {/* If the user opts to upload publically, set isPrivate in database to false */}
+                  <Picker.Item label="Public" value={false} />
+                  {/* If the user opts to keep private, set isPrivate in database to true */}
+                  <Picker.Item label="Private" value={true} />
+                </Picker>
+              </View>
+
               <TouchableOpacity
                 style={[styles.modalButton, styles.buttonClose]}
                 onPress={() => {
+                  upload()
                   closeModal()
                   onModalExit()
                   storeAudio()
-                  // navigate to personal instead? easy fix
+                  setSelectedValue(false)
                   navigation.navigate('Public Audio Map')
                 }}
               >
@@ -143,6 +162,7 @@ export default function RecordingDetails({
               <TouchableOpacity
                 style={[styles.modalButton, styles.buttonClose]}
                 onPress={() => {
+                  setSelectedValue(false)
                   onModalExit()
                   closeModal()
                 }}

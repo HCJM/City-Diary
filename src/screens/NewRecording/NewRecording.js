@@ -7,8 +7,9 @@ import RecordingDetails from './RecordingDetails'
 import { ScrollView } from 'react-native-gesture-handler'
 
 export default function NewRecording() {
-  const [recording, setRecording] = useState()
+  const [recording, setRecording] = useState(null)
   const [sound, setSound] = React.useState()
+  const [done, setDone] = useState(false)
   const [userRecording, setUserRecording] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -35,6 +36,7 @@ export default function NewRecording() {
     try {
       console.log('Stopped recording...')
       setRecording(undefined)
+      setDone(true)
       await recording.stopAndUnloadAsync()
       setUserRecording(recording.getURI())
     } catch (error) {
@@ -87,7 +89,7 @@ export default function NewRecording() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.button}
+          style={done ? styles.button : styles.hidden}
           onPress={() => {
             recording ? stopRecording() : null
             setModalVisible(!modalVisible)
@@ -99,6 +101,9 @@ export default function NewRecording() {
         <RecordingDetails
           userRecording={userRecording}
           visible={modalVisible}
+          upload={() => {
+            setDone(false)
+          }}
           closeModal={() => {
             setModalVisible(false)
           }}

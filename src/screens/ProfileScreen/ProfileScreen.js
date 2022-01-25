@@ -53,7 +53,7 @@ export default function ProfileScreen ({ navigation }) {
                 
                 <View>
                     {userAudioFiles.map(audioFile => 
-                        <Text key={audioFile.uploadedAt}>{JSON.stringify(audioFile.title)}</Text>
+                        <Text key={audioFile.uploadedAt}>{audioFile.title}</Text>
                     )}
                 </View>
 

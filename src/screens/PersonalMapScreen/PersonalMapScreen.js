@@ -1,12 +1,9 @@
 import * as React from 'react'
-import MapView from 'react-native-maps'
 import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
+  Dimensions, StyleSheet,
+  Text, TouchableOpacity, View
 } from 'react-native'
+import MapView from 'react-native-maps'
 // import styles from './styles'
 
 //get user location authorization and use that to set region!

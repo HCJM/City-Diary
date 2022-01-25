@@ -1,20 +1,21 @@
-import 'react-native-gesture-handler'
+import { createDrawerNavigator } from '@react-navigation/drawer'
+import { NavigationContainer } from '@react-navigation/native'
+import { decode, encode } from 'base-64'
 import React, { useEffect, useState } from 'react'
+import 'react-native-gesture-handler'
 import { firebase } from './firebase.js'
 import { AuthProvider } from './src/context/AuthContext.js'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { NavigationContainer } from '@react-navigation/native'
-import { createDrawerNavigator } from '@react-navigation/drawer'
 import {
-  LoginScreen,
-  RegistrationScreen,
-  PublicMapScreen,
-  PersonalMapScreen,
   LandingScreen,
+  LoginScreen,
   NewRecording,
+  PersonalMapScreen,
+  PublicMapScreen,
+  RegistrationScreen,
 } from './src/screens'
-import { decode, encode } from 'base-64'
 import { CustomDrawerContent } from './src/screens/SignOutScreen/SignOutScreen.js'
+
+//import AsyncStorage from '@react-native-async-storage/async-storage'
 
 if (!global.btoa) {
   global.btoa = encode
@@ -39,35 +40,35 @@ export default function App() {
   useEffect(() => {
     let mounted = true
     const usersRef = firebase.firestore().collection('users')
-    const persistedUser = AsyncStorage.getItem('persistedUser')
-      .then((response) => {
-        JSON.parse(response)
-        console.log('user from async storage in APP--->>>', JSON.parse(response))
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-    if (persistedUser !== null) {
-      usersRef
-        .doc(persistedUser.id)
-        .get()
-        .then((document) => {
-          if (mounted) {
-            const userData = document.data()
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        usersRef
+          .doc(user.uid)
+          .get()
+          .then((document) => {
+            if (mounted) {
+              const userData = document.data()
+              setLoading(false)
+              setUser(userData)
+              setIsLoggedIn(true)
+            }
+          })
+          .catch(() => {
             setLoading(false)
             setUser(userData)
             setIsLoggedIn(true)
-          }
-        })
-        .catch((error) => {
-          setLoading(false)
-          mounted = false
-        })
-    } else {
-      setLoading(false)
-      setIsLoggedIn(false)
-      mounted = false
-    }
+          })
+          .catch((error) => {
+            setLoading(false)
+            mounted = false
+          })
+      } else {
+        setLoading(false)
+        setIsLoggedIn(false)
+        mounted = false
+      }
+    })
   }, [])
   // firebase.auth().onAuthStateChanged((user) => {
   //   if (user) {
@@ -137,3 +138,21 @@ export default function App() {
     </AuthProvider>
   )
 }
+
+/*
+const persistedUser = AsyncStorage.getItem('persistedUser')
+      .then((response) => {
+        JSON.parse(response)
+        console.log('user from async storage in APP--->>>', JSON.parse(response))
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    if (persistedUser !== null) {
+      usersRef
+        .doc(persistedUser.id)
+        .get()
+        .then((document) => {
+          if (mounted) {
+            const userData = document.data()
+*/

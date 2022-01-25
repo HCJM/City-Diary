@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { firebase } from '../../../firebase.js'
-import { useAuth } from '../../context/AuthContext.js'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { firebase } from '../../../firebase.js'
+import { useAuth } from '../../context/AuthContext.js'
 import styles from './styles'
+
+//import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 export default function RegistrationScreen({ navigation }) {
   const [firstName, setFirstName] = useState('')

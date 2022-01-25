@@ -50,13 +50,7 @@ export default function ProfileScreen ({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-                
-                <View>
-                    {userAudioFiles.map(audioFile => 
-                        <Text key={audioFile.uploadedAt}>{audioFile.title}</Text>
-                    )}
-                </View>
-
+            
                 {/* <Text>{JSON.stringify(userAudioFiles[0])}</Text> */}
 
 
@@ -77,17 +71,19 @@ export default function ProfileScreen ({ navigation }) {
                     <View style={styles.row}>
                     <Text style={styles.locationText}>My Audio Entries:</Text>
                     </View>
-                </View>
+                </View> 
 
-                    
+            
+                {userAudioFiles.map(audioFile => 
+                    <View style={styles.menuWrapper}>
+                        <TouchableRipple onPress={() => console.log('hello friend')}>
+                            <View style={styles.menuItem}>
+                                <Text key={audioFile.uploadedAt} style={styles.menuItemText}>{audioFile.title}</Text>
+                            </View>
+                        </TouchableRipple>
+                    </View> 
+                )}
 
-                <View style={styles.menuWrapper}>
-                    <TouchableRipple onPress={() => console.log('hello friend')}>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemText}>My Latest Entry 1-24-22</Text>
-                    </View>
-                    </TouchableRipple>
-                </View>
 
             </ScrollView>
         </SafeAreaView>

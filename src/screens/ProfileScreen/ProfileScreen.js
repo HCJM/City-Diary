@@ -68,9 +68,9 @@ export default function ProfileScreen ({ navigation }) {
 
                 {userAudioFiles.map(audioFile => 
                     <View style={styles.menuWrapper}>
-                        <TouchableRipple onPress={() => console.log('hello friend')}>
+                        <TouchableRipple onPress={() => console.log(JSON.stringify(audioFile.title))}>
                             <View style={styles.menuItem}>
-                                <Text key={audioFile.uploadedAt} style={styles.menuItemText}>{audioFile.title}</Text>
+                                <Text key={audioFile.uploadedAt} style={styles.menuItemText}>Audio Title: {audioFile.title}</Text>
                             </View>
                         </TouchableRipple>
                     </View> 

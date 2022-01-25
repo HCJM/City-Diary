@@ -10,8 +10,7 @@ import { firebase } from '../../../firebase.js'
 import { useAuth } from '../../context/AuthContext'
 import styles from './styles.js'
 
-//import AsyncStorage from '@react-native-async-storage/async-storage'
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export function CustomDrawerContent(props) {
   const [label, setLabel] = useState('')
@@ -45,7 +44,6 @@ export function CustomDrawerContent(props) {
       .then(() => {
         setCurrentUser(null)
         AsyncStorage.removeItem('persistedUser')
-        console.log('LOGGED OUT-->>>', currentUser)
         navigateToLandingPage()
       })
       .catch((error) => console.log('user cannot sign out: ', error))

@@ -6,16 +6,15 @@ import { useEffect } from 'react/cjs/react.development'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function LandingScreen({ navigation }) {
-
   useEffect(() => {
     const persistedUser = AsyncStorage.getItem('persistedUser')
       .then((response) => {
-        JSON.parse(response)
-        console.log('user from async storage in LANDING--->>>', JSON.parse(response))
+        console.log('persisted user landing page...', JSON.parse(response))
       })
       .catch((error) => {
         console.error(error)
       })
+    console.log('LANDING PAGE user--->>>', persistedUser)
   })
   const onExploreButtonPress = () => {
     navigation.navigate('Public Audio Map')

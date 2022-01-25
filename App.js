@@ -15,7 +15,7 @@ import {
 } from './src/screens'
 import { CustomDrawerContent } from './src/screens/SignOutScreen/SignOutScreen.js'
 
-//import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 if (!global.btoa) {
   global.btoa = encode
@@ -37,80 +37,35 @@ export default function App() {
   // if (loading) {
   //   return <></>
   // }
-  useEffect(() => {
+  useEffect(async () => {
     let mounted = true
+    let persistedUser
     const usersRef = firebase.firestore().collection('users')
-
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        usersRef
-          .doc(user.uid)
-          .get()
-          .then((document) => {
-            if (mounted) {
-              const userData = document.data()
-              setLoading(false)
-              setUser(userData)
-              setIsLoggedIn(true)
-            }
-          })
-          .catch(() => {
-            setLoading(false)
-            setUser(userData)
-            setIsLoggedIn(true)
-          })
-          .catch((error) => {
-            setLoading(false)
-            mounted = false
-          })
+    try {
+      let persistedUser = await AsyncStorage.getItem('persistedUser')
+      // persistedUser = JSON.parse(storedUser)
+      console.log('persisted in app-->>', persistedUser)
+      if (persistedUser.id) {
+        const userDoc = await usersRef.doc(persistedUser.id).get()
+        if (mounted) {
+          const userData = userDoc.data
+          setLoading(false)
+          setUser(userData)
+          setIsLoggedIn(true)
+          console.log('USER ON STATE-->>', currentUser)
+        } else {
+          setLoading(true)
+          mounted = false
+        }
       } else {
-        setLoading(false)
+        setLoading(true)
         setIsLoggedIn(false)
         mounted = false
       }
-    })
+    } catch (error) {
+      console.error(error)
+    }
   }, [])
-  // firebase.auth().onAuthStateChanged((user) => {
-  //   if (user) {
-  //     usersRef
-  //       .doc(user.uid)
-  //       .get()
-  //       .then((document) => {
-  //         if (mounted) {
-  //           const userData = document.data()
-  //           setLoading(false)
-  //           setUser(userData)
-  //           setIsLoggedIn(true)
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         setLoading(false)
-  //         mounted = false
-  //       })
-  //   } else
-  // if (persistedUser !== null) {
-  //   usersRef
-  //     .doc(persistedUser.id)
-  //     .get()
-  //     .then((document) => {
-  //       if (mounted) {
-  //         const userData = document.data()
-  //         setLoading(false)
-  //         setUser(userData)
-  //         setIsLoggedIn(true)
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       setLoading(false)
-  //       mounted = false
-  //     })
-  // } else {
-  //   setLoading(false)
-  //   setIsLoggedIn(false)
-  //   mounted = false
-  // }
-  //   })
-  // }, [])
 
   return (
     <AuthProvider value={user}>
@@ -148,7 +103,7 @@ const persistedUser = AsyncStorage.getItem('persistedUser')
       .catch((error) => {
         console.error(error)
       })
-    if (persistedUser !== null) {
+    if (persistedUser) {
       usersRef
         .doc(persistedUser.id)
         .get()
@@ -156,3 +111,74 @@ const persistedUser = AsyncStorage.getItem('persistedUser')
           if (mounted) {
             const userData = document.data()
 */
+
+// firebase.auth().onAuthStateChanged((user) => {
+//   if (user) {
+//     usersRef
+//       .doc(user.uid)
+//       .get()
+//       .then((document) => {
+//         if (mounted) {
+//           const userData = document.data()
+//           setLoading(false)
+//           setUser(userData)
+//           setIsLoggedIn(true)
+//         }
+//       })
+//       .catch((error) => {
+//         setLoading(false)
+//         mounted = false
+//       })
+//   } else
+// if (persistedUser !== null) {
+//   usersRef
+//     .doc(persistedUser.id)
+//     .get()
+//     .then((document) => {
+//       if (mounted) {
+//         const userData = document.data()
+//         setLoading(false)
+//         setUser(userData)
+//         setIsLoggedIn(true)
+//       }
+//     })
+//     .catch((error) => {
+//       setLoading(false)
+//       mounted = false
+//     })
+// } else {
+//   setLoading(false)
+//   setIsLoggedIn(false)
+//   mounted = false
+// }
+//   })
+// }, [])
+
+//firebase.auth().onAuthStateChanged((user) => {
+//   if (user) {
+//     usersRef
+//       .doc(user.uid)
+//       .get()
+//       .then((document) => {
+//         if (mounted) {
+//           const userData = document.data()
+//           setLoading(false)
+//           setUser(userData)
+//           setIsLoggedIn(true)
+//         }
+//       })
+//       .catch(() => {
+//         setLoading(false)
+//         setUser(userData)
+//         setIsLoggedIn(true)
+//       })
+//       .catch((error) => {
+//         setLoading(false)
+//         mounted = false
+//       })
+//   } else {
+//     setLoading(false)
+//     setIsLoggedIn(false)
+//     mounted = false
+//   }
+// })

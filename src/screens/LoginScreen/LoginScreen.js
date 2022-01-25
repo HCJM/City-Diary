@@ -7,7 +7,6 @@ import styles from './styles'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -18,33 +17,30 @@ export default function LoginScreen({ navigation }) {
   }
 
   const onLoginPress = async () => {
-    await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        const uid = response.user.uid
-        const usersRef = firebase.firestore().collection('users')
-        usersRef
-          .doc(uid)
-          .get()
-          .then((firestoreDocument) => {
-            if (!firestoreDocument.exists) {
-              alert('User does not exist anymore.')
-              return
-            }
-            const user = firestoreDocument.data()
-            setCurrentUser(user)
-            AsyncStorage.setItem('persistedUser', JSON.stringify(user))
-
-            navigation.navigate('Public Audio Map')
-          })
-          .catch((error) => {
-            alert(error)
-          })
-      })
-      .catch((error) => {
-        alert(error)
-      })
+    try {
+      const userFromFirebase = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+      const uid = userFromFirebase.id
+      const usersRef = firebase.firestore().collection('users')
+      const userDoc = await usersRef.doc(uid).get()
+      console.log('firebase user doc-->>', userDoc)
+      if (!userDoc) {
+        alert('User does not exist anymore.')
+        return
+      } else {
+        const loggedInUser = userDoc.data()
+        await setCurrentUser(loggedInUser)
+        // await AsyncStorage.setItem(
+        //   'persistedUser',
+        //   JSON.stringify(loggedInUser)
+        // )
+        console.log('USER LOGGED IN-->>', loggedInUser)
+        navigation.navigate('Public Audio Map')
+      }
+    } catch (error) {
+      alert(error)
+    }
   }
 
   const resetLoginInputFields = () => {
@@ -101,3 +97,33 @@ export default function LoginScreen({ navigation }) {
     </View>
   )
 }
+
+/*
+await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        const uid = response.user.uid
+        const usersRef = firebase.firestore().collection('users')
+        usersRef
+          .doc(uid)
+          .get()
+          .then((firestoreDocument) => {
+            if (!firestoreDocument.exists) {
+              alert('User does not exist anymore.')
+              return
+            }
+            const user = firestoreDocument.data()
+            setCurrentUser(user)
+            AsyncStorage.setItem('persistedUser', JSON.stringify(user))
+
+            navigation.navigate('Public Audio Map')
+          })
+          .catch((error) => {
+            alert(error)
+          })
+      })
+      .catch((error) => {
+        alert(error)
+      })
+*/

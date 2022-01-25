@@ -48,11 +48,11 @@ export default function App() {
       if (persistedUser.id) {
         const userDoc = await usersRef.doc(persistedUser.id).get()
         if (mounted) {
-          const userData = userDoc.data
+          let dataFromFB = userDoc.data
           setLoading(false)
-          setUser(userData)
+          setUser(dataFromFB)
           setIsLoggedIn(true)
-          console.log('USER ON STATE-->>', currentUser)
+          console.log('USER ON STATE-->>', user)
         } else {
           setLoading(true)
           mounted = false
@@ -79,15 +79,32 @@ export default function App() {
             itemStyle: { marginVertical: 10 },
           }}
         >
-          <Drawer.Screen name="Explore" component={LandingScreen} />
-          <Drawer.Screen name="Login" component={LoginScreen} />
-          <Drawer.Screen name="Registration" component={RegistrationScreen} />
-          <Drawer.Screen name="Public Audio Map" component={PublicMapScreen} />
-          <Drawer.Screen
-            name="Personal Audio Map"
-            component={PersonalMapScreen}
-          />
-          <Drawer.Screen name="New Recording" component={NewRecording} />
+          {user ? (
+            <>
+              <Drawer.Screen
+                name="Public Audio Map"
+                component={PublicMapScreen}
+              />
+              <Drawer.Screen
+                name="Personal Audio Map"
+                component={PersonalMapScreen}
+              />
+              <Drawer.Screen name="New Recording" component={NewRecording} />
+            </>
+          ) : (
+            <>
+              <Drawer.Screen name="Explore" component={LandingScreen} />
+              <Drawer.Screen name="Login" component={LoginScreen} />
+              <Drawer.Screen
+                name="Registration"
+                component={RegistrationScreen}
+              />
+              <Drawer.Screen
+                name="Public Audio Map"
+                component={PublicMapScreen}
+              />
+            </>
+          )}
         </Drawer.Navigator>
       </NavigationContainer>
     </AuthProvider>

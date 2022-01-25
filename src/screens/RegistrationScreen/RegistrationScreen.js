@@ -5,7 +5,7 @@ import { firebase } from '../../../firebase.js'
 import { useAuth } from '../../context/AuthContext.js'
 import styles from './styles'
 
-import AsyncStorage from '@react-native-async-storage/async-storage'
+// import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function RegistrationScreen({ navigation }) {
   const [firstName, setFirstName] = useState('')
@@ -43,7 +43,7 @@ export default function RegistrationScreen({ navigation }) {
           .set(data)
           .then(() => {
             setCurrentUser(data)
-            AsyncStorage.setItem('persistedUser', JSON.stringify(data))
+            // AsyncStorage.setItem('persistedUser', JSON.stringify(data))
 
             navigation.navigate('Public Audio Map')
           })

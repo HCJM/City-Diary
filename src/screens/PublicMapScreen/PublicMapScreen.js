@@ -11,8 +11,6 @@ import SignInPrompt from './SignInPromptModal.js'
 import styles from './styles'
 import MapScreenModule from './MapScreenModule.js'
 
-import AsyncStorage from '@react-native-async-storage/async-storage'
-
 const deltas = {
   latitudeDelta: 0.2,
   longitudeDelta: 0.05,
@@ -32,7 +30,6 @@ export default function PublicMapScreen({ navigation }) {
 
   const onRecordPress = () => {
     if (currentUser.id) {
-      AsyncStorage.setItem('persistedUser', JSON.stringify(currentUser))
       navigation.navigate('New Recording')
     } else {
       setOpen(true)

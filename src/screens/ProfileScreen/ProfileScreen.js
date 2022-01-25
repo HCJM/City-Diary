@@ -23,8 +23,8 @@ export default function ProfileScreen ({ navigation }) {
         
 
         const fetchAllUserAudio = async () => {
-            const userAudioRef = firebase.firestore().collection('audio')
-            userAudioRef.onSnapshot((querySnapShot) => {
+            const allAudioRef = firebase.firestore().collection('audio')
+            allAudioRef.where('userId', '==', 'n1oN7vmAXeYf2PbFOJDf5nr9sNJ3' ).onSnapshot((querySnapShot) => {
                 const audioList = []
                 querySnapShot.forEach((doc) => {
                     audioList.push(doc.data())

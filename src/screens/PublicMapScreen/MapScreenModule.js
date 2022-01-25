@@ -15,7 +15,6 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
   const [sound, setSound] = useState('')
   const [isPlaying, setIsPlaying] = useState(false)
 
-  
   const filterOutAllPrivateAudio = audioDetails.filter(
     (audioDoc) => audioDoc.data.isPrivate === false
   )
@@ -25,7 +24,6 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
       audioDoc.data.userId === currentUser.id ||
       audioDoc.data.isPrivate === false
   )
-  
 
   async function playSound(uri) {
     try {
@@ -65,38 +63,8 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
         showsUserLocation={true}
         zoomEnabled={true}
       >
-        {audioDetails.map((audioDoc) => (
-          <Marker
-            onPress={() => {
-              playSound(audioDoc.data.downloadUrl)
-            }}
-            onDeselect={stopSound}
-            key={audioDoc.id}
-            title={audioDoc.data.title}
-            description={audioDoc.data.description}
-            coordinate={{
-              latitude: audioDoc.data.location.latitude,
-              longitude: audioDoc.data.location.longitude,
-              ...deltas,
-            }}
-            pinColor={
-              audioDoc.data.userId === currentUser.id ? '#000000' : '#FF0000'
-            }
-          />
-        ))}
-      </MapView>
-    </View>
-  )
-}
- {/* {location ? (
-        currentUser.id ? (
-          <MapView
-            initialRegion={userRegion}
-            style={styles.map}
-            showsUserLocation={true}
-            zoomEnabled={true}
-          >
-            {filterOutOthersPrivateAudio.map((audioDoc) => (
+        {currentUser.id
+          ? filterOutOthersPrivateAudio.map((audioDoc) => (
               <Marker
                 onPress={() => {
                   playSound(audioDoc.data.downloadUrl)
@@ -118,16 +86,8 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
                     : '#FF0000'
                 }
               />
-            ))}
-          </MapView>
-        ) : (
-          <MapView
-            initialRegion={userRegion}
-            style={styles.map}
-            showsUserLocation={true}
-            zoomEnabled={true}
-          >
-            {filterOutAllPrivateAudio.map((audioDoc) => (
+            ))
+          : filterOutAllPrivateAudio.map((audioDoc) => (
               <Marker
                 onPress={() => {
                   playSound(audioDoc.data.downloadUrl)
@@ -148,33 +108,7 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
                 }
               />
             ))}
-          </MapView>
-        )
-      ) : (
-        <MapView
-          region={{
-            latitude: 40.73061,
-            longitude: -73.97,
-            ...deltas,
-          }}
-          zoomEnabled={true}
-          style={styles.map}
-        >
-          {filterOutAllPrivateAudio.map((audioDoc) => (
-            <Marker
-              onPress={() => {
-                playSound(audioDoc.data.downloadUrl)
-              }}
-              onDeselect={stopSound}
-              key={audioDoc.id}
-              title={audioDoc.data.title}
-              description={audioDoc.data.description}
-              coordinate={{
-                latitude: audioDoc.data.location.latitude,
-                longitude: audioDoc.data.location.longitude,
-                ...deltas,
-              }}
-            />
-          ))}
-        </MapView>
-      )} */}
+      </MapView>
+    </View>
+  )
+}

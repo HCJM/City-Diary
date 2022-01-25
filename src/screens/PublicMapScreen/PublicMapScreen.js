@@ -37,14 +37,14 @@ export default function PublicMapScreen({ navigation }) {
 
   const isFocused = useIsFocused()
 
-  const defaultRegion = { latitude: 40.73061, longitude: -73.97, ...deltas }
+  const defaultRegionNYC = { latitude: 40.73061, longitude: -73.97, ...deltas }
 
   useEffect(() => {
     const checkPermission = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied')
-        setUserRegion(defaultRegion)
+        setUserRegion(defaultRegionNYC)
         return
       }
       let location = await Location.getCurrentPositionAsync({})

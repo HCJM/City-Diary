@@ -7,6 +7,17 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  picker: {
+    height: 50,
+    width: 200,
+    // alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    marginVertical: 20,
+    // borderRadius: 20,
+    // padding: 10,
+    // elevation: 2,
+  },
   text: {
     color: 'black',
     fontSize: 17,
@@ -57,6 +68,9 @@ export default StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  hidden: {
+    display: 'none',
   },
   modalButton: {
     borderRadius: 20,

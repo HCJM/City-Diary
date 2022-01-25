@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import {
   View,
+  Picker,
   Text,
   SafeAreaView,
   TouchableOpacity,
@@ -24,7 +25,8 @@ export default function RecordingDetails({
   const [description, onChangeDescription] = React.useState('')
   const fileName = title.replace(/([^a-z0-9]+)/gi, '')
   const navigation = useNavigation()
-
+  const [selectedValue, setSelectedValue] = useState(false)
+  const [done, setDone] = useState(false)
   const uid = currentUser.id
 
   async function storeAudio() {
@@ -128,6 +130,19 @@ export default function RecordingDetails({
                 multiline={true}
                 value={description}
               />
+              <Picker
+                selectedValue={selectedValue}
+                style={styles.picker}
+                onValueChange={(itemValue, itemIndex) => {
+                  console.log(itemValue)
+                  setSelectedValue(itemValue)
+                }}
+              >
+                {/* If the user opts to upload publically, set isPrivate in database to false */}
+                <Picker.Item label="Upload publically" value={false} />
+                {/* If the user opts to keep private, set isPrivate in database to true */}
+                <Picker.Item label="Keep private" value={true} />
+              </Picker>
               <TouchableOpacity
                 style={[styles.modalButton, styles.buttonClose]}
                 onPress={() => {

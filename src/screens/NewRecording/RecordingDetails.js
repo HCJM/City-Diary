@@ -91,7 +91,7 @@ export default function RecordingDetails({
       instance.add({
         title,
         description,
-        isPrivate: false,
+        isPrivate: `${selectedValue}`,
         uploadedAt: new Date(),
         userId: uid,
         username: currentUser.userName,

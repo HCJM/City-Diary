@@ -1,14 +1,58 @@
-import { View, SafeAreaView } from 'react-native'
+import { useEffect, useState } from 'react'
+import { firebase } from '../../../firebase.js'
+import { useAuth } from '../../context/AuthContext'
+import { View, SafeAreaView, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Caption, Text, Title, TouchableRipple } from 'react-native-paper'
+import { Button, Caption, Text, Title, TouchableRipple } from 'react-native-paper'
 import styles from './styles.js'
 
 
 
 export default function ProfileScreen ({ navigation }) {
+    const [userAudioFiles, setUserAudioFiles] = useState([]) 
+
+    // currentUser is an object with these properties: email, firstName, id, lastName, userName
+    const currentUser = useAuth().currentUser || {}
+
+    console.log('currentUser before mount ===>', currentUser)
+    
+    useState(() => {
+        // const consFunction = () => {
+        //     console.log(currentUser.id)
+        // }
+        
+
+        const fetchAllUserAudio = async () => {
+            const userAudioRef = firebase.firestore().collection('audio')
+            userAudioRef.onSnapshot((querySnapShot) => {
+                const audioList = []
+                querySnapShot.forEach((doc) => {
+                    audioList.push(doc.data())
+                    console.log(audioList)
+                })
+            })
+
+            
+            // usersDocs.forEach((userAudioDoc) => {
+            //     const dataObj = { data: userAudioDoc.data() }
+            //     console.log(dataObj)
+            // })
+        }
+        fetchAllUserAudio()
+        
+        
+        // consFunction()
+    }, [])
+        
+
+   
+
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
+               
+
                 <View style={styles.userInfoSection}>
                     <View style={styles.nameUserNameView}>
                     <View style={styles.nameUserName}>
@@ -17,6 +61,10 @@ export default function ProfileScreen ({ navigation }) {
                     </View>
                     </View>
                 </View>
+
+                {/* <TouchableOpacity onPress={() => currentUser ? console.log(currentUser) : null}> 
+                        <Button>currentUser</Button>
+                </TouchableOpacity> */}
 
                 <View style={styles.userInfoSection}>
                     <View style={styles.row}>
@@ -45,6 +93,8 @@ export default function ProfileScreen ({ navigation }) {
                         <Text style={styles.menuItemText}>My Latest Entry 1-21-22</Text>
                     </View>
                     </TouchableRipple>
+
+                    
                 </View>
             </ScrollView>
         </SafeAreaView>

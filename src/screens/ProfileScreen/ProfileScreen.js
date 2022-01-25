@@ -14,7 +14,7 @@ export default function ProfileScreen ({ navigation }) {
     // currentUser is an object with these properties: email, firstName, id, lastName, userName
     const currentUser = useAuth().currentUser || {}
     
-    useState(() => {
+    useEffect(() => {
 
        
 
@@ -67,10 +67,10 @@ export default function ProfileScreen ({ navigation }) {
                 </View> 
 
                 {userAudioFiles.map(audioFile => 
-                    <View style={styles.menuWrapper}>
+                    <View key={audioFile.uploadedAt} style={styles.menuWrapper}>
                         <TouchableRipple onPress={() => console.log(JSON.stringify(audioFile.title))}>
                             <View style={styles.menuItem}>
-                                <Text key={audioFile.uploadedAt} style={styles.menuItemText}>Audio Title: {audioFile.title}</Text>
+                                <Text style={styles.menuItemText}>Audio Title: {audioFile.title}</Text>
                             </View>
                         </TouchableRipple>
                     </View> 

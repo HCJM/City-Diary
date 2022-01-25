@@ -29,6 +29,7 @@ export default function ProfileScreen ({ navigation }) {
                     audioList.push(doc.data())
                     console.log(audioList)
                 })
+                setUserAudioFiles(audioList)
             })
 
             
@@ -60,6 +61,8 @@ export default function ProfileScreen ({ navigation }) {
                     </View>
                     </View>
                 </View>
+
+                <Text>{JSON.stringify(userAudioFiles)}</Text>
 
                 {/* <TouchableOpacity onPress={() => currentUser ? console.log(currentUser) : null}> 
                         <Button>currentUser</Button>

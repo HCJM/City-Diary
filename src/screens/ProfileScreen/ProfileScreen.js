@@ -13,7 +13,6 @@ export default function ProfileScreen ({ navigation }) {
 
     // currentUser is an object with these properties: email, firstName, id, lastName, userName
     const currentUser = useAuth().currentUser || {}
-    console.log('this is currentUser ===>', currentUser)
     
     useState(() => {
 
@@ -23,7 +22,7 @@ export default function ProfileScreen ({ navigation }) {
 
         const fetchAllUserAudio = async () => {
             const allAudioRef = firebase.firestore().collection('audio')
-            allAudioRef.where('userId', '==', 'n1oN7vmAXeYf2PbFOJDf5nr9sNJ3' ).orderBy('uploadedAt', 'desc').onSnapshot((querySnapShot) => {
+            allAudioRef.where('userId', '==', `${currentUser.id}`).orderBy('uploadedAt', 'desc').onSnapshot((querySnapShot) => {
                 const audioList = []
                 querySnapShot.forEach((doc) => {
                     audioList.push(doc.data())

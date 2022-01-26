@@ -5,9 +5,10 @@ export const AuthContext = React.createContext(null)
 //wrapper for the provider
 export const AuthProvider = ({ user, children }) => {
   const [currentUser, setCurrentUser] = useState(user)
+  const [LoggedIn, setLoggedIn] = useState(false)
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
+    <AuthContext.Provider value={{ currentUser, setCurrentUser, LoggedIn, setLoggedIn }}>
       {children}
     </AuthContext.Provider>
   )

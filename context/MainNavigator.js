@@ -26,12 +26,15 @@ const MainNavigator = () => {
           }}
         >
           <Drawer.Screen name="Public Audio Map" component={PublicMapScreen} />
-          <Drawer.Screen
+
+          {/* this page is now a stretch goal */}
+          {/* <Drawer.Screen
             name="Personal Audio Map"
             component={PersonalMapScreen}
-          />
+          /> */}
           <Drawer.Screen name="New Recording" component={NewRecording} />
-          <Drawer.Screen name="My Profile" component={ProfileScreen}/>
+          {/* this page is now a stretch goal */}
+          {/* <Drawer.Screen name="My Profile" component={ProfileScreen}/> */}
         </Drawer.Navigator>
         ) : (
             <Drawer.Navigator>

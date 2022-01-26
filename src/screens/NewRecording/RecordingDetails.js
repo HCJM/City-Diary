@@ -4,13 +4,13 @@ import { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import {
   View,
-  Picker,
   Text,
   SafeAreaView,
   TouchableOpacity,
   Modal,
   TextInput,
 } from 'react-native'
+import { Picker } from '@react-native-picker/picker'
 import { firebase } from '../../../firebase.js'
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native'
@@ -116,11 +116,11 @@ export default function RecordingDetails({
         <Modal animationType="slide" transparent={true} visible={visible}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Tell us about this clip!</Text>
+              <Text style={styles.modalText}>Tell us about your audio clip:</Text>
               <TextInput
                 style={styles.input}
                 onChangeText={onChangeTitle}
-                placeholder="Give me a title"
+                placeholder="Title"
                 value={title}
               />
               <TextInput
@@ -140,9 +140,17 @@ export default function RecordingDetails({
                   }}
                 >
                   {/* If the user opts to upload publically, set isPrivate in database to false */}
-                  <Picker.Item label="Public" value={false} />
+                  <Picker.Item
+                    style={styles.pickerItem}
+                    label="Public"
+                    value={false}
+                  />
                   {/* If the user opts to keep private, set isPrivate in database to true */}
-                  <Picker.Item label="Private" value={true} />
+                  <Picker.Item
+                    style={styles.pickerItem}
+                    label="Private"
+                    value={true}
+                  />
                 </Picker>
               </View>
 

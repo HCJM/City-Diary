@@ -100,8 +100,8 @@ export default function PublicMapScreen({ navigation }) {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
-                Welcome to City Diary! {'\n'} {'\n'}Tap on a red marker for a
-                surprise! {'\n'} {'\n'} Tap elsewhere to stop playback
+                Welcome to City Diary! {'\n'} {'\n'}Tap on a map pin to play
+                audio. {'\n'} {'\n'} Tap elsewhere to stop audio.
               </Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}

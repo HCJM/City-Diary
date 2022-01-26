@@ -66,7 +66,7 @@ export default function NewRecording() {
       <View>
         <Image
           style={styles.image}
-          source={require('../../../assets/plainlogo.png')}
+          source={require('../../../assets/cityDiary.png')}
         />
         <Text style={styles.text}> 00 : 00 : 00 </Text>
         <TouchableOpacity

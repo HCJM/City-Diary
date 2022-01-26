@@ -16,10 +16,6 @@ export default function ProfileScreen ({ navigation }) {
     
     useEffect(() => {
 
-       
-
-        console.log('component did mount ===>', currentUser)
-
         const fetchAllUserAudio = async () => {
             const allAudioRef = firebase.firestore().collection('audio')
             allAudioRef.orderBy('uploadedAt', 'desc').where('userId', '==', `${currentUser.id}`).onSnapshot((querySnapShot) => {

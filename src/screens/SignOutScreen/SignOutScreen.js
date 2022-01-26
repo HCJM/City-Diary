@@ -14,11 +14,12 @@ export function CustomDrawerContent(props) {
   const [label, setLabel] = useState('')
   const { setCurrentUser } = useAuth()
   const { currentUser } = useAuth()
+  const { setLoggedIn } = useAuth()
 
   const navigation = useNavigation()
 
   const navigateToLandingPage = () => {
-    navigation.navigate('Explore')
+    navigation.navigate('Login')
   }
 
   const handleSignOut = async () => {
@@ -37,9 +38,10 @@ export function CustomDrawerContent(props) {
       <DrawerItemList {...props} />
       <DrawerItem
         style={styles.signOutItem}
-        label={currentUser ? 'Log Out' : ''}
+        // label={currentUser ? 'Log Out' : ''}
+        label={'Log Out'}
         onPress={() => {
-          currentUser ? handleSignOut() : null
+          setLoggedIn(false)
         }}
       />
     </DrawerContentScrollView>

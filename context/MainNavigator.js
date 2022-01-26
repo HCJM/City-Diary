@@ -18,7 +18,7 @@ const MainNavigator = () => {
     return (
         LoggedIn ? (
             <Drawer.Navigator
-        //   drawerContent={(props) => <CustomDrawerContent {...props} />}
+          drawerContent={(props) => <CustomDrawerContent {...props} />}
           drawerPosition="right"
           drawerType="front"
           screenOptions={{
@@ -37,6 +37,7 @@ const MainNavigator = () => {
         ) : (
             <Drawer.Navigator>
                 <Drawer.Screen name="Explore" component={LandingScreen} />
+                <Drawer.Screen name="Public Audio Map" component={PublicMapScreen} />
                 <Drawer.Screen name="Login" component={LoginScreen} />
                 <Drawer.Screen name="Registration" component={RegistrationScreen} />
             </Drawer.Navigator>

@@ -24,13 +24,13 @@ export default function LoginScreen({ navigation }) {
       const uid = userFromFirebase.id
       const usersRef = firebase.firestore().collection('users')
       const userDoc = await usersRef.doc(uid).get()
-      console.log('firebase user doc-->>', userDoc)
       if (!userDoc) {
         alert('User does not exist anymore.')
         return
       } else {
         const loggedInUser = userDoc.data()
         await setCurrentUser(loggedInUser)
+
         // await AsyncStorage.setItem(
         //   'persistedUser',
         //   JSON.stringify(loggedInUser)

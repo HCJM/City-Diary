@@ -4,7 +4,7 @@ import { decode, encode } from 'base-64'
 import React, { useEffect, useState } from 'react'
 import 'react-native-gesture-handler'
 import { firebase } from './firebase.js'
-import { AuthProvider } from './src/context/AuthContext.js'
+import { AuthProvider, useAuth } from './src/context/AuthContext.js'
 import {
   LandingScreen,
   LoginScreen,
@@ -52,7 +52,6 @@ export default function App() {
           setLoading(false)
           setUser(dataFromFB)
           setIsLoggedIn(true)
-          console.log('USER ON STATE-->>', user)
         } else {
           setLoading(true)
           mounted = false
@@ -70,17 +69,17 @@ export default function App() {
   return (
     <AuthProvider value={user}>
       <NavigationContainer>
-        <Drawer.Navigator
-          drawerContent={(props) => <CustomDrawerContent {...props} />}
-          drawerPosition="right"
-          drawerType="front"
-          screenOptions={{
-            activeTintColor: '#e91e63',
-            itemStyle: { marginVertical: 10 },
-          }}
-        >
-          {user ? (
-            <>
+        {user ? (
+          <>
+            <Drawer.Navigator
+              drawerContent={(props) => <CustomDrawerContent {...props} />}
+              drawerPosition="right"
+              drawerType="front"
+              screenOptions={{
+                activeTintColor: '#e91e63',
+                itemStyle: { marginVertical: 10 },
+              }}
+            >
               <Drawer.Screen
                 name="Public Audio Map"
                 component={PublicMapScreen}
@@ -90,9 +89,19 @@ export default function App() {
                 component={PersonalMapScreen}
               />
               <Drawer.Screen name="New Recording" component={NewRecording} />
-            </>
-          ) : (
-            <>
+            </Drawer.Navigator>
+          </>
+        ) : (
+          <>
+            <Drawer.Navigator
+              drawerContent={(props) => <CustomDrawerContent {...props} />}
+              drawerPosition="right"
+              drawerType="front"
+              screenOptions={{
+                activeTintColor: '#e91e63',
+                itemStyle: { marginVertical: 10 },
+              }}
+            >
               <Drawer.Screen name="Explore" component={LandingScreen} />
               <Drawer.Screen name="Login" component={LoginScreen} />
               <Drawer.Screen
@@ -103,9 +112,9 @@ export default function App() {
                 name="Public Audio Map"
                 component={PublicMapScreen}
               />
-            </>
-          )}
-        </Drawer.Navigator>
+            </Drawer.Navigator>
+          </>
+        )}
       </NavigationContainer>
     </AuthProvider>
   )

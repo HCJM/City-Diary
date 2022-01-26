@@ -70,30 +70,30 @@ export default function NewRecording() {
         />
         <Text style={styles.text}> 00 : 00 : 00 </Text>
         <TouchableOpacity
-          style={styles.button}
+          style={styles.audioButton}
           onPress={recording ? stopRecording : startRecording}
         >
-          <Text>Start Recording / Stop </Text>
+          <Text style={styles.audioButtonTitle}>Start Recording / Stop </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
-          <Text>Start Over</Text>
+        <TouchableOpacity style={styles.audioButton}>
+          <Text style={styles.audioButtonTitle}>Start Over</Text>
         </TouchableOpacity>
 
         <Text style={styles.text}> 00 : 00 : 00 / 00 : 00 : 00</Text>
 
-        <TouchableOpacity style={styles.button} onPress={playbackRecording}>
-          <Text>Play</Text>
+        <TouchableOpacity style={styles.audioButton} onPress={playbackRecording}>
+          <Text style={styles.audioButtonTitle}>Play</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={done ? styles.button : styles.hidden}
+          style={done ? styles.audioButton : styles.hidden}
           onPress={() => {
             recording ? stopRecording() : null
             setModalVisible(!modalVisible)
           }}
         >
-          <Text>Done</Text>
+          <Text style={styles.audioButtonTitle}>Done</Text>
         </TouchableOpacity>
 
         <RecordingDetails

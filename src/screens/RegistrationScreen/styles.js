@@ -1,23 +1,23 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
   title: {},
   logo: {
     flex: 1,
-    height: 120,
-    width: 90,
-    alignSelf: "center",
-    margin: 30,
+    height: 125,
+    width: 125,
+    alignSelf: 'center',
+    margin: 20,
   },
   input: {
     height: 48,
     borderRadius: 5,
-    overflow: "hidden",
-    backgroundColor: "white",
+    overflow: 'hidden',
+    backgroundColor: 'white',
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 30,
@@ -25,32 +25,40 @@ export default StyleSheet.create({
     paddingLeft: 16,
   },
   button: {
-    backgroundColor: "#788eec",
+    backgroundColor: '#4e598c',
     marginLeft: 30,
     marginRight: 30,
     marginTop: 20,
     height: 48,
     borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 4,
+    elevation: 5,
   },
   buttonTitle: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   footerView: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 20,
   },
   footerText: {
     fontSize: 16,
-    color: "#2e2e2d",
+    color: '#2e2e2d',
   },
   footerLink: {
-    color: "#788eec",
-    fontWeight: "bold",
+    color: '#4e598c',
+    fontWeight: 'bold',
     fontSize: 16,
   },
-});
+})

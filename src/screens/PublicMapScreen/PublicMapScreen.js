@@ -100,7 +100,7 @@ export default function PublicMapScreen({ navigation }) {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
-                City Diary Synopsis: {'\n'} {'\n'}Tap on a map pin to play
+                Welcome to City Diary! {'\n'} {'\n'}Tap on a map pin to play
                 audio. {'\n'} {'\n'} Tap elsewhere to stop audio.
               </Text>
               <Pressable

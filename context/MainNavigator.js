@@ -18,7 +18,7 @@ const MainNavigator = () => {
     return (
         LoggedIn ? (
             <Drawer.Navigator
-          drawerContent={(props) => <CustomDrawerContent {...props} />}
+        //   drawerContent={(props) => <CustomDrawerContent {...props} />}
           drawerPosition="right"
           drawerType="front"
           screenOptions={{

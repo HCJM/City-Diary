@@ -10,10 +10,13 @@ import { useAuth } from '../../context/AuthContext'
 import SignInPrompt from './SignInPromptModal.js'
 import styles from './styles'
 import MapScreenModule from './MapScreenModule.js'
+
+// deltas control how much of the map to display. The amount of 'zoom'.
 const deltas = {
   latitudeDelta: 0.2,
   longitudeDelta: 0.05,
 }
+
 
 export default function PublicMapScreen({ navigation }) {
   const [open, setOpen] = useState(false)

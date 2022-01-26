@@ -3,6 +3,7 @@
     "name": "city-diary",
     "slug": "city-diary",
     "privacy": "public",
+    "platforms": ["ios"],
     "description": "A mobile app that allows users to create and explore captured geolocated sound.",
     "version": "1.0.0",
     "icon": "./assets/city-diary-logos.png",

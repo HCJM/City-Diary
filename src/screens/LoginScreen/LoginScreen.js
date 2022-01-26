@@ -9,12 +9,15 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { setCurrentUser } = useAuth()
+  const { setLoggedIn } = useAuth()
+
 
   const onFooterLinkPress = () => {
     navigation.navigate('Registration')
   }
 
   const onLoginPress = async () => {
+
     await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -29,6 +32,7 @@ export default function LoginScreen({ navigation }) {
               alert('User does not exist anymore.')
               return
             }
+            setLoggedIn(true)
             const user = firestoreDocument.data()
             setCurrentUser(user)
             navigation.navigate('Public Audio Map')

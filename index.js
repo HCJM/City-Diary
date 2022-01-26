@@ -12,3 +12,5 @@ registerRootComponent(App);
 //run the seeding function once, then comment it out as the dummy data will be stored in the fire store DB
 
 // seeding()
+
+

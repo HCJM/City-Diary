@@ -5,16 +5,6 @@ import React, { useEffect, useState } from 'react'
 import 'react-native-gesture-handler'
 import { firebase } from './firebase.js'
 import { AuthProvider } from './src/context/AuthContext.js'
-import {
-  LandingScreen,
-  LoginScreen,
-  NewRecording,
-  PersonalMapScreen,
-  PublicMapScreen,
-  RegistrationScreen,
-} from './src/screens'
-import ProfileScreen from './src/screens/ProfileScreen/ProfileScreen.js'
-import { CustomDrawerContent } from './src/screens/SignOutScreen/SignOutScreen.js'
 import MainNavigator from './context/MainNavigator.js'
 
 if (!global.btoa) {

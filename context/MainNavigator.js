@@ -14,7 +14,6 @@ const Drawer = createDrawerNavigator()
 
 const MainNavigator = () => {
     const { LoggedIn } = useAuth()
-    console.log(LoggedIn)
     return (
         LoggedIn ? (
             <Drawer.Navigator

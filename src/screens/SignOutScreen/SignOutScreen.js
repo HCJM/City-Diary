@@ -41,7 +41,7 @@ export function CustomDrawerContent(props) {
         // label={currentUser ? 'Log Out' : ''}
         label={'Log Out'}
         onPress={() => {
-          setLoggedIn(false)
+          {setLoggedIn(false), setCurrentUser(null)}
         }}
       />
     </DrawerContentScrollView>

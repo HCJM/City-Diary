@@ -18,6 +18,8 @@ export default function LandingScreen({ navigation }) {
         style={styles.logo}
         source={require('../../../assets/cityDiary.png')}
       />
+      <Text style={styles.text}>every city has a story.</Text>
+      <Text style={styles.text}>be a part of it.</Text>
       <StatusBar style="auto" />
       <TouchableOpacity
         style={styles.exploreButton}

@@ -8,8 +8,8 @@ export default StyleSheet.create({
   title: {},
   logo: {
     flex: 1,
-    height: 120,
-    width: 90,
+    height: 200,
+    width: 200,
     alignSelf: 'center',
     margin: 30,
   },
@@ -25,7 +25,7 @@ export default StyleSheet.create({
     paddingLeft: 16,
   },
   button: {
-    backgroundColor: '#788eec',
+    backgroundColor: '#4e598c',
     marginLeft: 30,
     marginRight: 30,
     marginTop: 20,
@@ -33,10 +33,18 @@ export default StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 4,
+    elevation: 5,
   },
   buttonTitle: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 'bold',
   },
   footerView: {
@@ -49,7 +57,7 @@ export default StyleSheet.create({
     color: '#2e2e2d',
   },
   footerLink: {
-    color: '#788eec',
+    color: '#4e598c',
     fontWeight: 'bold',
     fontSize: 16,
   },

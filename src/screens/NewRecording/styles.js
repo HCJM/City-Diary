@@ -18,6 +18,9 @@ export default StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 20,
   },
+  pickerItem: {
+    fontSize: 17,
+  },
   text: {
     color: 'black',
     fontSize: 17,
@@ -25,11 +28,15 @@ export default StyleSheet.create({
     paddingTop: 30,
   },
   input: {
-    height: 40,
-    margin: 20,
-    borderWidth: 1,
-    padding: 10,
-    width: 200,
+    height: 48,
+    borderRadius: 5,
+    overflow: 'hidden',
+    backgroundColor: '#f5f5f5',
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 30,
+    marginRight: 30,
+    paddingLeft: 16,
   },
   image: {
     width: 150,
@@ -37,16 +44,32 @@ export default StyleSheet.create({
     alignSelf: 'center',
     marginTop: 15,
   },
-  button: {
+  audioButton: {
+    backgroundColor: '#85c7f2',
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 50,
+    // marginBottom: 30,
+    height: 48,
+    width: 330,
+    borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'grey',
-    padding: 13,
-    paddingHorizontal: 20,
-    marginTop: 42,
-    marginHorizontal: 65,
-    width: 250,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
+  audioButtonTitle: {
+    color: 'white',
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+
   // Modal start
   centeredView: {
     flex: 1,
@@ -73,15 +96,23 @@ export default StyleSheet.create({
     display: 'none',
   },
   modalButton: {
-    borderRadius: 20,
+    borderRadius: 5,
     padding: 10,
-    elevation: 2,
+    marginBottom: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#4e598c',
     marginVertical: 15,
   },
   textStyle: {
@@ -92,7 +123,8 @@ export default StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 17,
   },
   // Modal end
 })
+

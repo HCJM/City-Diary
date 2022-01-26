@@ -13,6 +13,7 @@ export default function RegistrationScreen({ navigation }) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const { setCurrentUser } = useAuth()
+  const { setLoggedIn } = useAuth()
 
   const onFooterLinkPress = () => {
     navigation.navigate('Login')
@@ -40,6 +41,7 @@ export default function RegistrationScreen({ navigation }) {
           .doc(uid)
           .set(data)
           .then(() => {
+            setLoggedIn(true)
             setCurrentUser(data)
             navigation.navigate('Public Audio Map')
           })

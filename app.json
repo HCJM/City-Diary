@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "City Diary 3",
-    "slug": "City-Diary",
+    "name": "city-diary",
+    "slug": "city-diary",
     "privacy": "public",
     "platforms": ["ios", "web"],
     "description": "A mobile app that allows users to create and explore captured geolocated sound.",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/city-diary-logos_black.png",
       "resizeMode": "contain",
-      "backgroundColor":"#ffffff"
+      "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -19,5 +19,4 @@
     }
   },
   "name": "city-diary"
- }
- 
+}

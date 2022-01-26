@@ -8,8 +8,14 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: 250,
-    height: 250,
+    width: 275,
+    height: 275,
+    // marginTop: 0,
+    // paddingTop: 0
+  },
+  text: {
+    marginTop: 20,
+    fontSize: 20
   },
   exploreButton: {
     backgroundColor: '#85c7f2',

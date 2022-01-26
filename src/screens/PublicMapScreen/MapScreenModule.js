@@ -82,9 +82,9 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
                 pinColor={
                   audioDoc.data.userId === currentUser.id
                     ? audioDoc.data.isPrivate
-                      ? '#000000'
-                      : '#008000'
-                    : '#FF0000'
+                      ? '#306B34'
+                      : '#FCAF58'
+                    : '#FF5A5F'
                 }
               />
             ))
@@ -102,6 +102,7 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
                   longitude: audioDoc.data.location.longitude,
                   ...deltas,
                 }}
+                pinColor='#FF5A5F'
               />
             ))}
       </MapView>

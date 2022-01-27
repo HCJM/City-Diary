@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/drawer'
 import { useNavigation } from '@react-navigation/native'
 import * as React from 'react'
-import { useState } from 'react/cjs/react.development'
+import { useState } from 'react'
 import { firebase } from '../../../firebase.js'
 import { useAuth } from '../../context/AuthContext'
 import styles from './styles.js'

@@ -96,4 +96,21 @@ export default StyleSheet.create({
     top: 20,
     backgroundColor: '#fff',
   },
+  // Callout Start
+  calloutView: {
+    margin: 10,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 15,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  // CalloutEnd
 })

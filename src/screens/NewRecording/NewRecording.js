@@ -6,13 +6,13 @@ import styles from './styles'
 import RecordingDetails from './RecordingDetails'
 
 export default function NewRecording() {
-  const [recording, setRecording] = useState()
+  const [recording, setRecording] = useState(null)
   const [sound, setSound] = React.useState()
   const [userRecording, setUserRecording] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   //const [timerSeconds, setTimerSeconds] = useState(0)
   //const [timerMinutes, setTimerMinutes] = useState(0)
-  const [timeoutID, setTimeoutID] = useState({})
+  const [timeoutID, setTimeoutID] = useState(null)
   const [time, setTime] = useState({ seconds: 0, minutes: 0, hours: 0 })
 
   async function startRecording() {
@@ -39,7 +39,7 @@ export default function NewRecording() {
   async function stopRecording() {
     try {
       console.log('Stopped recording...')
-      setRecording(undefined)
+      setRecording(null)
       //clearInterval(timeoutID)
       await recording.stopAndUnloadAsync()
       setUserRecording(recording.getURI())
@@ -66,18 +66,19 @@ export default function NewRecording() {
       : undefined
   }, [sound])
 
-  const timerContext = () => {
+  const startTimerContext = () => {
     let timerVar = setInterval(startTimer, 1000)
     let totalSeconds = 0
-    // setTimeoutID(timerVar)
+    setTimeoutID(timerVar)
     // console.log(timeoutID)
     function startTimer() {
       //let totalSeconds = 0
       totalSeconds++
       let hour = Math.floor(totalSeconds / 3600)
       let minute = Math.floor((totalSeconds - hour * 3600) / 60)
-      let seconds = totalSeconds - (hour * 3600 + minute * 60)
-      if (seconds <= 20) {
+      let second = totalSeconds - (hour * 3600 + minute * 60)
+      setTime({ hours: hour, minutes: minute, seconds: second })
+      if (second <= 20) {
         console.log(totalSeconds)
       } else {
         clearInterval(timerVar)
@@ -92,8 +93,18 @@ export default function NewRecording() {
 
   const stopTimeContext = () => {
     clearInterval(timeoutID)
+    setTime({ hours: 0, minutes: 0, seconds: 0 })
   }
-  //setTime({ hours: hour, minutes: minute, seconds: seconds })
+
+  const handleRecordingPress = () => {
+    if (recording) {
+      stopTimeContext()
+      stopRecording()
+    } else {
+      startTimerContext()
+      startRecording()
+    }
+  }
 
   return (
     <SafeAreaView>
@@ -108,15 +119,11 @@ export default function NewRecording() {
             time.seconds < 10 ? '0' + time.seconds : time.seconds
           }`}{' '}
         </Text> */}
-        {/* <Text style={styles.text}>
+        <Text style={styles.text}>
           {' '}
           {`${time.hours} : ${time.minutes} : ${time.seconds}`}{' '}
-        </Text> */}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={recording ? stopRecording : startRecording}
-          onPress={recording ? stopTimeContext : timerContext}
-        >
+        </Text>
+        <TouchableOpacity style={styles.button} onPress={handleRecordingPress}>
           <Text>Start Recording / Stop </Text>
         </TouchableOpacity>
 

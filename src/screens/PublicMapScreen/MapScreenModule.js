@@ -91,7 +91,27 @@ export default function MapScreenModule({
                       : '#FCAF58'
                     : '#FF5A5F'
                 }
-              />
+              >
+                <Callout tooltip>
+                  <View style={styles.calloutView}>
+                    <Text
+                      style={[
+                        styles.modalText,
+                        { fontWeight: 'bold', fontSize: 20 },
+                      ]}
+                    >{`${audioDoc.data.title}`}</Text>
+                    <Text
+                      style={styles.modalText}
+                    >{`${audioDoc.data.description}`}</Text>
+                    <Text
+                      style={[
+                        styles.modalText,
+                        { fontWeight: 'bold', fontStyle: 'italic' },
+                      ]}
+                    >{`Uploaded by ${audioDoc.data.username}`}</Text>
+                  </View>
+                </Callout>
+              </Marker>
             ))
           : filterOutAllPrivateAudio.map((audioDoc) => (
               <Marker

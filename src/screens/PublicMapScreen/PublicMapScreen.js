@@ -17,7 +17,6 @@ const deltas = {
   longitudeDelta: 0.05,
 }
 
-
 export default function PublicMapScreen({ navigation }) {
   const [open, setOpen] = useState(false)
   const [location, setLocation] = useState(null)
@@ -85,6 +84,7 @@ export default function PublicMapScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <MapScreenModule
+        initialRegion={defaultRegionNYC}
         region={userRegion}
         audioDetails={audioDetails}
         currentUser={currentUser}

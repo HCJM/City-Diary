@@ -65,50 +65,53 @@ export default function NewRecording() {
   return (
     <SafeAreaView>
       <ScrollView>
-      <View>
-        <Image
-          style={styles.image}
-          source={require('../../../assets/cityDiary.png')}
-        />
-        <Text style={styles.text}> 00 : 00 : 00 </Text>
-        <TouchableOpacity
-          style={styles.audioButton}
-          onPress={recording ? stopRecording : startRecording}
-        >
-          <Text style={styles.audioButtonTitle}>Start Recording / Stop </Text>
-        </TouchableOpacity>
+        <View>
+          <Image
+            style={styles.image}
+            source={require('../../../assets/cityDiary.png')}
+          />
+          <Text style={styles.text}> 00 : 00 : 00 </Text>
+          <TouchableOpacity
+            style={styles.audioButton}
+            onPress={recording ? stopRecording : startRecording}
+          >
+            <Text style={styles.audioButtonTitle}>Start Recording / Stop </Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.audioButton}>
-          <Text style={styles.audioButtonTitle}>Start Over</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.audioButton}>
+            <Text style={styles.audioButtonTitle}>Start Over</Text>
+          </TouchableOpacity>
 
-        <Text style={styles.text}> 00 : 00 : 00 / 00 : 00 : 00</Text>
+          <Text style={styles.text}> 00 : 00 : 00 / 00 : 00 : 00</Text>
 
-        <TouchableOpacity style={styles.audioButton} onPress={playbackRecording}>
-          <Text style={styles.audioButtonTitle}>Play</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.audioButton}
+            onPress={playbackRecording}
+          >
+            <Text style={styles.audioButtonTitle}>Play</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={done ? styles.audioButton : styles.hidden}
-          onPress={() => {
-            recording ? stopRecording() : null
-            setModalVisible(!modalVisible)
-          }}
-        >
-          <Text style={styles.audioButtonTitle}>Done</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={done ? styles.audioButton : styles.hidden}
+            onPress={() => {
+              recording ? stopRecording() : null
+              setModalVisible(!modalVisible)
+            }}
+          >
+            <Text style={styles.audioButtonTitle}>Done</Text>
+          </TouchableOpacity>
 
-        <RecordingDetails
-          userRecording={userRecording}
-          visible={modalVisible}
-          upload={() => {
-            setDone(false)
-          }}
-          closeModal={() => {
-            setModalVisible(false)
-          }}
-        />
-      </View>
+          <RecordingDetails
+            userRecording={userRecording}
+            visible={modalVisible}
+            uploadButton={() => {
+              setDone(false)
+            }}
+            closeModal={() => {
+              setModalVisible(false)
+            }}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   )

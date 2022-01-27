@@ -18,7 +18,7 @@ import { useNavigation } from '@react-navigation/native'
 export default function RecordingDetails({
   visible,
   closeModal,
-  upload,
+  uploadButton,
   userRecording,
 }) {
   const currentUser = useAuth().currentUser || {}
@@ -101,6 +101,7 @@ export default function RecordingDetails({
         ),
       })
       console.log('Added!')
+      navigation.navigate('Public Audio Map')
     } catch (error) {
       console.log(error)
     }
@@ -116,7 +117,9 @@ export default function RecordingDetails({
         <Modal animationType="slide" transparent={true} visible={visible}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Tell us about your audio clip:</Text>
+              <Text style={styles.modalText}>
+                Tell us about your audio clip:
+              </Text>
               <TextInput
                 style={styles.input}
                 onChangeText={onChangeTitle}
@@ -157,12 +160,11 @@ export default function RecordingDetails({
               <TouchableOpacity
                 style={[styles.modalButton, styles.buttonClose]}
                 onPress={() => {
-                  upload()
+                  uploadButton()
                   closeModal()
                   onModalExit()
                   storeAudio()
                   setSelectedValue(false)
-                  navigation.navigate('Public Audio Map')
                 }}
               >
                 <Text style={styles.textStyle}>Upload</Text>

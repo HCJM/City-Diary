@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import * as React from 'react'
+import { useState } from 'react'
 
 export const AuthContext = React.createContext(null)
 
@@ -8,7 +9,9 @@ export const AuthProvider = ({ user, children }) => {
   const [LoggedIn, setLoggedIn] = useState(false)
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser, LoggedIn, setLoggedIn }}>
+    <AuthContext.Provider
+      value={{ currentUser, setCurrentUser, LoggedIn, setLoggedIn }}
+    >
       {children}
     </AuthContext.Provider>
   )

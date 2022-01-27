@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
+import * as React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import styles from './styles'

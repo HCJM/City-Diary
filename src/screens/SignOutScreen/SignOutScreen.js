@@ -19,7 +19,7 @@ export function CustomDrawerContent(props) {
   const navigation = useNavigation()
 
   const navigateToLandingPage = () => {
-    navigation.navigate('Login')
+    navigation.navigate('Explore')
   }
 
   const handleSignOut = async () => {
@@ -41,7 +41,9 @@ export function CustomDrawerContent(props) {
         // label={currentUser ? 'Log Out' : ''}
         label={'Log Out'}
         onPress={() => {
-          {setLoggedIn(false), setCurrentUser(null)}
+          {
+            setLoggedIn(false), handleSignOut()
+          }
         }}
       />
     </DrawerContentScrollView>

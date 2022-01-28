@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#A9A9A9',
+    // backgroundColor: '#A9A9A9',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -127,4 +127,3 @@ export default StyleSheet.create({
   },
   // Modal end
 })
-

@@ -10,7 +10,10 @@ export default function LoadingModal() {
         <Modal animationType="slide" transparent={true} visible={true}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Thanks for your entry!</Text>
+              <Text style={styles.modalText}>
+                Thanks for contributing! {'/n'} Please wait while we upload your
+                entry!
+              </Text>
             </View>
           </View>
         </Modal>

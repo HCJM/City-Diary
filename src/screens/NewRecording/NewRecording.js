@@ -66,7 +66,7 @@ export default function NewRecording() {
   }, [sound])
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <View>
           <Image

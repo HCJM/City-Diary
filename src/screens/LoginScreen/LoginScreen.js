@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import * as React from 'react'
+import { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { firebase } from '../../../firebase.js'
@@ -9,6 +10,7 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { setCurrentUser } = useAuth()
+  const { setLoggedIn } = useAuth()
 
   const onFooterLinkPress = () => {
     navigation.navigate('Registration')
@@ -29,6 +31,7 @@ export default function LoginScreen({ navigation }) {
               alert('User does not exist anymore.')
               return
             }
+            setLoggedIn(true)
             const user = firestoreDocument.data()
             setCurrentUser(user)
             navigation.navigate('Public Audio Map')
@@ -55,7 +58,7 @@ export default function LoginScreen({ navigation }) {
       >
         <Image
           style={styles.logo}
-          source={require('../../../assets/icon.png')}
+          source={require('../../../assets/cityDiary.png')}
         />
         <TextInput
           style={styles.input}

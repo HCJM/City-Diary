@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import { Audio } from 'expo-av'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Callout, Marker } from 'react-native-maps'
 import { useState } from 'react'
 import styles from './styles'
 
@@ -10,7 +10,12 @@ const deltas = {
   longitudeDelta: 0.05,
 }
 
-export default function MapScreenModule({ region, audioDetails, currentUser }) {
+export default function MapScreenModule({
+  region,
+  audioDetails,
+  currentUser,
+  initialRegion,
+}) {
   // for grabbing from db
   const [sound, setSound] = useState('')
   const [isPlaying, setIsPlaying] = useState(false)
@@ -58,7 +63,7 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
   return (
     <View>
       <MapView
-        region={region}
+        initialRegion={region}
         style={styles.map}
         showsUserLocation={true}
         zoomEnabled={true}
@@ -81,11 +86,31 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
                 pinColor={
                   audioDoc.data.userId === currentUser.id
                     ? audioDoc.data.isPrivate
-                      ? '#000000'
-                      : '#008000'
-                    : '#FF0000'
+                      ? '#306B34'
+                      : '#FCAF58'
+                    : '#FF5A5F'
                 }
-              />
+              >
+                <Callout tooltip>
+                  <View style={styles.calloutView}>
+                    <Text
+                      style={[
+                        styles.modalText,
+                        { fontWeight: 'bold', fontSize: 20 },
+                      ]}
+                    >{`${audioDoc.data.title}`}</Text>
+                    <Text
+                      style={styles.modalText}
+                    >{`${audioDoc.data.description}`}</Text>
+                    <Text
+                      style={[
+                        styles.modalText,
+                        { fontWeight: 'bold', fontStyle: 'italic' },
+                      ]}
+                    >{`Uploaded by ${audioDoc.data.username}`}</Text>
+                  </View>
+                </Callout>
+              </Marker>
             ))
           : filterOutAllPrivateAudio.map((audioDoc) => (
               <Marker
@@ -94,14 +119,35 @@ export default function MapScreenModule({ region, audioDetails, currentUser }) {
                 }}
                 onDeselect={stopSound}
                 key={audioDoc.id}
-                title={audioDoc.data.title}
-                description={audioDoc.data.description}
+                // title={audioDoc.data.title}
+                // description={audioDoc.data.description}
                 coordinate={{
                   latitude: audioDoc.data.location.latitude,
                   longitude: audioDoc.data.location.longitude,
                   ...deltas,
                 }}
-              />
+                pinColor="#FF5A5F"
+              >
+                <Callout tooltip>
+                  <View style={styles.calloutView}>
+                    <Text
+                      style={[
+                        styles.modalText,
+                        { fontWeight: 'bold', fontSize: 20 },
+                      ]}
+                    >{`${audioDoc.data.title}`}</Text>
+                    <Text
+                      style={styles.modalText}
+                    >{`${audioDoc.data.description}`}</Text>
+                    <Text
+                      style={[
+                        styles.modalText,
+                        { fontWeight: 'bold', fontStyle: 'italic' },
+                      ]}
+                    >{`Uploaded by ${audioDoc.data.username}`}</Text>
+                  </View>
+                </Callout>
+              </Marker>
             ))}
       </MapView>
     </View>

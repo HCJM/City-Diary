@@ -5,6 +5,7 @@ import { Text, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import styles from './styles'
 import RecordingDetails from './RecordingDetails'
 import { ScrollView } from 'react-native-gesture-handler'
+import LoadingModal from './LoadingModal'
 
 export default function NewRecording() {
   const [recording, setRecording] = useState(null)
@@ -12,6 +13,8 @@ export default function NewRecording() {
   const [done, setDone] = useState(false)
   const [userRecording, setUserRecording] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
+  const [loading, setLoading] = useState(false)
+  console.log(loading)
 
   async function startRecording() {
     try {
@@ -100,17 +103,24 @@ export default function NewRecording() {
           >
             <Text style={styles.audioButtonTitle}>Done</Text>
           </TouchableOpacity>
-
+          {/* {loading && <LoadingModal />} */}
+          {/* {loading ? (
+            <LoadingModal />
+          ) : ( */}
           <RecordingDetails
             userRecording={userRecording}
             visible={modalVisible}
             uploadButton={() => {
+              setLoading(true)
               setDone(false)
             }}
             closeModal={() => {
               setModalVisible(false)
             }}
+            setLoading={() => setLoading(false)}
+            loading={loading}
           />
+          {/* )} */}
         </View>
       </ScrollView>
     </SafeAreaView>

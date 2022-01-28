@@ -23,6 +23,7 @@ export default function RecordingDetails({
   userRecording,
   setLoading,
   loading,
+  timeReset,
 }) {
   const currentUser = useAuth().currentUser || {}
   const [title, onChangeTitle] = useState('')
@@ -172,6 +173,7 @@ export default function RecordingDetails({
                   onModalExit()
                   storeAudio()
                   setSelectedValue(false)
+                  timeReset()
                 }}
               >
                 <Text style={styles.textStyle}>Upload</Text>

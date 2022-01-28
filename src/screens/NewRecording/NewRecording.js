@@ -103,7 +103,6 @@ export default function NewRecording() {
           >
             <Text style={styles.audioButtonTitle}>Done</Text>
           </TouchableOpacity>
-          {/* {loading && <LoadingModal />} */}
 
           <RecordingDetails
             userRecording={userRecording}
@@ -115,7 +114,7 @@ export default function NewRecording() {
             closeModal={() => {
               setModalVisible(false)
             }}
-            setLoading={() => setLoading(false)}
+            setLoading={setLoading}
             loading={loading}
           />
         </View>

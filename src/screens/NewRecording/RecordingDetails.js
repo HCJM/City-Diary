@@ -105,7 +105,7 @@ export default function RecordingDetails({
       })
       console.log('Added!')
       setTimeout(() => {
-        setLoading()
+        setLoading(false)
         navigation.navigate('Public Audio Map')
       }, 3000)
     } catch (error) {

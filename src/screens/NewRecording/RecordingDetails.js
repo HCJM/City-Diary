@@ -14,12 +14,15 @@ import { Picker } from '@react-native-picker/picker'
 import { firebase } from '../../../firebase.js'
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native'
+import LoadingModal from './LoadingModal'
 
 export default function RecordingDetails({
   visible,
   closeModal,
   uploadButton,
   userRecording,
+  setLoading,
+  loading,
 }) {
   const currentUser = useAuth().currentUser || {}
   const [title, onChangeTitle] = useState('')
@@ -101,6 +104,7 @@ export default function RecordingDetails({
         ),
       })
       console.log('Added!')
+      setLoading()
       navigation.navigate('Public Audio Map')
     } catch (error) {
       console.log(error)
@@ -113,6 +117,7 @@ export default function RecordingDetails({
   }
   return (
     <SafeAreaView>
+      {loading && <LoadingModal />}
       <View>
         <Modal animationType="slide" transparent={true} visible={visible}>
           <View style={styles.centeredView}>

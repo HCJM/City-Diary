@@ -13,8 +13,9 @@ export default function NewRecording() {
   const [done, setDone] = useState(false)
   const [userRecording, setUserRecording] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
+  const [timeoutID, setTimeoutID] = useState(null)
+  const [time, setTime] = useState({ seconds: 0, minutes: 0, hours: 0 })
   const [loading, setLoading] = useState(false)
-
 
   async function startRecording() {
     try {
@@ -29,6 +30,8 @@ export default function NewRecording() {
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
       )
       setRecording(recording)
+      //const timerPush = setInterval(startTimer, 1000)
+      //settimeoutID(timerPush)
       console.log('Recording started')
     } catch (err) {
       console.error('Failed to start recording', err)
@@ -65,6 +68,46 @@ export default function NewRecording() {
       : undefined
   }, [sound])
 
+  const startTimerContext = () => {
+    let timerVar = setInterval(startTimer, 1000)
+    let totalSeconds = 0
+    setTimeoutID(timerVar)
+    // console.log(timeoutID)
+    function startTimer() {
+      //let totalSeconds = 0
+      totalSeconds++
+      let hour = Math.floor(totalSeconds / 3600)
+      let minute = Math.floor((totalSeconds - hour * 3600) / 60)
+      let second = totalSeconds - (hour * 3600 + minute * 60)
+      setTime({ hours: hour, minutes: minute, seconds: second })
+      if (second <= 20) {
+        console.log(totalSeconds)
+      } else {
+        clearInterval(timerVar)
+      }
+      // let seconds = totalSeconds - (hour * 3600 + minute * 60)
+      // console.log(totalSeconds)
+      // if (hour < 10) hour = '0' + hour
+      // if (minute < 10) minute = '0' + minute
+      // if (seconds < 10) seconds = '0' + seconds
+    }
+  }
+
+  const stopTimeContext = () => {
+    clearInterval(timeoutID)
+    setTime({ hours: 0, minutes: 0, seconds: 0 })
+  }
+
+  const handleRecordingPress = () => {
+    if (recording) {
+      stopTimeContext()
+      stopRecording()
+    } else {
+      startTimerContext()
+      startRecording()
+    }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -73,10 +116,10 @@ export default function NewRecording() {
             style={styles.image}
             source={require('../../../assets/cityDiary.png')}
           />
-          <Text style={styles.text}> 00 : 00 : 00 </Text>
+          <Text style={styles.text}> {`${time.hours} : ${time.minutes} : ${time.seconds}`} </Text>
           <TouchableOpacity
             style={styles.audioButton}
-            onPress={recording ? stopRecording : startRecording}
+            onPress={handleRecordingPress}
           >
             <Text style={styles.audioButtonTitle}>Start Recording / Stop </Text>
           </TouchableOpacity>
@@ -85,7 +128,6 @@ export default function NewRecording() {
             <Text style={styles.audioButtonTitle}>Start Over</Text>
           </TouchableOpacity>
 
-          <Text style={styles.text}> 00 : 00 : 00 / 00 : 00 : 00</Text>
 
           <TouchableOpacity
             style={styles.audioButton}

@@ -90,11 +90,12 @@ export default StyleSheet.create({
     fontWeight: 'bold',
   },
   paragraph: {
-    fontSize: 16,
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#4e598c',
     textAlign: 'center',
     position: 'absolute',
     top: 20,
-    backgroundColor: '#fff',
   },
   // Callout Start
   calloutView: {

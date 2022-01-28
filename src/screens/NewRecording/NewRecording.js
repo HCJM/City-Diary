@@ -14,7 +14,7 @@ export default function NewRecording() {
   const [userRecording, setUserRecording] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [loading, setLoading] = useState(false)
-  console.log(loading)
+
 
   async function startRecording() {
     try {

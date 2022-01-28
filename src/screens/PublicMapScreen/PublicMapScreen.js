@@ -10,6 +10,8 @@ import { useAuth } from '../../context/AuthContext'
 import SignInPrompt from './SignInPromptModal.js'
 import styles from './styles'
 import MapScreenModule from './MapScreenModule.js'
+
+// deltas control how much of the map to display. The amount of 'zoom'.
 const deltas = {
   latitudeDelta: 0.2,
   longitudeDelta: 0.05,
@@ -82,6 +84,7 @@ export default function PublicMapScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <MapScreenModule
+        initialRegion={defaultRegionNYC}
         region={userRegion}
         audioDetails={audioDetails}
         currentUser={currentUser}
@@ -100,8 +103,8 @@ export default function PublicMapScreen({ navigation }) {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
-                Welcome to City Diary! {'\n'} {'\n'}Tap on a red marker for a
-                surprise! {'\n'} {'\n'} Tap elsewhere to stop playback
+                Welcome to City Diary! {'\n'} {'\n'}Tap on a map pin to play
+                audio. {'\n'} {'\n'} Tap elsewhere to stop audio.
               </Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}

@@ -4,16 +4,18 @@ import { useState } from 'react'
 import { Text, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import styles from './styles'
 import RecordingDetails from './RecordingDetails'
+import { ScrollView } from 'react-native-gesture-handler'
+import LoadingModal from './LoadingModal'
 
 export default function NewRecording() {
   const [recording, setRecording] = useState(null)
   const [sound, setSound] = React.useState()
+  const [done, setDone] = useState(false)
   const [userRecording, setUserRecording] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
-  //const [timerSeconds, setTimerSeconds] = useState(0)
-  //const [timerMinutes, setTimerMinutes] = useState(0)
   const [timeoutID, setTimeoutID] = useState(null)
   const [time, setTime] = useState({ seconds: 0, minutes: 0, hours: 0 })
+  const [loading, setLoading] = useState(false)
 
   async function startRecording() {
     try {
@@ -39,8 +41,8 @@ export default function NewRecording() {
   async function stopRecording() {
     try {
       console.log('Stopped recording...')
-      setRecording(null)
-      //clearInterval(timeoutID)
+      setRecording(undefined)
+      setDone(true)
       await recording.stopAndUnloadAsync()
       setUserRecording(recording.getURI())
     } catch (error) {
@@ -107,54 +109,58 @@ export default function NewRecording() {
   }
 
   return (
-    <SafeAreaView>
-      <View>
-        <Image
-          style={styles.image}
-          source={require('../../../assets/plainlogo.png')}
-        />
-        {/* <Text style={styles.text}>
-          {' '}
-          {`${time.minutes < 10 ? '0' + time.minutes : time.minutes} : ${
-            time.seconds < 10 ? '0' + time.seconds : time.seconds
-          }`}{' '}
-        </Text> */}
-        <Text style={styles.text}>
-          {' '}
-          {`${time.hours} : ${time.minutes} : ${time.seconds}`}{' '}
-        </Text>
-        <TouchableOpacity style={styles.button} onPress={handleRecordingPress}>
-          <Text>Start Recording / Stop </Text>
-        </TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View>
+          <Image
+            style={styles.image}
+            source={require('../../../assets/cityDiary.png')}
+          />
+          <Text style={styles.text}> {`${time.hours} : ${time.minutes} : ${time.seconds}`} </Text>
+          <TouchableOpacity
+            style={styles.audioButton}
+            onPress={handleRecordingPress}
+          >
+            <Text style={styles.audioButtonTitle}>Start Recording / Stop </Text>
+          </TouchableOpacity>
 
-        {/* <TouchableOpacity style={styles.button}>
-          <Text>Start Over</Text>
-        </TouchableOpacity> */}
+          <TouchableOpacity style={styles.audioButton}>
+            <Text style={styles.audioButtonTitle}>Start Over</Text>
+          </TouchableOpacity>
 
-        {/* <Text style={styles.text}> 00 : 00 : 00 / 00 : 00 : 00</Text> */}
 
-        <TouchableOpacity style={styles.button} onPress={playbackRecording}>
-          <Text>Play</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.audioButton}
+            onPress={playbackRecording}
+          >
+            <Text style={styles.audioButtonTitle}>Play</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            recording ? stopRecording() : null
-            setModalVisible(!modalVisible)
-          }}
-        >
-          <Text>Done</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={done ? styles.audioButton : styles.hidden}
+            onPress={() => {
+              recording ? stopRecording() : null
+              setModalVisible(!modalVisible)
+            }}
+          >
+            <Text style={styles.audioButtonTitle}>Done</Text>
+          </TouchableOpacity>
 
-        <RecordingDetails
-          userRecording={userRecording}
-          visible={modalVisible}
-          closeModal={() => {
-            setModalVisible(false)
-          }}
-        />
-      </View>
+          <RecordingDetails
+            userRecording={userRecording}
+            visible={modalVisible}
+            uploadButton={() => {
+              setLoading(true)
+              setDone(false)
+            }}
+            closeModal={() => {
+              setModalVisible(false)
+            }}
+            setLoading={setLoading}
+            loading={loading}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

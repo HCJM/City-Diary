@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/drawer'
 import { useNavigation } from '@react-navigation/native'
 import * as React from 'react'
-import { useState } from 'react/cjs/react.development'
+import { useState } from 'react'
 import { firebase } from '../../../firebase.js'
 import { useAuth } from '../../context/AuthContext'
 import styles from './styles.js'
@@ -14,6 +14,7 @@ export function CustomDrawerContent(props) {
   const [label, setLabel] = useState('')
   const { setCurrentUser } = useAuth()
   const { currentUser } = useAuth()
+  const { setLoggedIn } = useAuth()
 
   const navigation = useNavigation()
 
@@ -37,9 +38,12 @@ export function CustomDrawerContent(props) {
       <DrawerItemList {...props} />
       <DrawerItem
         style={styles.signOutItem}
-        label={currentUser ? 'Log Out' : ''}
+        // label={currentUser ? 'Log Out' : ''}
+        label={'Log Out'}
         onPress={() => {
-          currentUser ? handleSignOut() : null
+          {
+            setLoggedIn(false), handleSignOut()
+          }
         }}
       />
     </DrawerContentScrollView>

@@ -10,21 +10,26 @@ import {
   Modal,
   TextInput,
 } from 'react-native'
+import { Picker } from '@react-native-picker/picker'
 import { firebase } from '../../../firebase.js'
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native'
+import LoadingModal from './LoadingModal'
 
 export default function RecordingDetails({
   visible,
   closeModal,
+  uploadButton,
   userRecording,
+  setLoading,
+  loading,
 }) {
   const currentUser = useAuth().currentUser || {}
-  const [title, onChangeTitle] = React.useState('')
-  const [description, onChangeDescription] = React.useState('')
+  const [title, onChangeTitle] = useState('')
+  const [description, onChangeDescription] = useState('')
   const fileName = title.replace(/([^a-z0-9]+)/gi, '')
   const navigation = useNavigation()
-
+  const [selectedValue, setSelectedValue] = useState(false)
   const uid = currentUser.id
 
   async function storeAudio() {
@@ -88,7 +93,7 @@ export default function RecordingDetails({
       instance.add({
         title,
         description,
-        isPrivate: false,
+        isPrivate: selectedValue,
         uploadedAt: new Date(),
         userId: uid,
         username: currentUser.userName,
@@ -99,6 +104,10 @@ export default function RecordingDetails({
         ),
       })
       console.log('Added!')
+      setTimeout(() => {
+        setLoading(false)
+        navigation.navigate('Public Audio Map')
+      }, 3000)
     } catch (error) {
       console.log(error)
     }
@@ -110,15 +119,18 @@ export default function RecordingDetails({
   }
   return (
     <SafeAreaView>
+      {loading && <LoadingModal />}
       <View>
         <Modal animationType="slide" transparent={true} visible={visible}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Tell us about this clip!</Text>
+              <Text style={styles.modalText}>
+                Tell us about your audio clip:
+              </Text>
               <TextInput
                 style={styles.input}
                 onChangeText={onChangeTitle}
-                placeholder="Give me a title"
+                placeholder="Title"
                 value={title}
               />
               <TextInput
@@ -128,14 +140,38 @@ export default function RecordingDetails({
                 multiline={true}
                 value={description}
               />
+              <View style={styles.pickerView}>
+                <Picker
+                  selectedValue={selectedValue}
+                  style={styles.picker}
+                  onValueChange={(itemValue, itemIndex) => {
+                    console.log(itemValue)
+                    setSelectedValue(itemValue)
+                  }}
+                >
+                  {/* If the user opts to upload publically, set isPrivate in database to false */}
+                  <Picker.Item
+                    style={styles.pickerItem}
+                    label="Public"
+                    value={false}
+                  />
+                  {/* If the user opts to keep private, set isPrivate in database to true */}
+                  <Picker.Item
+                    style={styles.pickerItem}
+                    label="Private"
+                    value={true}
+                  />
+                </Picker>
+              </View>
+
               <TouchableOpacity
                 style={[styles.modalButton, styles.buttonClose]}
                 onPress={() => {
+                  uploadButton()
                   closeModal()
                   onModalExit()
                   storeAudio()
-                  // navigate to personal instead? easy fix
-                  navigation.navigate('Public Audio Map')
+                  setSelectedValue(false)
                 }}
               >
                 <Text style={styles.textStyle}>Upload</Text>
@@ -143,6 +179,7 @@ export default function RecordingDetails({
               <TouchableOpacity
                 style={[styles.modalButton, styles.buttonClose]}
                 onPress={() => {
+                  setSelectedValue(false)
                   onModalExit()
                   closeModal()
                 }}

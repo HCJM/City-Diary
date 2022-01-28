@@ -63,8 +63,7 @@ export default function MapScreenModule({
   return (
     <View>
       <MapView
-        initialRegion={initialRegion}
-        region={region}
+        initialRegion={region}
         style={styles.map}
         showsUserLocation={true}
         zoomEnabled={true}

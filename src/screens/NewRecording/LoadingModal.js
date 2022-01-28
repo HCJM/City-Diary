@@ -11,7 +11,7 @@ export default function LoadingModal() {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
-                Thanks for contributing! {'/n'} Please wait while we upload your
+                Thanks for contributing! {'\n'} Please wait while we upload your
                 entry!
               </Text>
             </View>

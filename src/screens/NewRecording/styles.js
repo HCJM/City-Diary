@@ -46,10 +46,10 @@ export default StyleSheet.create({
   },
   audioButton: {
     backgroundColor: '#85c7f2',
-    marginLeft: 30,
-    marginRight: 30,
+    //marginLeft: 30,
+    //marginRight: 30,
     marginTop: 50,
-    // marginBottom: 30,
+    //marginBottom: 30,
     height: 48,
     width: 330,
     borderRadius: 5,

@@ -102,12 +102,19 @@ export default function MapScreenModule({
                     <Text
                       style={styles.modalText}
                     >{`${audioDoc.data.description}`}</Text>
+                    {/* <Text style={styles.modalText}>
+                      {audioDoc.data.isPrivate ? 'private' : ''}
+                    </Text> */}
                     <Text
                       style={[
                         styles.modalText,
                         { fontWeight: 'bold', fontStyle: 'italic' },
                       ]}
-                    >{`Uploaded by ${audioDoc.data.username}`}</Text>
+                    >
+                      {`Uploaded by ${audioDoc.data.username} ${
+                        audioDoc.data.isPrivate ? '(private)' : ''
+                      }`}
+                    </Text>
                   </View>
                 </Callout>
               </Marker>
@@ -119,8 +126,6 @@ export default function MapScreenModule({
                 }}
                 onDeselect={stopSound}
                 key={audioDoc.id}
-                // title={audioDoc.data.title}
-                // description={audioDoc.data.description}
                 coordinate={{
                   latitude: audioDoc.data.location.latitude,
                   longitude: audioDoc.data.location.longitude,

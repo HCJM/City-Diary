@@ -10,11 +10,16 @@ export default StyleSheet.create({
   logo: {
     width: 350,
     height: 350,
-    // marginTop: 0,
+    marginBottom: 40,
     // paddingTop: 0
   },
+  textTop: {
+    color: '#61605f',
+    marginTop: 0,
+    fontSize: 20,
+  },
   text: {
-    marginTop: 20,
+    marginTop: 2,
     fontSize: 20,
   },
   exploreButton: {

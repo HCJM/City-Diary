@@ -102,9 +102,6 @@ export default function MapScreenModule({
                     <Text
                       style={styles.modalText}
                     >{`${audioDoc.data.description}`}</Text>
-                    {/* <Text style={styles.modalText}>
-                      {audioDoc.data.isPrivate ? 'private' : ''}
-                    </Text> */}
                     <Text
                       style={[
                         styles.modalText,

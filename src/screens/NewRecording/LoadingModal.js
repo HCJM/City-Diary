@@ -12,7 +12,7 @@ export default function LoadingModal() {
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
                 Thanks for contributing! {'\n'} Please wait while we upload your
-                entry!
+                audio!
               </Text>
             </View>
           </View>

@@ -107,7 +107,7 @@ export default function RecordingDetails({
       console.log('Added!')
       setTimeout(() => {
         setLoading(false)
-        navigation.navigate('Public Audio Map')
+        navigation.navigate('City Diary Map')
       }, 3000)
     } catch (error) {
       console.log(error)

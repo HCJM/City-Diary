@@ -44,7 +44,7 @@ export default function RegistrationScreen({ navigation }) {
           .then(() => {
             setLoggedIn(true)
             setCurrentUser(data)
-            navigation.navigate('Public Audio Map')
+            navigation.navigate('City Diary Map')
           })
           .catch((error) => {
             alert(error)

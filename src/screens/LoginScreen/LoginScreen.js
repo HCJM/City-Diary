@@ -34,7 +34,7 @@ export default function LoginScreen({ navigation }) {
             setLoggedIn(true)
             const user = firestoreDocument.data()
             setCurrentUser(user)
-            navigation.navigate('Public Audio Map')
+            navigation.navigate('City Diary Map')
           })
           .catch((error) => {
             alert(error)

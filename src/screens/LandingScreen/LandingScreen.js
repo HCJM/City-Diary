@@ -6,7 +6,7 @@ import styles from './styles'
 
 export default function LandingScreen({ navigation }) {
   const onExploreButtonPress = () => {
-    navigation.navigate('Public Audio Map')
+    navigation.navigate('City Diary Map')
   }
 
   const onLoginButtonPress = () => {

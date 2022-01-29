@@ -18,7 +18,7 @@ export default function LandingScreen({ navigation }) {
       <View style={styles.container}>
         <Image
           style={styles.logo}
-          source={require('../../../assets/cityDiary.png')}
+          source={require('../../../assets/cityDiary_building.png')}
         />
         <Text style={styles.text}>every city has a story.</Text>
         <Text style={styles.text}>be a part of it.</Text>

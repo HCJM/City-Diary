@@ -6,9 +6,9 @@
     "platforms": ["ios", "web"],
     "description": "A mobile app that allows users to create and explore captured geolocated sound.",
     "version": "1.0.0",
-    "icon": "./assets/city-diary-logos.png",
+    "icon": "./assets/cityDiary_building.png",
     "splash": {
-      "image": "./assets/city-diary-logos_black.png",
+      "image": "./assets/cityDiary_building.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

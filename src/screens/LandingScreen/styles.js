@@ -3,19 +3,19 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
   },
   logo: {
-    width: 275,
-    height: 275,
+    width: 350,
+    height: 350,
     // marginTop: 0,
     // paddingTop: 0
   },
   text: {
     marginTop: 20,
-    fontSize: 20
+    fontSize: 20,
   },
   exploreButton: {
     backgroundColor: '#85c7f2',

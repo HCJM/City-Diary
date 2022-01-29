@@ -72,7 +72,7 @@ export default function RegistrationScreen({ navigation }) {
       >
         <Image
           style={styles.logo}
-          source={require('../../../assets/cityDiary.png')}
+          source={require('../../../assets/cityDiary_bigLogo.png')}
         />
         <TextInput
           style={styles.input}
@@ -140,7 +140,7 @@ export default function RegistrationScreen({ navigation }) {
         </TouchableOpacity>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
-            Already got an account?{' '}
+            Already have an account?{' '}
             <Text onPress={onFooterLinkPress} style={styles.footerLink}>
               Log in
             </Text>

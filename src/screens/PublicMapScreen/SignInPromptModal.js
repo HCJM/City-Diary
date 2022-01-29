@@ -12,7 +12,7 @@ export default function SignInPrompt({ open, onClose }) {
           <View style={styles.modalView}>
             <View>
               <Text style={styles.modalText}>
-                Please log in to contribute to City Diary
+                Please log in to contribute to{'\n'}City Diary
               </Text>
               <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}

@@ -111,7 +111,7 @@ export default function NewRecording() {
         <View>
           <Image
             style={styles.image}
-            source={require('../../../assets/cityDiary.png')}
+            source={require('../../../assets/cityDiary_bigLogo.png')}
           />
           <Text style={styles.text}>
             {' '}

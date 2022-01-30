@@ -54,7 +54,7 @@ export default function MapScreenModule({
     try {
       console.log('Stopping sound')
       setIsPlaying(false)
-      sound.stopAsync()
+      await sound.stopAsync()
     } catch (error) {
       console.error(error)
     }

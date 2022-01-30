@@ -2,6 +2,13 @@ logic.md
 thing.js
 coordinates.md
 node_modules
+# added by spaceCATS
+firebase.js
+GoogleService-Info.plist
+package-lock.json
+seeds.js
+users.js
+.prettierrc
 # Logs
 logs
 *.log

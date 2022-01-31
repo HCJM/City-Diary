@@ -4,6 +4,9 @@
 <p align="center" style="font-style:italic">
 City Diary is a mobile app that allows you to interact and explore a user generated sound map.
 </p>
+<h1 align="center">
+  <img width="250px" src="assets/appCollageForReadme.png" alt="City Diary App Collage">
+</h1>
 
 ## Table of Contents
 
@@ -12,7 +15,7 @@ City Diary is a mobile app that allows you to interact and explore a user genera
 - [Tech Stack](#tech-stack)
 - [Features](#features)
 - [Future Goals](#future-goals)
-- [Notes on Agile Development](#notes-on-agile-development)
+- [Notes on Teamwork & Agile Software Development](#notes-on-teamwork-&-agile-development)
 - [Developers](#developers)
 - [Fork This Repo](#fork-this-repo)
 
@@ -59,12 +62,20 @@ Watch our demo video [here]()!
 
 ## Future Goals
 
-<!-- The next steps for City Diary include incorporating a user profile feature that will display a list of all user audio files, and filtering features...
- -->
-## Notes on Agile Development
-<!-- talk about team dynamics and learning moments here -->
-<!-- We developed customized solutions for seeding user data, structuring chat data, and handling navigation. Read about our takeaways here:
- -->
+The next steps for City Diary include incorporating a user profile view that will display a list of all your audio files, along with audio file search and filter features.  Search and filter features will also be made available in the City Diary Map view.
+
+## Notes on Teamwork & Agile Software Development
+
+As a team, we learned valuable lessons from working together on an ambitious project with a strict deadline. 
+
+- Fail fast, make mistakes quickly and learn from them
+- Trust your teammates
+- Communicate clearly, respectfully, and effectively
+- Plan thoroughly
+- Deploy early and often
+- Practice good and consistent version control
+- Have fun!!!
+
 ## Developers
 
 Meet the team behind City Diary!

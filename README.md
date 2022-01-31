@@ -1,12 +1,13 @@
-<h1 align="center">
+<p align="center">
   <img width="250px" src="assets/cityDiary_building.png" alt="City Diary logo">
-</h1>
+  <img width="250px" src="assets/appCollageForReadme.png" alt="City Diary App Collage">
+</p>
 <p align="center" style="font-style:italic">
 City Diary is a mobile app that allows you to interact and explore a user generated sound map.
 </p>
-<h1 align="center">
+<!-- <h1 align="center">
   <img width="250px" src="assets/appCollageForReadme.png" alt="City Diary App Collage">
-</h1>
+</h1> -->
 
 ## Table of Contents
 

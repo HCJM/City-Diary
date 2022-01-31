@@ -3,7 +3,7 @@
   <img width="375px" src="assets/appCollageForReadme.png" alt="City Diary App Collage">
 </p>
 <h3 align="center">
-City Diary is a mobile app that allows you to interact and explore a user generated sound map.
+City Diary is a mobile app that allows you to interact with and explore<br>a user generated sound map.
 </h3>
 
 
@@ -20,7 +20,7 @@ City Diary is a mobile app that allows you to interact and explore a user genera
 
 ## Introduction
 
-City Diary is a mobile app allows you to quickly capture audio, and save that unique moment to your specific location on a map. Users can choose to publicly or privately share their audio on the City Diary Map, to revisit anytime.
+City Diary is a mobile app that allows you to quickly capture audio, and save that unique moment to your specific location on a map. Users can choose to publicly or privately share their audio on the City Diary Map, to revisit anytime.
 
   As New Yorkers, we were inspired to help tell this city’s story through sound, highlighting the rich cultural diversity that changes with each step you take.  With City Diary, you can capture those precious fleeting moments like impromptu jazz in the park, buskers on the train platform, or the sound of your dear friend’s laughter after you land a great joke. 
 

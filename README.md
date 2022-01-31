@@ -28,6 +28,27 @@ Watch our demo video [here]()!
 
 ## Try out the latest version of City Diary
 
+### Directions for Android Devices
+
+- Scan the QR code displayed below
+- Submit this [feedback form](https://forms.gle/VABCvZsQ9Viqz1t76) to let us know how your experience with City Diary was 😺
+
+<p align="left">
+  <img width="250px" src="assets/expoPublishQR.png" alt="QR code for Expo Go City Diary">
+</p>
+
+### Directions for IOS Devices
+
+- Download the [Expo Go app](https://apps.apple.com/us/app/expo-go/id982107779) from the App Store
+- Create a free [Expo Go account](https://expo.dev/signup)
+- Please fill out this [City Diary Invitation Request form](https://forms.gle/CpSBGEaUT8iQrYNw6) with the same email address used to create your Expo Go account
+- We will add your Expo Go Account to our App. Please look out for an invitation email and kindly accept it. 
+- Scan the QR code below to enjoy City Diary!
+- Submit this [feedback form](https://forms.gle/VABCvZsQ9Viqz1t76) to let us know how your experience with City Diary was 😺
+
+<p align="left">
+  <img width="250px" src="assets/expoPublishQR.png" alt="QR code for Expo Go City Diary">
+</p>
 
 ## Tech Stack
 
@@ -54,10 +75,10 @@ Watch our demo video [here]()!
 ### Technical Features
 
 - ***Registration:*** User login with E-mail & Password
-- ***React Navigation:*** Drawer navigator & and thoughtful Modal prompts to optimize user experience
+- ***React Navigation:*** Drawer navigator & thoughtful Modal prompts to optimize user experience
 - ***User data:*** Writing to & reading from Firestore Database
 - ***Audio data:*** Recording & uploading sound file from user device to Cloud Storage. Retrieving sound file from Cloud Storage, and playing on user device
-- ***Geolocation:*** linking a sound file to precise location of user device at time of recording
+- ***Geolocation:*** Linking a sound file to precise location of user device at time of recording
 
 ## Future Goals
 

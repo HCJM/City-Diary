@@ -6,6 +6,7 @@ node_modules
 firebase.js
 GoogleService-Info.plist
 seedDb
+.env
 # Logs
 logs
 *.log

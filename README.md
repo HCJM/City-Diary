@@ -103,7 +103,7 @@ Meet the team behind City Diary!
 - Chenel Morgan - [Github](https://github.com/cheMorgan) | [LinkedIn](https://www.linkedin.com/in/chenelmorgan/)
 - Heather White - [Github](https://github.com/HTHR-WHT) | [LinkedIn](https://www.linkedin.com/in/heather-white-nyc/)
 - Jose Lema - [Github](https://github.com/mauilema) | [LinkedIn](https://www.linkedin.com/in/josemlema/)
-- Malcolm Mack - [Github](https://github.com/malcolmlearnstech) | [LinkedIn]()
+- Malcolm Mack - [Github](https://github.com/malcolmlearnstech) | [LinkedIn](https://www.linkedin.com/in/malcolmrm/)
 
 ## Fork This Repo
 
